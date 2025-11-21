@@ -10,16 +10,19 @@ class AuthPage extends ConsumerWidget {
     final state = ref.watch(authProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Auth Page")),
-      body: Center(
-        child: state.isLoading
-            ? const CircularProgressIndicator()
-            : Text(state.data),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => ref.read(authProvider.notifier).load(),
-        child: const Icon(Icons.refresh),
-      ),
+      body: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                 begin: Alignment(0.50, -0.00),
+              end: Alignment(0.50, 1.00),
+              colors: [const Color(0xFF0B3160), const Color(0xFF1665C6)],
+            ),
+          ))
+        ],
+      )
     );
   }
 }
