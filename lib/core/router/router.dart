@@ -1,5 +1,5 @@
-import 'package:amrita_vidhyalayam_teacher/features/auth/presentation/view/auth_page.dart';
-import 'package:amrita_vidhyalayam_teacher/features/splash_screen/presentation/view/splash_screen_page.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/auth/presentation/view/auth_page.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/splash_screen/presentation/view/splash_screen_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
