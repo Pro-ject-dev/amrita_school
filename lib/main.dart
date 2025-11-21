@@ -1,6 +1,8 @@
-import 'package:amrita_vidhyalayam_teacher/router/router.dart';
+import 'package:amrita_vidhyalayam_teacher/core/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'core/theme/app_theme.dart' show AppTheme;
 
 void main() {
   runApp(ProviderScope(child: MyApp()));
@@ -16,9 +18,8 @@ class MyApp extends ConsumerWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Amrita Vidhyalayam Teacher App',
-      theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-      ),
+      theme:AppTheme.light(),
+      darkTheme: AppTheme.dark(),
       routerConfig: router,
     );
   }

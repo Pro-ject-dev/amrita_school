@@ -1,4 +1,4 @@
-import 'package:amrita_vidhyalayam_teacher/features/splash_screen/presentation/viewmodel/splash_screen_state.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/splash_screen/presentation/viewmodel/splash_screen_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
