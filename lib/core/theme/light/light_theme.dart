@@ -1,11 +1,19 @@
-import 'package:amrita_vidhyalayam_teacher/core/theme/typography/text_styles.dart';
 import 'package:flutter/material.dart';
-import '../colors/app_colors.dart';
 
+import '../colors/app_colors.dart';
+import '../typography/text_styles.dart';
 
 final ThemeData lightTheme = ThemeData(
+  fontFamily: 'Poppins',
   brightness: Brightness.light,
   primaryColor: AppColors.primary,
+
+
+  bottomAppBarTheme: const BottomAppBarThemeData(
+    
+    color: AppColors.primary,
+    elevation: 2,
+  ),
 
   scaffoldBackgroundColor: AppColors.background,
 
@@ -18,7 +26,7 @@ final ThemeData lightTheme = ThemeData(
     style: ElevatedButton.styleFrom(
       backgroundColor: AppColors.primary,
       foregroundColor: Colors.white,
-      minimumSize: const Size(double.infinity, 48),
+      minimumSize: Size(double.infinity, 48),
     ),
   ),
 );

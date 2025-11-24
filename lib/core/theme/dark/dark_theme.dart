@@ -6,8 +6,15 @@ import '../typography/text_styles.dart';
 final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   primaryColor: AppColors.primary,
+  fontFamily: 'Poppins',
 
   scaffoldBackgroundColor: AppColors.grey900,
+
+    bottomAppBarTheme: const BottomAppBarThemeData(
+    
+    color: AppColors.primary,
+    elevation: 2,
+  ),
 
   textTheme: const TextTheme(
     headlineMedium: AppTextStyles.headline1,
