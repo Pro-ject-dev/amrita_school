@@ -12,7 +12,7 @@ class AppStrings {
   static const b_nav_4 = 'Profile';
 
 
-  static const welcome_title = 'Welcome Abhijith.....!';
-  static const welcome_subtitle = 'Please complete today’s attendance.';
+  static const welcome_title = 'Good Morning.👋!';
+  static const welcome_subtitle = 'Class 10';
 
 }

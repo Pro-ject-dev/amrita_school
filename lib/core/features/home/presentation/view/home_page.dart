@@ -2,6 +2,7 @@ import 'package:amrita_vidhyalayam_teacher/core/theme/icons/app_icons.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/images/app_images.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/strings/app_strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,6 +13,9 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+    );
 
     return Scaffold(
       body: Column(
@@ -55,20 +59,25 @@ class HomePage extends ConsumerWidget {
 
                     SizedBox(height: 8.h),
 
-                    Text(
-                      AppStrings.welcome_subtitle,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                         fontSize: 12.sp,
-                        color: Colors.white,
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(16)),
+                      color: Color(0xff254671)
+                      ),
+                      child: Text(
+                        AppStrings.welcome_subtitle,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12.sp,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
 
                     SizedBox(height: 10.h),
 
                     Divider(color: Colors.white30, thickness: 0..h),
-
-                    
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,7 +89,7 @@ class HomePage extends ConsumerWidget {
                               SvgPicture.asset(
                                 AppIcons.calendar_left,
                                 width: 20.w,
-                               height: 20.h,
+                                height: 20.h,
                               ),
                               Text(
                                 "Today, Nov 20",
@@ -92,8 +101,7 @@ class HomePage extends ConsumerWidget {
                               SvgPicture.asset(
                                 AppIcons.calendar_right,
                                 width: 20.w,
-                               height: 20.h,
-
+                                height: 20.h,
                               ),
                             ],
                           ),
@@ -108,10 +116,13 @@ class HomePage extends ConsumerWidget {
                         ),
                         SizedBox(width: 15.w),
 
-                        SvgPicture.asset(AppIcons.calendar,width: 20.w,
-                               height: 20.h,),
-                       SizedBox(width: 15.w),
-                       ],
+                        SvgPicture.asset(
+                          AppIcons.calendar,
+                          width: 20.w,
+                          height: 20.h,
+                        ),
+                        SizedBox(width: 15.w),
+                      ],
                     ),
                   ],
                 ),
@@ -149,13 +160,13 @@ class HomePage extends ConsumerWidget {
                         border: Border.all(color: Colors.grey.shade300),
                         color: Colors.grey.shade100,
                       ),
-                      child:  TextField(
+                      child: TextField(
                         decoration: InputDecoration(
                           hintText: "Search student",
                           hintStyle: TextStyle(
                             color: const Color.fromARGB(255, 202, 202, 202),
                             fontSize: 12.sp,
-                            fontWeight: FontWeight.w600
+                            fontWeight: FontWeight.w600,
                           ),
                           border: InputBorder.none,
                           icon: SvgPicture.asset(
@@ -186,24 +197,31 @@ class HomePage extends ConsumerWidget {
                   ],
                 ),
               ),
-              
             ],
           ),
           Row(
             mainAxisAlignment: .center,
-           
+
             children: [
               MaterialButton(
                 color: theme.primaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.r),
                 ),
-                onPressed: (){},child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 13.0,horizontal: 30.0),
-                  child: Text("Mark Attendance ",style: TextStyle(color: Colors.white),),
-                ),),
+                onPressed: () {},
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 13.0,
+                    horizontal: 30.0,
+                  ),
+                  child: Text(
+                    "Mark Attendance ",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
             ],
-          )
+          ),
         ],
       ),
 
