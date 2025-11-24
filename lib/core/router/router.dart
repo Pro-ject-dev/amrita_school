@@ -1,4 +1,5 @@
 import 'package:amrita_vidhyalayam_teacher/core/features/auth/presentation/view/auth_page.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/view/home_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/splash_screen/presentation/view/splash_screen_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -21,11 +22,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         name: 'authentication',
         builder: (_, __) => const AuthPage(),
       ),
-      // GoRoute(
-      //   path: '/home',
-      //   name: 'home',
-      //   builder: (_, __) => const HomePage(),
-      // ),
+      GoRoute(
+        path: '/home',
+        name: 'home',
+        builder: (_, __) => const HomePage(),
+      ),
 
       
     ],

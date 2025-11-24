@@ -23,6 +23,7 @@ class MyApp extends ConsumerWidget {
       builder: (_, child) {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
+          
           title: AppStrings.appTitle ,
           themeMode:isDarkMode? ThemeMode.dark : ThemeMode.light,
           theme: AppTheme.light(),

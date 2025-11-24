@@ -5,4 +5,14 @@ class AppStrings {
   static const logoutButton = 'Logout';
   static const settingsTitle = 'Settings';
   static const profileTitle = 'Profile';
+
+  static const b_nav_1 = 'Home';
+  static const b_nav_2 = 'Students';
+  static const b_nav_3 = 'Reports';
+  static const b_nav_4 = 'Profile';
+
+
+  static const welcome_title = 'Welcome Abhijith.....!';
+  static const welcome_subtitle = 'Please complete today’s attendance.';
+
 }
