@@ -36,13 +36,14 @@ class AuthPage extends ConsumerWidget {
                 colors: [const Color(0xFF0B3160), const Color(0xFF1665C6)],
               ),
             ),
-            child: SafeArea(
-              maintainBottomViewPadding: true,
-              minimum: EdgeInsets.symmetric(horizontal: 16.sp),
+            child: Container(
+              padding: EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: .spaceBetween,
                 children: [
+
+                  SizedBox(height: 5.h),
                   Image.asset(AppImages.app_logo, width: 100),
                   SizedBox(height: 20.h),
                   Column(
