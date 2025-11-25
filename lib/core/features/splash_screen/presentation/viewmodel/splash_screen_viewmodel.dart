@@ -18,7 +18,7 @@ class SplashScreenViewModel extends StateNotifier<SplashScreenState> {
     try {
       final result = await _useCase.execute();
       state = state.copyWith(isLoading: false, data: result.value);
-      await Future.delayed(const Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 0));
       log('5-second delay finished, navigating to login screen');
       state = state.copyWith(isFinished: true);
     } catch (e) {
