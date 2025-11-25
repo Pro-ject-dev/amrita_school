@@ -36,13 +36,14 @@ class AuthPage extends ConsumerWidget {
                 colors: [const Color(0xFF0B3160), const Color(0xFF1665C6)],
               ),
             ),
-            child: SafeArea(
-              maintainBottomViewPadding: true,
-              minimum: EdgeInsets.symmetric(horizontal: 16.sp),
+            child: Container(
+              padding: EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: .spaceBetween,
                 children: [
+
+                  SizedBox(height: 5.h),
                   Image.asset(AppImages.app_logo, width: 100),
                   SizedBox(height: 20.h),
                   Column(
@@ -70,37 +71,39 @@ class AuthPage extends ConsumerWidget {
             ),
           ),
           SizedBox(height: 30.h),
-          InkWell(
-            onTap: () {
-           context.go('/home');
-            },
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 16.w),
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 15),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(32)),
-                border: BoxBorder.all(color: AppColors.grey300),
-              ),
-              child: Row(
-                spacing: 20,
-                crossAxisAlignment: .center,
-                mainAxisAlignment: .center,
-                children: [
-                  // SvgPicture.asset('assets/icons/Microsoft.svg',width: 24,),
-                  Image.asset('assets/images/Microsoft.png', width: 20.w),
-                  Text(
-                    'Sign in with Microsoft',
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.grey900,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          Padding(
+  padding: EdgeInsets.symmetric(horizontal: 16.w), // was Container margin
+  child: ElevatedButton(
+    onPressed: () {
+      context.go('/home');
+    },
+    style: ElevatedButton.styleFrom(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(32),
+        side: BorderSide(color: AppColors.grey300),
+      ),
+    ),
+    child: Row(
+      spacing: 20,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset('assets/images/Microsoft.png', width: 20.w),
+        Text(
+          'Sign in with Microsoft',
+          style: TextStyle(
+            fontSize: 15.sp,
+            fontWeight: FontWeight.w600,
+            color: AppColors.grey900,
           ),
+        ),
+      ],
+    ),
+  ),
+)
+,
           SizedBox(height: 10.h),
           Text(
             'Contact support for account access.',
