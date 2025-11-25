@@ -157,8 +157,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     data: Theme.of(context).copyWith(
                                       colorScheme: const ColorScheme.light(
                                         primary: AppColors.primary,
-                                        // onPrimary: Colors.white,
-                                        // onSurface: Colors.black,
                                       ),
                                       textButtonTheme: TextButtonThemeData(
                                         style: TextButton.styleFrom(
@@ -211,16 +209,19 @@ class _HomePageState extends ConsumerState<HomePage> {
 
                       Container(
                         // margin: EdgeInsets.only(bottom: 14.h),
-                        padding: EdgeInsets.all(12.w),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.r),
-                          border: Border.all(color: Colors.grey.shade300),
-                          color: Colors.white,
-                        ),
+                      //  padding: EdgeInsets.all(10.w),
+                      //   decoration: BoxDecoration(
+                      //     borderRadius: BorderRadius.circular(16.r),
+                      //     border: Border.all(color: Colors.grey.shade300),
+                      //     color: Colors.white,
+                      //   ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             MaterialButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.r),
+                              ),
                               color: theme.primaryColor,
                               onPressed: () {},
                               child: Text(
@@ -235,6 +236,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                             SizedBox(width: 20.w),
                             MaterialButton(
                               onPressed: () {},
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.r),
+                              ),
                               color: Colors.red,
                               child: Text(
                                 "Mark All Absent",
@@ -248,6 +252,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ],
                         ),
                       ),
+
+                      SizedBox(height: 15.h),
 
                       // Search box
                       Container(
