@@ -5,12 +5,24 @@ class StudentCard extends StatefulWidget {
   final String name;
   final String id;
   final String imageUrl;
+  final bool isPresent;
+  final bool isAbsent;
+  final bool isChecked;
+  final VoidCallback? onPresent;
+  final VoidCallback? onAbsent;
+  final ValueChanged<bool?>? onCheckboxChanged;
 
   const StudentCard({
     super.key,
     required this.name,
     required this.id,
-    required this.imageUrl,
+    required this.imageUrl, 
+    required this.onPresent, 
+    required this.onAbsent, 
+    required this.onCheckboxChanged,
+    required this.isPresent,
+    required this.isAbsent ,  
+    required this.isChecked ,
   });
 
   @override
@@ -34,11 +46,8 @@ class _StudentCardState extends State<StudentCard> {
       child: Row(
         children: [
           Checkbox(
-            value:true,
-            onChanged: (_) {
-
-
-            },
+            value: widget.isChecked,
+            onChanged:widget.onCheckboxChanged,
             fillColor: WidgetStateProperty.resolveWith((states) {
               return Colors.white;
             }),
@@ -77,36 +86,38 @@ class _StudentCardState extends State<StudentCard> {
             ),
           ),
 
-          GestureDetector(
-            onTap: () {
-             
-            },
-            child: CircleAvatar(
-              radius: 20.r,
-              backgroundColor: true
-                  ? Colors.green.withOpacity(0.15)
-                  : Colors.grey.shade200,
-              child: Icon(
-                Icons.check_circle,
-                color:true ? Colors.green : Colors.grey,
+          Visibility(
+            visible: !widget.isChecked ,
+            child: GestureDetector(
+              onTap: widget.onPresent,
+              child: CircleAvatar(
+                radius: 20.r,
+                backgroundColor: widget.isPresent
+                    ? Colors.green.withOpacity(0.15)
+                    : Colors.grey.shade200,
+                child: Icon(
+                  Icons.check_circle,
+                  color:widget.isPresent ? Colors.green : Colors.grey,
+                ),
               ),
             ),
           ),
 
           SizedBox(width: 10.w),
 
-          GestureDetector(
-            onTap: () {
-             
-            },
-            child: CircleAvatar(
-              radius: 20.r,
-              backgroundColor: true
-                  ? Colors.red.withOpacity(0.15)
-                  : Colors.grey.shade200,
-              child: Icon(
-                Icons.cancel,
-                color:true ? Colors.red : Colors.grey,
+          Visibility(
+            visible: !widget.isChecked ,
+            child: GestureDetector(
+              onTap:widget.onAbsent ,
+              child: CircleAvatar(
+                radius: 20.r,
+                backgroundColor: widget.isAbsent
+                    ? Colors.red.withOpacity(0.15)
+                    : Colors.grey.shade200,
+                child: Icon(
+                  Icons.cancel,
+                  color:widget.isAbsent ? Colors.red : Colors.grey,
+                ),
               ),
             ),
           ),

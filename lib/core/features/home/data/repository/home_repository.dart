@@ -19,6 +19,7 @@ HomeRepository homeRepository(Ref ref) {
   Future<AttendanceModel> getClassAttendance({
     required String sclass,
     required String attendanceOn,
+    required String? searchQuery,
   }) async {
     try {
       final response = await _dio.post(
@@ -26,9 +27,10 @@ HomeRepository homeRepository(Ref ref) {
         data: {
           "sclass": sclass,
           "attendance_on": attendanceOn,
+          "student":searchQuery
         },
       );
-     
+     await Future.delayed(const Duration(seconds: 1));
       return AttendanceModel.fromJson(response.data);
     } catch (e) {
       rethrow;

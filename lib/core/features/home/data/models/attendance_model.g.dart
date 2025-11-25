@@ -23,13 +23,17 @@ Map<String, dynamic> _$AttendanceModelToJson(_AttendanceModel instance) =>
 _StudentAttendance _$StudentAttendanceFromJson(Map<String, dynamic> json) =>
     _StudentAttendance(
       student: json['student'] as String,
+      studentName: json['student_name'] as String,
       attendanceStatus: json['attendance_status'] as String,
       attendanceOn: json['attendance_on'] as String,
+      isChecked: json['isChecked'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$StudentAttendanceToJson(_StudentAttendance instance) =>
     <String, dynamic>{
       'student': instance.student,
+      'student_name': instance.studentName,
       'attendance_status': instance.attendanceStatus,
       'attendance_on': instance.attendanceOn,
+      'isChecked': instance.isChecked,
     };

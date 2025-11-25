@@ -287,7 +287,7 @@ as String,
 /// @nodoc
 mixin _$StudentAttendance {
 
- String get student;@JsonKey(name: 'attendance_status') String get attendanceStatus;@JsonKey(name: 'attendance_on') String get attendanceOn;
+ String get student;@JsonKey(name: 'student_name') String get studentName;@JsonKey(name: 'attendance_status') String get attendanceStatus;@JsonKey(name: 'attendance_on') String get attendanceOn; bool get isChecked;
 /// Create a copy of StudentAttendance
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -300,16 +300,16 @@ $StudentAttendanceCopyWith<StudentAttendance> get copyWith => _$StudentAttendanc
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StudentAttendance&&(identical(other.student, student) || other.student == student)&&(identical(other.attendanceStatus, attendanceStatus) || other.attendanceStatus == attendanceStatus)&&(identical(other.attendanceOn, attendanceOn) || other.attendanceOn == attendanceOn));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is StudentAttendance&&(identical(other.student, student) || other.student == student)&&(identical(other.studentName, studentName) || other.studentName == studentName)&&(identical(other.attendanceStatus, attendanceStatus) || other.attendanceStatus == attendanceStatus)&&(identical(other.attendanceOn, attendanceOn) || other.attendanceOn == attendanceOn)&&(identical(other.isChecked, isChecked) || other.isChecked == isChecked));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,student,attendanceStatus,attendanceOn);
+int get hashCode => Object.hash(runtimeType,student,studentName,attendanceStatus,attendanceOn,isChecked);
 
 @override
 String toString() {
-  return 'StudentAttendance(student: $student, attendanceStatus: $attendanceStatus, attendanceOn: $attendanceOn)';
+  return 'StudentAttendance(student: $student, studentName: $studentName, attendanceStatus: $attendanceStatus, attendanceOn: $attendanceOn, isChecked: $isChecked)';
 }
 
 
@@ -320,7 +320,7 @@ abstract mixin class $StudentAttendanceCopyWith<$Res>  {
   factory $StudentAttendanceCopyWith(StudentAttendance value, $Res Function(StudentAttendance) _then) = _$StudentAttendanceCopyWithImpl;
 @useResult
 $Res call({
- String student,@JsonKey(name: 'attendance_status') String attendanceStatus,@JsonKey(name: 'attendance_on') String attendanceOn
+ String student,@JsonKey(name: 'student_name') String studentName,@JsonKey(name: 'attendance_status') String attendanceStatus,@JsonKey(name: 'attendance_on') String attendanceOn, bool isChecked
 });
 
 
@@ -337,12 +337,14 @@ class _$StudentAttendanceCopyWithImpl<$Res>
 
 /// Create a copy of StudentAttendance
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? student = null,Object? attendanceStatus = null,Object? attendanceOn = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? student = null,Object? studentName = null,Object? attendanceStatus = null,Object? attendanceOn = null,Object? isChecked = null,}) {
   return _then(_self.copyWith(
 student: null == student ? _self.student : student // ignore: cast_nullable_to_non_nullable
+as String,studentName: null == studentName ? _self.studentName : studentName // ignore: cast_nullable_to_non_nullable
 as String,attendanceStatus: null == attendanceStatus ? _self.attendanceStatus : attendanceStatus // ignore: cast_nullable_to_non_nullable
 as String,attendanceOn: null == attendanceOn ? _self.attendanceOn : attendanceOn // ignore: cast_nullable_to_non_nullable
-as String,
+as String,isChecked: null == isChecked ? _self.isChecked : isChecked // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -427,10 +429,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String student, @JsonKey(name: 'attendance_status')  String attendanceStatus, @JsonKey(name: 'attendance_on')  String attendanceOn)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String student, @JsonKey(name: 'student_name')  String studentName, @JsonKey(name: 'attendance_status')  String attendanceStatus, @JsonKey(name: 'attendance_on')  String attendanceOn,  bool isChecked)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _StudentAttendance() when $default != null:
-return $default(_that.student,_that.attendanceStatus,_that.attendanceOn);case _:
+return $default(_that.student,_that.studentName,_that.attendanceStatus,_that.attendanceOn,_that.isChecked);case _:
   return orElse();
 
 }
@@ -448,10 +450,10 @@ return $default(_that.student,_that.attendanceStatus,_that.attendanceOn);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String student, @JsonKey(name: 'attendance_status')  String attendanceStatus, @JsonKey(name: 'attendance_on')  String attendanceOn)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String student, @JsonKey(name: 'student_name')  String studentName, @JsonKey(name: 'attendance_status')  String attendanceStatus, @JsonKey(name: 'attendance_on')  String attendanceOn,  bool isChecked)  $default,) {final _that = this;
 switch (_that) {
 case _StudentAttendance():
-return $default(_that.student,_that.attendanceStatus,_that.attendanceOn);case _:
+return $default(_that.student,_that.studentName,_that.attendanceStatus,_that.attendanceOn,_that.isChecked);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -468,10 +470,10 @@ return $default(_that.student,_that.attendanceStatus,_that.attendanceOn);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String student, @JsonKey(name: 'attendance_status')  String attendanceStatus, @JsonKey(name: 'attendance_on')  String attendanceOn)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String student, @JsonKey(name: 'student_name')  String studentName, @JsonKey(name: 'attendance_status')  String attendanceStatus, @JsonKey(name: 'attendance_on')  String attendanceOn,  bool isChecked)?  $default,) {final _that = this;
 switch (_that) {
 case _StudentAttendance() when $default != null:
-return $default(_that.student,_that.attendanceStatus,_that.attendanceOn);case _:
+return $default(_that.student,_that.studentName,_that.attendanceStatus,_that.attendanceOn,_that.isChecked);case _:
   return null;
 
 }
@@ -483,12 +485,14 @@ return $default(_that.student,_that.attendanceStatus,_that.attendanceOn);case _:
 @JsonSerializable()
 
 class _StudentAttendance implements StudentAttendance {
-  const _StudentAttendance({required this.student, @JsonKey(name: 'attendance_status') required this.attendanceStatus, @JsonKey(name: 'attendance_on') required this.attendanceOn});
+  const _StudentAttendance({required this.student, @JsonKey(name: 'student_name') required this.studentName, @JsonKey(name: 'attendance_status') required this.attendanceStatus, @JsonKey(name: 'attendance_on') required this.attendanceOn, this.isChecked = false});
   factory _StudentAttendance.fromJson(Map<String, dynamic> json) => _$StudentAttendanceFromJson(json);
 
 @override final  String student;
+@override@JsonKey(name: 'student_name') final  String studentName;
 @override@JsonKey(name: 'attendance_status') final  String attendanceStatus;
 @override@JsonKey(name: 'attendance_on') final  String attendanceOn;
+@override@JsonKey() final  bool isChecked;
 
 /// Create a copy of StudentAttendance
 /// with the given fields replaced by the non-null parameter values.
@@ -503,16 +507,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StudentAttendance&&(identical(other.student, student) || other.student == student)&&(identical(other.attendanceStatus, attendanceStatus) || other.attendanceStatus == attendanceStatus)&&(identical(other.attendanceOn, attendanceOn) || other.attendanceOn == attendanceOn));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StudentAttendance&&(identical(other.student, student) || other.student == student)&&(identical(other.studentName, studentName) || other.studentName == studentName)&&(identical(other.attendanceStatus, attendanceStatus) || other.attendanceStatus == attendanceStatus)&&(identical(other.attendanceOn, attendanceOn) || other.attendanceOn == attendanceOn)&&(identical(other.isChecked, isChecked) || other.isChecked == isChecked));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,student,attendanceStatus,attendanceOn);
+int get hashCode => Object.hash(runtimeType,student,studentName,attendanceStatus,attendanceOn,isChecked);
 
 @override
 String toString() {
-  return 'StudentAttendance(student: $student, attendanceStatus: $attendanceStatus, attendanceOn: $attendanceOn)';
+  return 'StudentAttendance(student: $student, studentName: $studentName, attendanceStatus: $attendanceStatus, attendanceOn: $attendanceOn, isChecked: $isChecked)';
 }
 
 
@@ -523,7 +527,7 @@ abstract mixin class _$StudentAttendanceCopyWith<$Res> implements $StudentAttend
   factory _$StudentAttendanceCopyWith(_StudentAttendance value, $Res Function(_StudentAttendance) _then) = __$StudentAttendanceCopyWithImpl;
 @override @useResult
 $Res call({
- String student,@JsonKey(name: 'attendance_status') String attendanceStatus,@JsonKey(name: 'attendance_on') String attendanceOn
+ String student,@JsonKey(name: 'student_name') String studentName,@JsonKey(name: 'attendance_status') String attendanceStatus,@JsonKey(name: 'attendance_on') String attendanceOn, bool isChecked
 });
 
 
@@ -540,12 +544,14 @@ class __$StudentAttendanceCopyWithImpl<$Res>
 
 /// Create a copy of StudentAttendance
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? student = null,Object? attendanceStatus = null,Object? attendanceOn = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? student = null,Object? studentName = null,Object? attendanceStatus = null,Object? attendanceOn = null,Object? isChecked = null,}) {
   return _then(_StudentAttendance(
 student: null == student ? _self.student : student // ignore: cast_nullable_to_non_nullable
+as String,studentName: null == studentName ? _self.studentName : studentName // ignore: cast_nullable_to_non_nullable
 as String,attendanceStatus: null == attendanceStatus ? _self.attendanceStatus : attendanceStatus // ignore: cast_nullable_to_non_nullable
 as String,attendanceOn: null == attendanceOn ? _self.attendanceOn : attendanceOn // ignore: cast_nullable_to_non_nullable
-as String,
+as String,isChecked: null == isChecked ? _self.isChecked : isChecked // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

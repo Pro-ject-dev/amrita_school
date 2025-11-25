@@ -21,11 +21,12 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
+  final searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(homeProvider.notifier).fetchAttendance();
+      ref.read(homeProvider.notifier).fetchAttendance("");
     });
   }
 
@@ -203,56 +204,52 @@ class _HomePageState extends ConsumerState<HomePage> {
                       ),
 
                       SizedBox(height: 10.h),
-
-                      Container(
-                        // margin: EdgeInsets.only(bottom: 14.h),
-                        //  padding: EdgeInsets.all(10.w),
-                        //   decoration: BoxDecoration(
-                        //     borderRadius: BorderRadius.circular(16.r),
-                        //     border: Border.all(color: Colors.grey.shade300),
-                        //     color: Colors.white,
-                        //   ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            MaterialButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                              ),
-                              color: theme.primaryColor,
-                              onPressed: () {},
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Mark All Present",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeight.bold,
+                      Visibility(
+                        visible: homeState.isChecked,
+                        child: Container(
+                        
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              MaterialButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                ),
+                                color: theme.primaryColor,
+                                onPressed: () {},
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Mark All Present",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(width: 20.w),
-                            MaterialButton(
-                              onPressed: () {},
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                              ),
-                              color: Colors.red,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "Mark All Absent",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 13.sp,
-                                    fontWeight: FontWeight.bold,
+                              SizedBox(width: 20.w),
+                              MaterialButton(
+                                onPressed: () {},
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                ),
+                                color: Colors.red,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Mark All Absent",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
 
@@ -267,6 +264,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                           color: Colors.grey.shade100,
                         ),
                         child: TextField(
+                          controller: searchController,
+                          onChanged: (value) => ref.read(homeProvider.notifier).fetchAttendance(value),
                           decoration: InputDecoration(
                             hintText: "Search student",
                             hintStyle: TextStyle(
@@ -293,7 +292,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           child: SizedBox(
                             height: 370.h,
                             child: ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
+                              physics:BouncingScrollPhysics(),
                               padding: EdgeInsets.all(0),
                               itemCount: homeState.isLoading
                                   ? 10
@@ -304,13 +303,24 @@ class _HomePageState extends ConsumerState<HomePage> {
                                         student: "Student Name",
                                         attendanceStatus: "Present",
                                         attendanceOn: "2024-01-01",
+                                        studentName: "Student Name",
+                                        isChecked: false,
                                       )
                                     : homeState.attendanceList![i];
+                                final isPresent = student.attendanceStatus == "Present";
+                                final isAbsent = student.attendanceStatus == "Absent";
+                                final isChecked = student.isChecked;
                                 return StudentCard(
-                                  name: student.student,
+                                  name: student.studentName,
                                   id: student.student,
                                   imageUrl:
-                                      "https://i.pravatar.cc/150?img=${i + 1}",
+                                      "https://i.pravatar.cc/150?img=${i + 1}", 
+                                      onPresent: () => ref.read(homeProvider.notifier).toggleAttendance(i, true), 
+                                      onAbsent: () => ref.read(homeProvider.notifier).toggleAttendance(i, false), 
+                                      onCheckboxChanged: (bool? value) => ref.read(homeProvider.notifier ).checkBox(i, value), 
+                                      isPresent: isPresent, 
+                                      isAbsent: isAbsent, 
+                                      isChecked: isChecked,
                                 );
                               },
                             ),
