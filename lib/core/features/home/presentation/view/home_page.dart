@@ -11,7 +11,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../data/models/attendance_model.dart';
 import '../viewmodel/home_viewmodel.dart';
-import  'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -33,6 +33,9 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final homeState = ref.watch(homeProvider);
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+    );
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -56,11 +59,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Image.asset(AppImages.app_logo, width: 100.w),
-                          SvgPicture.asset(
-                            AppIcons.user,
-                            width: 20.w,
-                            height: 20.h,
-                          ),
+                          Icon(LucideIcons.logOut, color: Colors.white),
                         ],
                       ),
 
@@ -109,10 +108,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                               children: [
                                 IconButton(
                                   onPressed: () {},
-                                  icon: SvgPicture.asset(
-                                    AppIcons.calendar_left,
-                                    width: 20.w,
-                                    height: 20.h,
+                                  icon: Icon(
+                                    LucideIcons.chevronLeft,
+                                    color: Colors.white,
                                   ),
                                 ),
 
@@ -126,10 +124,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 ),
                                 IconButton(
                                   onPressed: () {},
-                                  icon: SvgPicture.asset(
-                                    AppIcons.calendar_right,
-                                    width: 20.w,
-                                    height: 20.h,
+                                  icon: Icon(
+                                    LucideIcons.chevronRight,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ],
@@ -170,10 +167,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 },
                               );
                             },
-                            icon: SvgPicture.asset(
-                              AppIcons.calendar,
-                              width: 20.w,
-                              height: 20.h,
+                            icon: Icon(
+                              LucideIcons.calendar,
+                              color: Colors.white,
                             ),
                           ),
                           SizedBox(width: 2.w),
@@ -210,12 +206,12 @@ class _HomePageState extends ConsumerState<HomePage> {
 
                       Container(
                         // margin: EdgeInsets.only(bottom: 14.h),
-                      //  padding: EdgeInsets.all(10.w),
-                      //   decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(16.r),
-                      //     border: Border.all(color: Colors.grey.shade300),
-                      //     color: Colors.white,
-                      //   ),
+                        //  padding: EdgeInsets.all(10.w),
+                        //   decoration: BoxDecoration(
+                        //     borderRadius: BorderRadius.circular(16.r),
+                        //     border: Border.all(color: Colors.grey.shade300),
+                        //     color: Colors.white,
+                        //   ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -334,23 +330,23 @@ class _HomePageState extends ConsumerState<HomePage> {
         unselectedItemColor: Colors.white70,
         items: [
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppIcons.home, width: 20.w, height: 20.h),
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Icon(LucideIcons.house, color: Colors.white),
+            ),
             label: AppStrings.b_nav_1,
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              AppIcons.students,
-              width: 20.w,
-              height: 20.h,
-            ),
+            icon: Icon(LucideIcons.users, color: Colors.white),
+
             label: AppStrings.b_nav_2,
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppIcons.reports, width: 20.w, height: 20.h),
+            icon: Icon(LucideIcons.notepadText, color: Colors.white),
             label: AppStrings.b_nav_3,
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppIcons.profile, width: 20.w, height: 20.h),
+            icon: Icon(LucideIcons.user, color: Colors.white),
             label: AppStrings.b_nav_4,
           ),
         ],
