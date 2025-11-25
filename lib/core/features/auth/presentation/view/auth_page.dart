@@ -70,30 +70,35 @@ class AuthPage extends ConsumerWidget {
             ),
           ),
           SizedBox(height: 30.h),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 16.w),
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 15),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(32)),
-              border: BoxBorder.all(color: AppColors.grey300),
-            ),
-            child: Row(
-              spacing: 20,
-              crossAxisAlignment: .center,
-              mainAxisAlignment: .center,
-              children: [
-                // SvgPicture.asset('assets/icons/Microsoft.svg',width: 24,),
-                Image.asset('assets/images/Microsoft.png', width: 20.w),
-                Text(
-                  'Sign in with Microsoft',
-                  style: TextStyle(
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.grey900,
+          InkWell(
+            onTap: () {
+           context.go('/home');
+            },
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 16.w),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(32)),
+                border: BoxBorder.all(color: AppColors.grey300),
+              ),
+              child: Row(
+                spacing: 20,
+                crossAxisAlignment: .center,
+                mainAxisAlignment: .center,
+                children: [
+                  // SvgPicture.asset('assets/icons/Microsoft.svg',width: 24,),
+                  Image.asset('assets/images/Microsoft.png', width: 20.w),
+                  Text(
+                    'Sign in with Microsoft',
+                    style: TextStyle(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.grey900,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           SizedBox(height: 10.h),

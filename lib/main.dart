@@ -2,6 +2,7 @@ import 'package:amrita_vidhyalayam_teacher/core/providers/common_providers.dart'
 import 'package:amrita_vidhyalayam_teacher/core/router/router.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/strings/app_strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/theme/app_theme.dart' show AppTheme;
@@ -14,6 +15,9 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
+    );
     final router = ref.read(routerProvider);
     final isDarkMode = ref.watch(AppProviders().isDarkModeProvider);
     return ScreenUtilInit(

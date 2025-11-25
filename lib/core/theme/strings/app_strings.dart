@@ -13,6 +13,6 @@ class AppStrings {
 
 
   static const welcome_title = 'Welcome Abhijith.....!';
-  static const welcome_subtitle = 'Please complete today’s attendance.';
+  static const class_txt = 'Class 5th - "A" ';
 
 }
