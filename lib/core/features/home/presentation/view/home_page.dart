@@ -49,7 +49,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 40.h),
-        
+
                       // Top Row
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,9 +62,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ),
                         ],
                       ),
-        
+
                       SizedBox(height: 22.h),
-        
+
                       Text(
                         AppStrings.welcome_title,
                         style: theme.textTheme.headlineSmall?.copyWith(
@@ -73,22 +73,32 @@ class _HomePageState extends ConsumerState<HomePage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-        
+
                       SizedBox(height: 8.h),
-        
-                      Text(
-                        AppStrings.class_txt,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 13.33.sp,
-                          color: Colors.white,
+
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                          color: Color(0xff254671),
+                        ),
+                        child: Text(
+                          AppStrings.class_txt,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12.sp,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-        
+
                       SizedBox(height: 10.h),
-        
+
                       Divider(color: Colors.white30, thickness: 0..h),
-        
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -104,7 +114,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     height: 20.h,
                                   ),
                                 ),
-        
+
                                 Text(
                                   "Today, Nov 20",
                                   style: theme.textTheme.bodyMedium?.copyWith(
@@ -124,7 +134,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                               ],
                             ),
                           ),
-        
+
                           SizedBox(
                             height: 30.h,
                             child: VerticalDivider(
@@ -132,35 +142,34 @@ class _HomePageState extends ConsumerState<HomePage> {
                               color: Colors.white30,
                             ),
                           ),
-        
+
                           // SizedBox(width: 5.w),
                           IconButton(
                             onPressed: () {
                               // Show calendar picker
                               showDatePicker(
-  context: context,
-  initialDate: DateTime.now(),
-  firstDate: DateTime(2020),
-  lastDate: DateTime(2030),
-  builder: (context, child) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-        colorScheme: const ColorScheme.light(
-          primary: AppColors.primary,
-          // onPrimary: Colors.white,     
-          // onSurface: Colors.black,     
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            foregroundColor: AppColors.primary, 
-          ),
-        ),
-      ),
-      child: child!,
-    );
-  },
-);
-
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2020),
+                                lastDate: DateTime(2030),
+                                builder: (context, child) {
+                                  return Theme(
+                                    data: Theme.of(context).copyWith(
+                                      colorScheme: const ColorScheme.light(
+                                        primary: AppColors.primary,
+                                        // onPrimary: Colors.white,
+                                        // onSurface: Colors.black,
+                                      ),
+                                      textButtonTheme: TextButtonThemeData(
+                                        style: TextButton.styleFrom(
+                                          foregroundColor: AppColors.primary,
+                                        ),
+                                      ),
+                                    ),
+                                    child: child!,
+                                  );
+                                },
+                              );
                             },
                             icon: SvgPicture.asset(
                               AppIcons.calendar,
@@ -197,9 +206,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                           fontSize: 20.sp,
                         ),
                       ),
-        
+
                       SizedBox(height: 10.h),
-        
+
                       Container(
                         // margin: EdgeInsets.only(bottom: 14.h),
                         padding: EdgeInsets.all(12.w),
@@ -239,7 +248,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ],
                         ),
                       ),
-        
+
                       // Search box
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -265,7 +274,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ),
                         ),
                       ),
-        
+
                       SizedBox(height: 15.h),
                       if (homeState.error != null)
                         Center(child: Text("Error: ${homeState.error}"))
@@ -285,7 +294,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     ? const StudentAttendance(
                                         student: "Student Name",
                                         attendanceStatus: "Present",
-                                        attendanceOn: "2024-01-01")
+                                        attendanceOn: "2024-01-01",
+                                      )
                                     : homeState.attendanceList![i];
                                 return StudentCard(
                                   name: student.student,
