@@ -225,12 +225,15 @@ class _HomePageState extends ConsumerState<HomePage> {
                               ),
                               color: theme.primaryColor,
                               onPressed: () {},
-                              child: Text(
-                                "Mark All Present",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13.sp,
-                                  fontWeight: FontWeight.bold,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Mark All Present",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
@@ -241,12 +244,15 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 borderRadius: BorderRadius.circular(8.r),
                               ),
                               color: Colors.red,
-                              child: Text(
-                                "Mark All Absent",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13.sp,
-                                  fontWeight: FontWeight.bold,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Mark All Absent",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
