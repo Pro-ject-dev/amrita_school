@@ -11,6 +11,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../data/models/attendance_model.dart';
 import '../viewmodel/home_viewmodel.dart';
+import  'package:lucide_icons_flutter/lucide_icons.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
