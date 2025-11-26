@@ -12,7 +12,7 @@ void main(List<String> args) {
   final camel = toCamel(name);
   final snake = name.toLowerCase();
 
-  final base = "lib/features/$snake";
+  final base = "lib/core/features/$snake";
 
   final structure = [
     "$base/data/models",

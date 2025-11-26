@@ -62,7 +62,11 @@ class _StudentCardState extends State<StudentCard> {
 
           CircleAvatar(
             radius: 22.r,
-            backgroundImage: NetworkImage(widget.imageUrl),
+            // backgroundImage: NetworkImage(widget.imageUrl),
+            child: Image.asset('assets/images/student.gif'),
+            // child: Text('AJ',style: TextStyle(
+            //   fontWeight: FontWeight.w600
+            // ),),
           ),
 
           SizedBox(width: 12.w),
