@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../data/models/attendance_model.dart';
@@ -438,37 +439,41 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
 
       // ===== BOTTOM NAV BAR =====
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: 0,
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        backgroundColor: theme.primaryColor,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white70,
-        items: [
-          BottomNavigationBarItem(
-            icon: Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Icon(LucideIcons.house, color: Colors.white),
-            ),
-            label: AppStrings.b_nav_1,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(LucideIcons.users, color: Colors.white),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   type: BottomNavigationBarType.fixed,
+      //   currentIndex: 0,
+      //   showSelectedLabels: true,
+      //   showUnselectedLabels: true,
+      //   backgroundColor: theme.primaryColor,
+      //   selectedItemColor: Colors.white,
+      //   unselectedItemColor: Colors.white70,
+      //   items: [
+      //     BottomNavigationBarItem(
+      //       icon: Padding(
+      //         padding: const EdgeInsets.only(top: 8),
+      //         child: Icon(LucideIcons.house, color: Colors.white),
+      //       ),
+      //       label: AppStrings.b_nav_1,
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: InkWell(
+      //         onTap: () {
+      //           context.go('/student');
+      //         },
+      //         child: Icon(LucideIcons.users, color: Colors.white)),
 
-            label: AppStrings.b_nav_2,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(LucideIcons.notepadText, color: Colors.white),
-            label: AppStrings.b_nav_3,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(LucideIcons.user, color: Colors.white),
-            label: AppStrings.b_nav_4,
-          ),
-        ],
-      ),
+      //       label: AppStrings.b_nav_2,
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(LucideIcons.notepadText, color: Colors.white),
+      //       label: AppStrings.b_nav_3,
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(LucideIcons.user, color: Colors.white),
+      //       label: AppStrings.b_nav_4,
+      //     ),
+      //   ],
+      // ),
     );
   }
 }

@@ -75,7 +75,7 @@ class AuthPage extends ConsumerWidget {
   padding: EdgeInsets.symmetric(horizontal: 16.w), // was Container margin
   child: ElevatedButton(
     onPressed: () {
-      context.go('/home');
+      context.go('/mainScaffold');
     },
     style: ElevatedButton.styleFrom(
       backgroundColor: Colors.white,
