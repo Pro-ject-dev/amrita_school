@@ -32,7 +32,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           .read(homeProvider.notifier)
           .fetchAttendance(
             "",
-            DateFormat('dd - MM - yyyy').format(DateTime.now()).toString(),
+            DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
           );
     });
   }

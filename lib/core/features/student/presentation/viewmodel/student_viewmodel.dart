@@ -1,25 +1,35 @@
+
+import 'package:intl/intl.dart';
 import 'package:riverpod/legacy.dart';
+import '../../../home/data/repository/home_repository.dart';
 import 'student_state.dart';
-import '../../domain/usecases/student_usecase.dart';
+
 
 class StudentViewModel extends StateNotifier<StudentState> {
-  final StudentUseCase _useCase = StudentUseCase();
+  final HomeRepository _repository;
 
-  StudentViewModel() : super(StudentState.initial());
+  StudentViewModel(this._repository) : super(StudentState.initial());
 
-  Future<void> load() async {
+
+  Future<void> fetchStudent(String searchTxt) async{
     state = state.copyWith(isLoading: true);
+    final today = DateFormat("dd-MM-yyyy").format(DateTime.now());
+    print(today);
+    final studentsList = await _repository.getClassAttendance(sclass: "TS 25 CLASS 2 A", attendanceOn:today , searchQuery: searchTxt);
+    state = state.copyWith(studentList:studentsList.attendanceList,isLoading: false);
 
-    try {
-      final result = await _useCase.execute();
-      state = state.copyWith(isLoading: false, data: result.value);
-    } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
-    }
   }
+
+
 }
 
-final studentProvider =
+  final studentProvider =
     StateNotifierProvider<StudentViewModel, StudentState>(
-  (ref) => StudentViewModel(),
-);
+  (ref) => StudentViewModel(ref.watch(homeRepositoryProvider)));
+
+
+
+   
+
+
+
