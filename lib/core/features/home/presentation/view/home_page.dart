@@ -51,7 +51,6 @@ class _HomePageState extends ConsumerState<HomePage> {
       body: Column(
         children: [
           Container(
-           
             width: double.infinity,
             color: theme.primaryColor,
             padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -59,7 +58,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 40.h),
-                
+
                 // Top Row
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,9 +67,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                     Icon(LucideIcons.logOut, color: Colors.white),
                   ],
                 ),
-                
+
                 SizedBox(height: 22.h),
-                
+
                 Text(
                   AppStrings.welcome_title,
                   style: theme.textTheme.headlineSmall?.copyWith(
@@ -79,14 +78,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                
+
                 SizedBox(height: 8.h),
-                
+
                 Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 5,
-                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(16)),
                     color: Color(0xff254671),
@@ -100,11 +96,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ),
                   ),
                 ),
-                
+
                 SizedBox(height: 10.h),
-                
+
                 Divider(color: Colors.white30, thickness: 0..h),
-                
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -114,16 +110,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                         children: [
                           IconButton(
                             onPressed: () {
-                              ref
-                                  .read(homeProvider.notifier)
-                                  .previousDate();
+                              ref.read(homeProvider.notifier).previousDate();
                             },
                             icon: Icon(
                               LucideIcons.chevronLeft,
                               color: Colors.white,
                             ),
                           ),
-                
+
                           Text(
                             homeState.date,
                             style: theme.textTheme.bodyMedium?.copyWith(
@@ -134,22 +128,23 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ),
                           IconButton(
                             onPressed: () {
-                              if(homeState.date.startsWith("Today,")){
+                              if (homeState.date.startsWith("Today,")) {
                                 return;
-                              }
-                              else{
-                              ref.read(homeProvider.notifier).nextDate();
+                              } else {
+                                ref.read(homeProvider.notifier).nextDate();
                               }
                             },
                             icon: Icon(
-                               LucideIcons.chevronRight,
-                              color:homeState.date.startsWith("Today,") ?const Color.fromARGB(255, 152, 152, 152): Colors.white,
+                              LucideIcons.chevronRight,
+                              color: homeState.date.startsWith("Today,")
+                                  ? const Color.fromARGB(255, 152, 152, 152)
+                                  : Colors.white,
                             ),
                           ),
                         ],
                       ),
                     ),
-                
+
                     SizedBox(
                       height: 30.h,
                       child: VerticalDivider(
@@ -157,7 +152,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         color: Colors.white30,
                       ),
                     ),
-                
+
                     // SizedBox(width: 5.w),
                     IconButton(
                       onPressed: () async {
@@ -165,9 +160,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           context: context,
                           initialDate: homeState.date.startsWith("Today,")
                               ? DateTime.now()
-                              : DateFormat(
-                                  'dd-MM-yyyy',
-                                ).parse(homeState.date),
+                              : DateFormat('dd-MM-yyyy').parse(homeState.date),
                           firstDate: DateTime(2020),
                           lastDate: DateTime.now(),
                           builder: (context, child) {
@@ -186,23 +179,18 @@ class _HomePageState extends ConsumerState<HomePage> {
                             );
                           },
                         );
-                
+
                         if (date != null) {
                           final formattedDate = DateFormat(
                             'dd-MM-yyyy',
                           ).format(date);
-                          final notifier = ref.read(
-                            homeProvider.notifier,
-                          );
+                          final notifier = ref.read(homeProvider.notifier);
                           final currentFormatted = DateFormat(
                             'dd-MM-yyyy',
                           ).format(notifier.parseCurrentDate());
                           if (formattedDate != currentFormatted) {
                             await notifier.getDate(formattedDate);
-                            await notifier.fetchAttendance(
-                              "",
-                              formattedDate,
-                            );
+                            await notifier.fetchAttendance("", formattedDate);
                           }
                         }
                       },
@@ -241,13 +229,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                       fontSize: 20.sp,
                     ),
                   ),
-                  
-               
+
                   Visibility(
                     visible: homeState.isChecked,
                     child: Column(
                       children: [
-                           SizedBox(height: 10.h),
+                        SizedBox(height: 10.h),
                         Container(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -295,13 +282,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                       ],
                     ),
                   ),
-                  
+
                   SizedBox(height: 15.h),
-                  
+
                   // Search box
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Flexible(
                         child: Container(
@@ -315,16 +302,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                             controller: searchController,
                             onChanged: (value) => ref
                                 .read(homeProvider.notifier)
-                                .fetchAttendance(value,homeState.date),
+                                .fetchAttendance(value, homeState.date),
                             decoration: InputDecoration(
                               hintText: "Search student",
                               hintStyle: TextStyle(
-                                color: const Color.fromARGB(
-                                  255,
-                                  202,
-                                  202,
-                                  202,
-                                ),
+                                color: const Color.fromARGB(255, 202, 202, 202),
                                 fontSize: 13.sp,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -339,23 +321,24 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ),
                       ),
                       SizedBox(width: 10.w),
-                  
+
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                         
                           Checkbox(
                             value: homeState.isCheckedSelectAll,
-                            onChanged: (v) {ref.read(homeProvider.notifier).toggleSelectAll(v!);},
+                            onChanged: (v) {
+                              ref
+                                  .read(homeProvider.notifier)
+                                  .toggleSelectAll(v!);
+                            },
                             fillColor: WidgetStateProperty.resolveWith((
                               states,
                             ) {
                               return Colors.white;
                             }),
-                            side: WidgetStateBorderSide.resolveWith((
-                              states,
-                            ) {
+                            side: WidgetStateBorderSide.resolveWith((states) {
                               return BorderSide(
                                 color: theme.primaryColor,
                                 width: 1,
@@ -363,13 +346,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                             }),
                             checkColor: theme.primaryColor,
                             visualDensity: VisualDensity.comfortable,
-                  
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.padded,
+
+                            materialTapTargetSize: MaterialTapTargetSize.padded,
                           ),
-                  
-                           Text(
-                            "Select All",
+
+                          Text(
+                            homeState.isCheckedSelectAll
+                                ? "Unselect All"
+                                : "Select All",
                             style: theme.textTheme.headlineSmall?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: const Color.fromARGB(255, 117, 117, 117),
@@ -380,7 +364,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       ),
                     ],
                   ),
-                  
+
                   SizedBox(height: 15.h),
                   if (homeState.error != null)
                     Center(child: Text("Error: ${homeState.error}"))
