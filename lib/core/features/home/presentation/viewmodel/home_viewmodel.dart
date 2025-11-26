@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:riverpod/legacy.dart';
 import '../../data/models/attendance_model.dart';
 import '../../data/repository/home_repository.dart';
@@ -9,59 +11,185 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   HomeViewModel(this._repository) : super(HomeState.initial());
 
-  Future<void> fetchAttendance(String searchTxt) async {
+  static const String standardFormat = 'dd-MM-yyyy';
+  static const String displayFormat = 'MMM dd';
+
+  Future<void> fetchAttendance(String searchTxt, String date) async {
     state = state.copyWith(isLoading: true);
+
+    if (date.startsWith("Today")) {
+      date = DateFormat(standardFormat).format(DateTime.now());
+    }
     try {
       final result = await _repository.getClassAttendance(
         sclass: "TS 25 CLASS 2 A",
-        attendanceOn: "18-11-2025",
-        searchQuery: searchTxt
-
+        attendanceOn: date,
+        searchQuery: searchTxt,
       );
+
+      // Use existing selections instead of clearing them
+      final newSelectedIds = state.selectedIds;
+      
+      final syncedList = _syncListWithSelection(result.attendanceList, newSelectedIds);
+
       state = state.copyWith(
         isLoading: false,
-        attendanceList: result.attendanceList,
+        attendanceList: syncedList,
+        filteredAttendanceList: null, 
+        selectedIds: newSelectedIds,
+        isChecked: newSelectedIds.isNotEmpty,
+        isCheckedSelectAll: false,
       );
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
 
-Future<void> checkBox(int index, bool? isChecked) async {
-  if (state.attendanceList != null) {
-    final updatedList = List<StudentAttendance>.from(state.attendanceList!);
-    final studentAttendance = updatedList[index];
-    final updatedAttendance = studentAttendance.copyWith(
-      isChecked: isChecked ?? false,
-    );
-    updatedList[index] = updatedAttendance;
-    final anyChecked = updatedList.any((e) => e.isChecked == true);
+  // Helper to sync a list with selected IDs
+  List<StudentAttendance> _syncListWithSelection(List<StudentAttendance> list, Set<String> selectedIds) {
+    return list.map((student) {
+      return student.copyWith(isChecked: selectedIds.contains(student.student));
+    }).toList();
+  }
+
+  void toggleSelection(String studentId) {
+    final currentSelectedIds = Set<String>.from(state.selectedIds);
+    if (currentSelectedIds.contains(studentId)) {
+      currentSelectedIds.remove(studentId);
+    } else {
+      currentSelectedIds.add(studentId);
+    }
+
+    final updatedAttendanceList = state.attendanceList != null 
+        ? _syncListWithSelection(state.attendanceList!, currentSelectedIds) 
+        : null;
+        
+    final updatedFilteredList = state.filteredAttendanceList != null
+        ? _syncListWithSelection(state.filteredAttendanceList!, currentSelectedIds)
+        : null;
+
+    final anyChecked = currentSelectedIds.isNotEmpty;
+    
     state = state.copyWith(
-      attendanceList: updatedList,
-      isChecked: anyChecked, 
+      selectedIds: currentSelectedIds,
+      attendanceList: updatedAttendanceList,
+      filteredAttendanceList: updatedFilteredList,
+      isChecked: anyChecked,
     );
   }
-}
 
+  void searchStudent(String query) {
+    if (state.attendanceList == null || state.attendanceList!.isEmpty) return;
+    
+    final filteredList = query.isEmpty
+        ? null
+        : state.attendanceList!
+            .where((e) => e.studentName.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+            
+    state = state.copyWith(
+      filteredAttendanceList: filteredList,
+    );
+  }
 
   Future<void> toggleAttendance(int index, bool isPresent) async {
     if (state.attendanceList != null) {
-      final updatedList = List<StudentAttendance>.from(state.attendanceList!);
-      final studentAttendance = updatedList[index];
-      final updatedAttendance = studentAttendance.copyWith(
+      // If filtered, index refers to filtered list!
+      final targetList = state.filteredAttendanceList ?? state.attendanceList!;
+      if (index >= targetList.length) return;
+      
+      final student = targetList[index];
+      final updatedStudent = student.copyWith(
         attendanceStatus: isPresent ? "Present" : "Absent",
       );
-      updatedList[index] = updatedAttendance;
+      
+      // Now we need to update this student in the main list
+      final mainList = List<StudentAttendance>.from(state.attendanceList!);
+      final mainIndex = mainList.indexWhere((s) => s.student == student.student);
+      if (mainIndex != -1) {
+        mainList[mainIndex] = updatedStudent;
+      }
+      
+      // Also update filtered list if it exists
+      List<StudentAttendance>? newFilteredList;
+      if (state.filteredAttendanceList != null) {
+        newFilteredList = List<StudentAttendance>.from(state.filteredAttendanceList!);
+        newFilteredList[index] = updatedStudent;
+      }
 
-      state = state.copyWith(attendanceList: updatedList);
+      state = state.copyWith(
+        attendanceList: mainList,
+        filteredAttendanceList: newFilteredList,
+      );
     }
   }
 
+  Future<void> getDate(String date) async {
+    final dateFormat = DateFormat(standardFormat);
+    final todayDate = dateFormat.format(DateTime.now());
+    
+    state = state.copyWith(
+      date: date == todayDate 
+        ? "Today, ${DateFormat(displayFormat).format(DateTime.now())}"
+        : date,
+      selectedIds: {}, // Clear selections when date changes
+      isChecked: false,
+      isCheckedSelectAll: false,
+    );
+  }
 
+  Future<void> nextDate() async {
+    await navigateDate(1);
+  }
 
+  Future<void> previousDate() async {
+    await navigateDate(-1);
+  }
+
+  Future<void> navigateDate(int days) async {
+    final currentDate = parseCurrentDate();
+    final newDate = currentDate.add(Duration(days: days));
+    final formattedDate = DateFormat(standardFormat).format(newDate);
+    
+    await getDate(formattedDate);
+    await fetchAttendance("", formattedDate);
+  }
+
+  DateTime parseCurrentDate() {
+    final todayText = "Today, ${DateFormat(displayFormat).format(DateTime.now())}";
+    if (state.date == todayText) {
+      return DateTime.now();
+    }
+    return DateFormat(standardFormat).parse(state.date);
+  }
+
+  Future<void> toggleSelectAll(bool isSelected) async {
+    if (state.attendanceList != null) {
+      final targetList = state.filteredAttendanceList ?? state.attendanceList!;
+      final targetIds = targetList.map((e) => e.student).toSet();
+      
+      final newSelectedIds = Set<String>.from(state.selectedIds);
+      if (isSelected) {
+        newSelectedIds.addAll(targetIds);
+      } else {
+        newSelectedIds.removeAll(targetIds);
+      }
+      
+      final updatedAttendanceList = _syncListWithSelection(state.attendanceList!, newSelectedIds);
+      final updatedFilteredList = state.filteredAttendanceList != null
+          ? _syncListWithSelection(state.filteredAttendanceList!, newSelectedIds)
+          : null;
+
+      state = state.copyWith(
+        attendanceList: updatedAttendanceList,
+        filteredAttendanceList: updatedFilteredList,
+        isCheckedSelectAll: isSelected,
+        isChecked: newSelectedIds.isNotEmpty,
+        selectedIds: newSelectedIds,
+      );
+    }
+  }
 }
-
-
 
 final homeProvider =
     StateNotifierProvider<HomeViewModel, HomeState>(

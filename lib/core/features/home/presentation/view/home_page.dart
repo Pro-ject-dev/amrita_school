@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../data/models/attendance_model.dart';
 import '../viewmodel/home_viewmodel.dart';
@@ -26,7 +27,12 @@ class _HomePageState extends ConsumerState<HomePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(homeProvider.notifier).fetchAttendance("");
+      ref
+          .read(homeProvider.notifier)
+          .fetchAttendance(
+            "",
+            DateFormat('dd - MM - yyyy').format(DateTime.now()).toString(),
+          );
     });
   }
 
@@ -108,7 +114,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    ref
+                                        .read(homeProvider.notifier)
+                                        .previousDate();
+                                  },
                                   icon: Icon(
                                     LucideIcons.chevronLeft,
                                     color: Colors.white,
@@ -116,7 +126,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 ),
 
                                 Text(
-                                  "Today, Nov 20",
+                                  homeState.date,
                                   style: theme.textTheme.bodyMedium?.copyWith(
                                     fontWeight: FontWeight.w600,
                                     color: Colors.white,
@@ -124,7 +134,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   ),
                                 ),
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    ref.read(homeProvider.notifier).nextDate();
+                                  },
                                   icon: Icon(
                                     LucideIcons.chevronRight,
                                     color: Colors.white,
@@ -144,11 +156,14 @@ class _HomePageState extends ConsumerState<HomePage> {
 
                           // SizedBox(width: 5.w),
                           IconButton(
-                            onPressed: () {
-                              // Show calendar picker
-                              showDatePicker(
+                            onPressed: () async {
+                              final DateTime? date = await showDatePicker(
                                 context: context,
-                                initialDate: DateTime.now(),
+                                initialDate: homeState.date.startsWith("Today,")
+                                    ? DateTime.now()
+                                    : DateFormat(
+                                        'dd-MM-yyyy',
+                                      ).parse(homeState.date),
                                 firstDate: DateTime(2020),
                                 lastDate: DateTime(2030),
                                 builder: (context, child) {
@@ -167,8 +182,27 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   );
                                 },
                               );
+
+                              if (date != null) {
+                                final formattedDate = DateFormat(
+                                  'dd-MM-yyyy',
+                                ).format(date);
+                                final notifier = ref.read(
+                                  homeProvider.notifier,
+                                );
+                                final currentFormatted = DateFormat(
+                                  'dd-MM-yyyy',
+                                ).format(notifier.parseCurrentDate());
+                                if (formattedDate != currentFormatted) {
+                                  await notifier.getDate(formattedDate);
+                                  await notifier.fetchAttendance(
+                                    "",
+                                    formattedDate,
+                                  );
+                                }
+                              }
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               LucideIcons.calendar,
                               color: Colors.white,
                             ),
@@ -207,7 +241,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                       Visibility(
                         visible: homeState.isChecked,
                         child: Container(
-                        
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -256,31 +289,86 @@ class _HomePageState extends ConsumerState<HomePage> {
                       SizedBox(height: 15.h),
 
                       // Search box
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          border: Border.all(color: Colors.grey.shade300),
-                          color: Colors.grey.shade100,
-                        ),
-                        child: TextField(
-                          controller: searchController,
-                          onChanged: (value) => ref.read(homeProvider.notifier).fetchAttendance(value),
-                          decoration: InputDecoration(
-                            hintText: "Search student",
-                            hintStyle: TextStyle(
-                              color: const Color.fromARGB(255, 202, 202, 202),
-                              fontSize: 13.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            border: InputBorder.none,
-                            icon: SvgPicture.asset(
-                              AppIcons.search,
-                              width: 18.w,
-                              height: 18.h,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.r),
+                                border: Border.all(color: Colors.grey.shade300),
+                                color: Colors.grey.shade100,
+                              ),
+                              child: TextField(
+                                controller: searchController,
+                                onChanged: (value) => ref
+                                    .read(homeProvider.notifier)
+                                    .fetchAttendance(value,homeState.date),
+                                decoration: InputDecoration(
+                                  hintText: "Search student",
+                                  hintStyle: TextStyle(
+                                    color: const Color.fromARGB(
+                                      255,
+                                      202,
+                                      202,
+                                      202,
+                                    ),
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  border: InputBorder.none,
+                                  icon: SvgPicture.asset(
+                                    AppIcons.search,
+                                    width: 18.w,
+                                    height: 18.h,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          SizedBox(width: 10.w),
+
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                             
+                              Checkbox(
+                                value: homeState.isCheckedSelectAll,
+                                onChanged: (v) {ref.read(homeProvider.notifier).toggleSelectAll(v!);},
+                                fillColor: WidgetStateProperty.resolveWith((
+                                  states,
+                                ) {
+                                  return Colors.white;
+                                }),
+                                side: WidgetStateBorderSide.resolveWith((
+                                  states,
+                                ) {
+                                  return BorderSide(
+                                    color: theme.primaryColor,
+                                    width: 1,
+                                  );
+                                }),
+                                checkColor: theme.primaryColor,
+                                visualDensity: VisualDensity.comfortable,
+
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.padded,
+                              ),
+
+                               Text(
+                                "Select All",
+                                style: theme.textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color.fromARGB(255, 117, 117, 117),
+                                  fontSize: 10.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
 
                       SizedBox(height: 15.h),
@@ -292,7 +380,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           child: SizedBox(
                             height: 370.h,
                             child: ListView.builder(
-                              physics:BouncingScrollPhysics(),
+                              physics: BouncingScrollPhysics(),
                               padding: EdgeInsets.all(0),
                               itemCount: homeState.isLoading
                                   ? 10
@@ -307,20 +395,28 @@ class _HomePageState extends ConsumerState<HomePage> {
                                         isChecked: false,
                                       )
                                     : homeState.attendanceList![i];
-                                final isPresent = student.attendanceStatus == "Present";
-                                final isAbsent = student.attendanceStatus == "Absent";
+                                final isPresent =
+                                    student.attendanceStatus == "Present";
+                                final isAbsent =
+                                    student.attendanceStatus == "Absent";
                                 final isChecked = student.isChecked;
                                 return StudentCard(
                                   name: student.studentName,
                                   id: student.student,
                                   imageUrl:
-                                      "https://i.pravatar.cc/150?img=${i + 1}", 
-                                      onPresent: () => ref.read(homeProvider.notifier).toggleAttendance(i, true), 
-                                      onAbsent: () => ref.read(homeProvider.notifier).toggleAttendance(i, false), 
-                                      onCheckboxChanged: (bool? value) => ref.read(homeProvider.notifier ).checkBox(i, value), 
-                                      isPresent: isPresent, 
-                                      isAbsent: isAbsent, 
-                                      isChecked: isChecked,
+                                      "https://i.pravatar.cc/150?img=${i + 1}",
+                                  onPresent: () => ref
+                                      .read(homeProvider.notifier)
+                                      .toggleAttendance(i, true),
+                                  onAbsent: () => ref
+                                      .read(homeProvider.notifier)
+                                      .toggleAttendance(i, false),
+                                  onCheckboxChanged: (bool? value) => ref
+                                      .read(homeProvider.notifier)
+                                      .toggleSelection(student.student),
+                                  isPresent: isPresent,
+                                  isAbsent: isAbsent,
+                                  isChecked: isChecked,
                                 );
                               },
                             ),

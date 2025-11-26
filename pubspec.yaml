@@ -46,6 +46,7 @@ dependencies:
   dio: ^5.9.0
   skeletonizer: ^2.1.0+1
   lucide_icons_flutter: ^3.1.6
+  intl: ^0.20.2
 
 
 dev_dependencies:
