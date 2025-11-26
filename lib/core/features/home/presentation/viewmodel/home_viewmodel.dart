@@ -13,6 +13,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   static const String standardFormat = 'dd-MM-yyyy';
   static const String displayFormat = 'MMM dd';
+  
 
   Future<void> fetchAttendance(String searchTxt, String date) async {
     state = state.copyWith(isLoading: true);
