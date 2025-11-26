@@ -384,6 +384,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         child: SizedBox(
                           height: 285.h,
                           child: ListView.builder(
+                            shrinkWrap: true,
                             physics: BouncingScrollPhysics(),
                             padding: EdgeInsets.all(0),
                             itemCount: homeState.isLoading
