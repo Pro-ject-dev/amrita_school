@@ -8,10 +8,23 @@ import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../viewmodel/student_viewmodel.dart';
 
-class StudentPage extends ConsumerWidget {
-  StudentPage({super.key});
+class StudentPage extends ConsumerStatefulWidget {
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<StudentPage> createState() => _StudentPageState();
+}
+
+class _StudentPageState extends ConsumerState<StudentPage> {
+  final searchController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(studentProvider.notifier).fetchStudent("");
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final state = ref.watch(studentProvider);
     final theme = Theme.of(context);
 
@@ -42,6 +55,9 @@ class StudentPage extends ConsumerWidget {
                 borderRadius: BorderRadius.all(Radius.circular(16)),
               ),
               child: TextField(
+                onChanged: (value) {
+                  ref.read(studentProvider.notifier).fetchStudent(value);
+                },
                 decoration: InputDecoration(
                   hintText: 'Search student',
                   // hint: Text('data'),
@@ -58,56 +74,24 @@ class StudentPage extends ConsumerWidget {
               child: ListView.builder(
                 // shrinkWrap: BouncingScrollPhysics.,
                 // padding: EdgeInsets.all(0),
-                itemCount: 50,
+                itemCount: state.studentList == null
+                    ? 0
+                    : state.studentList!.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return StudentCard();
+                  var student = state.studentList![index];
+                  return StudentCard(
+                    title: student.studentName,
+                    subtitle: student.student,
+                    isActiveColor: student.attendanceStatus == "Present"
+                        ? Colors.green
+                        : Colors.red,
+                  );
                 },
               ),
             ),
           ),
         ],
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   type: BottomNavigationBarType.fixed,
-      //   currentIndex: 0,
-      //   showSelectedLabels: true,
-      //   showUnselectedLabels: true,
-      //   backgroundColor: theme.primaryColor,
-      //   selectedItemColor: Colors.white,
-      //   unselectedItemColor: Colors.white70,
-      //   items: [
-      //     BottomNavigationBarItem(
-      //       icon: Padding(
-      //         padding: const EdgeInsets.only(top: 8),
-      //         child: InkWell(
-      //           onTap: () {
-      //             context.go('/home');
-      //           },
-      //           child: Icon(LucideIcons.house, color: Colors.white),
-      //         ),
-      //       ),
-      //       label: AppStrings.b_nav_1,
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: InkWell(
-      //         onTap: () {
-      //           context.go('/student');
-      //         },
-      //         child: Icon(LucideIcons.users, color: Colors.white),
-      //       ),
-
-      //       label: AppStrings.b_nav_2,
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(LucideIcons.notepadText, color: Colors.white),
-      //       label: AppStrings.b_nav_3,
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(LucideIcons.user, color: Colors.white),
-      //       label: AppStrings.b_nav_4,
-      //     ),
-      //   ],
-      // ),
     );
   }
 }

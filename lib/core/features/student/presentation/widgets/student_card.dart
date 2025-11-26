@@ -4,14 +4,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class StudentCard extends StatelessWidget {
-  const StudentCard({super.key});
+  const StudentCard({super.key, required this.title, required this.subtitle, required this.isActiveColor});
+  final String title;
+  final String subtitle;
+  final Color isActiveColor;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return Container(
-      margin: EdgeInsets.only(bottom: 14.h),
+      margin: EdgeInsets.only(bottom: 10.h),
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.r),
@@ -41,7 +43,7 @@ class StudentCard extends StatelessWidget {
               Positioned(
                 right: 2,
                 bottom: 1,
-                child: CircleAvatar(radius: 7, backgroundColor: Colors.green),
+                child: CircleAvatar(radius: 7, backgroundColor: isActiveColor),
               ),
             ],
           ),
@@ -54,14 +56,14 @@ class StudentCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Abhijith",
+                  title,
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
-                  "ID: 12345",
+                  subtitle,
                   style: TextStyle(fontSize: 13, color: Colors.grey),
                 ),
               ],

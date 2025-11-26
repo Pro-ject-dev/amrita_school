@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$StudentState {
 
- bool get isLoading; String get data; String? get error;
+ bool get isLoading; String get data; List<StudentAttendance>? get studentList; String? get error;
 /// Create a copy of StudentState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $StudentStateCopyWith<StudentState> get copyWith => _$StudentStateCopyWithImpl<S
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StudentState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is StudentState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&const DeepCollectionEquality().equals(other.studentList, studentList)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,data,error);
+int get hashCode => Object.hash(runtimeType,isLoading,data,const DeepCollectionEquality().hash(studentList),error);
 
 @override
 String toString() {
-  return 'StudentState(isLoading: $isLoading, data: $data, error: $error)';
+  return 'StudentState(isLoading: $isLoading, data: $data, studentList: $studentList, error: $error)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $StudentStateCopyWith<$Res>  {
   factory $StudentStateCopyWith(StudentState value, $Res Function(StudentState) _then) = _$StudentStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, String data, String? error
+ bool isLoading, String data, List<StudentAttendance>? studentList, String? error
 });
 
 
@@ -62,11 +62,12 @@ class _$StudentStateCopyWithImpl<$Res>
 
 /// Create a copy of StudentState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? data = null,Object? error = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? data = null,Object? studentList = freezed,Object? error = freezed,}) {
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as String,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as String,studentList: freezed == studentList ? _self.studentList : studentList // ignore: cast_nullable_to_non_nullable
+as List<StudentAttendance>?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -152,10 +153,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  String data,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  String data,  List<StudentAttendance>? studentList,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _StudentState() when $default != null:
-return $default(_that.isLoading,_that.data,_that.error);case _:
+return $default(_that.isLoading,_that.data,_that.studentList,_that.error);case _:
   return orElse();
 
 }
@@ -173,10 +174,10 @@ return $default(_that.isLoading,_that.data,_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  String data,  String? error)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  String data,  List<StudentAttendance>? studentList,  String? error)  $default,) {final _that = this;
 switch (_that) {
 case _StudentState():
-return $default(_that.isLoading,_that.data,_that.error);case _:
+return $default(_that.isLoading,_that.data,_that.studentList,_that.error);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +194,10 @@ return $default(_that.isLoading,_that.data,_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  String data,  String? error)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  String data,  List<StudentAttendance>? studentList,  String? error)?  $default,) {final _that = this;
 switch (_that) {
 case _StudentState() when $default != null:
-return $default(_that.isLoading,_that.data,_that.error);case _:
+return $default(_that.isLoading,_that.data,_that.studentList,_that.error);case _:
   return null;
 
 }
@@ -208,11 +209,20 @@ return $default(_that.isLoading,_that.data,_that.error);case _:
 
 
 class _StudentState implements StudentState {
-  const _StudentState({required this.isLoading, required this.data, this.error});
+  const _StudentState({required this.isLoading, required this.data, required final  List<StudentAttendance>? studentList, this.error}): _studentList = studentList;
   
 
 @override final  bool isLoading;
 @override final  String data;
+ final  List<StudentAttendance>? _studentList;
+@override List<StudentAttendance>? get studentList {
+  final value = _studentList;
+  if (value == null) return null;
+  if (_studentList is EqualUnmodifiableListView) return _studentList;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
 @override final  String? error;
 
 /// Create a copy of StudentState
@@ -225,16 +235,16 @@ _$StudentStateCopyWith<_StudentState> get copyWith => __$StudentStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StudentState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StudentState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&const DeepCollectionEquality().equals(other._studentList, _studentList)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,data,error);
+int get hashCode => Object.hash(runtimeType,isLoading,data,const DeepCollectionEquality().hash(_studentList),error);
 
 @override
 String toString() {
-  return 'StudentState(isLoading: $isLoading, data: $data, error: $error)';
+  return 'StudentState(isLoading: $isLoading, data: $data, studentList: $studentList, error: $error)';
 }
 
 
@@ -245,7 +255,7 @@ abstract mixin class _$StudentStateCopyWith<$Res> implements $StudentStateCopyWi
   factory _$StudentStateCopyWith(_StudentState value, $Res Function(_StudentState) _then) = __$StudentStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, String data, String? error
+ bool isLoading, String data, List<StudentAttendance>? studentList, String? error
 });
 
 
@@ -262,11 +272,12 @@ class __$StudentStateCopyWithImpl<$Res>
 
 /// Create a copy of StudentState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? data = null,Object? error = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? data = null,Object? studentList = freezed,Object? error = freezed,}) {
   return _then(_StudentState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as String,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as String,studentList: freezed == studentList ? _self._studentList : studentList // ignore: cast_nullable_to_non_nullable
+as List<StudentAttendance>?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
