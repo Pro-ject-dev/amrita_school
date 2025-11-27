@@ -23,6 +23,7 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   final searchController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -40,46 +41,45 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final homeState = ref.watch(homeProvider);
+
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
     );
 
     return Scaffold(
-      // backgroundColor: AppColors.primary,
       resizeToAvoidBottomInset: false,
       body: Container(
         decoration: BoxDecoration(
-    image: DecorationImage(
-      image: AssetImage('assets/images/bg-test2.jpg'),
-      fit: BoxFit.cover,
-      colorFilter: ColorFilter.mode(
-        Colors.black.withOpacity(0.2), // overlay color
-        BlendMode.darken, // blending mode
-      ),
-    ),
-  ),
+          image: DecorationImage(
+            image: const AssetImage('assets/images/bg-test2.jpg'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.2),
+              BlendMode.darken,
+            ),
+          ),
+        ),
         child: Column(
           children: [
             Container(
               width: double.infinity,
-              // color: theme.primaryColor,
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 40.h),
-        
-                  // Top Row
+
+                  /// Top Row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Image.asset(AppImages.app_logo, width: 100.w),
-                      Icon(LucideIcons.logOut, color: Colors.white),
+                      const Icon(LucideIcons.logOut, color: Colors.white),
                     ],
                   ),
-        
+
                   SizedBox(height: 22.h),
-        
+
                   Text(
                     AppStrings.welcome_title,
                     style: theme.textTheme.headlineSmall?.copyWith(
@@ -88,12 +88,15 @@ class _HomePageState extends ConsumerState<HomePage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-        
+
                   SizedBox(height: 8.h),
-        
+
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(16)),
                       color: Color(0xff254671),
                     ),
@@ -106,11 +109,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                       ),
                     ),
                   ),
-        
+
                   SizedBox(height: 10.h),
-        
-                  Divider(color: Colors.white30, thickness: 0..h),
-        
+
+                  Divider(color: Colors.white30, thickness: 0.8.h),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -122,12 +125,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                               onPressed: () {
                                 ref.read(homeProvider.notifier).previousDate();
                               },
-                              icon: Icon(
+                              icon: const Icon(
                                 LucideIcons.chevronLeft,
                                 color: Colors.white,
                               ),
                             ),
-        
                             Text(
                               homeState.date,
                               style: theme.textTheme.bodyMedium?.copyWith(
@@ -154,23 +156,22 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ],
                         ),
                       ),
-        
                       SizedBox(
                         height: 30.h,
-                        child: VerticalDivider(
+                        child: const VerticalDivider(
                           thickness: 1,
                           color: Colors.white30,
                         ),
                       ),
-        
-                      // SizedBox(width: 5.w),
                       IconButton(
                         onPressed: () async {
                           final DateTime? date = await showDatePicker(
                             context: context,
                             initialDate: homeState.date.startsWith("Today,")
                                 ? DateTime.now()
-                                : DateFormat('dd-MM-yyyy').parse(homeState.date),
+                                : DateFormat(
+                                    'dd-MM-yyyy',
+                                  ).parse(homeState.date),
                             firstDate: DateTime(2020),
                             lastDate: DateTime.now(),
                             builder: (context, child) {
@@ -189,7 +190,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                               );
                             },
                           );
-        
+
                           if (date != null) {
                             final formattedDate = DateFormat(
                               'dd-MM-yyyy',
@@ -215,7 +216,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ],
               ),
             ),
-        
+
+            /// Bottom Sheet
             Expanded(
               child: Container(
                 margin: EdgeInsets.only(top: 5.h),
@@ -239,66 +241,64 @@ class _HomePageState extends ConsumerState<HomePage> {
                         fontSize: 20.sp,
                       ),
                     ),
-        
+
+                    /// Bulk action buttons
                     Visibility(
                       visible: homeState.isChecked,
                       child: Column(
                         children: [
                           SizedBox(height: 10.h),
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                MaterialButton(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.r),
-                                  ),
-                                  color: theme.primaryColor,
-                                  onPressed: () {},
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "Mark Present",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 13.sp,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              MaterialButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                ),
+                                color: theme.primaryColor,
+                                onPressed: () {},
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Mark Present",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                                SizedBox(width: 20.w),
-                                MaterialButton(
-                                  onPressed: () {},
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.r),
-                                  ),
-                                  color: Colors.red,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      "Mark Absent",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 13.sp,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                              ),
+                              SizedBox(width: 20.w),
+                              MaterialButton(
+                                onPressed: () {},
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                ),
+                                color: Colors.red,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Mark Absent",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
-        
+
                     SizedBox(height: 10.h),
-        
-                    // Search box
-                    Container(
+
+                    /// Search box + select all
+                    SizedBox(
                       height: 45.h,
-                      // color: Colors.black,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -319,7 +319,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 decoration: InputDecoration(
                                   hintText: "Search student",
                                   hintStyle: TextStyle(
-                                    color: const Color.fromARGB(255, 202, 202, 202),
+                                    color: const Color.fromARGB(
+                                      255,
+                                      202,
+                                      202,
+                                      202,
+                                    ),
                                     fontSize: 13.sp,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -334,7 +339,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                             ),
                           ),
                           SizedBox(width: 10.w),
-                      
+
+                          /// Select all
                           Visibility(
                             visible: !homeState.isIndividual,
                             child: Column(
@@ -353,7 +359,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   ) {
                                     return Colors.white;
                                   }),
-                                  side: WidgetStateBorderSide.resolveWith((states) {
+                                  side: WidgetStateBorderSide.resolveWith((
+                                    states,
+                                  ) {
                                     return BorderSide(
                                       color: theme.primaryColor,
                                       width: 1,
@@ -361,20 +369,24 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   }),
                                   checkColor: theme.primaryColor,
                                   visualDensity: VisualDensity.comfortable,
-                      
                                   materialTapTargetSize:
                                       MaterialTapTargetSize.padded,
                                 ),
-                      
                                 Text(
                                   homeState.isCheckedSelectAll
                                       ? "Unselect All"
                                       : "Select All",
-                                  style: theme.textTheme.headlineSmall?.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                    color: const Color.fromARGB(255, 117, 117, 117),
-                                    fontSize: 10.sp,
-                                  ),
+                                  style: theme.textTheme.headlineSmall
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: const Color.fromARGB(
+                                          255,
+                                          117,
+                                          117,
+                                          117,
+                                        ),
+                                        fontSize: 10.sp,
+                                      ),
                                 ),
                               ],
                             ),
@@ -382,17 +394,15 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ],
                       ),
                     ),
-        
+
                     SizedBox(height: 5.h),
+
+                    /// Tabs: All / Individual
                     Row(
                       children: [
-                        
-                       
                         InkWell(
                           onTap: () {
-                            ref
-                                .read(homeProvider.notifier)
-                                .changePage(0);
+                            ref.read(homeProvider.notifier).changePage(0);
                           },
                           child: Card(
                             elevation: !homeState.isIndividual ? 4 : 2,
@@ -403,8 +413,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 ? AppColors.primary
                                 : Colors.white,
                             child: Padding(
-                              padding:  EdgeInsets.symmetric(
-                               horizontal: 15.0.w,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 15.0.w,
                                 vertical: 7.0.h,
                               ),
                               child: Text(
@@ -420,12 +430,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                             ),
                           ),
                         ),
-                         SizedBox(width: 5.w),
+                        SizedBox(width: 5.w),
                         InkWell(
                           onTap: () {
-                           ref
-                                .read(homeProvider.notifier)
-                                .changePage(1);
+                            ref.read(homeProvider.notifier).changePage(1);
                           },
                           child: Card(
                             elevation: homeState.isIndividual ? 4 : 2,
@@ -436,7 +444,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 ? AppColors.primary
                                 : Colors.white,
                             child: Padding(
-                              padding:  EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                 horizontal: 15.0.w,
                                 vertical: 7.0.h,
                               ),
@@ -455,119 +463,211 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ),
                       ],
                     ),
+
                     SizedBox(height: 10.h),
+
+                    /// PageView: All / Individual
                     Expanded(
                       child: PageView(
                         controller: ref
                             .read(homeProvider.notifier)
                             .pageController,
                         onPageChanged: (index) {
-                          ref
-                              .read(homeProvider.notifier)
-                              .changePage(  index);
+                          ref.read(homeProvider.notifier).changePage(index);
                         },
                         children: [
-                         
-        
+                          /// TAB 1 – ALL
                           if (homeState.error != null)
                             Center(child: Text("Error: ${homeState.error}"))
                           else
                             Skeletonizer(
                               enabled: homeState.isLoading,
-                              child: ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                padding: EdgeInsets.all(0),
-                                itemCount: homeState.isLoading
-                                    ? 10
-                                    : (homeState.attendanceList?.length ?? 0),
-                                itemBuilder: (_, i) {
-                                  final student = homeState.isLoading
-                                      ? const StudentAttendance(
+                              child: homeState.isLoading
+                                  ? ListView.builder(
+                                      physics: const BouncingScrollPhysics(),
+                                      padding: EdgeInsets.zero,
+                                      itemCount: 10,
+                                      itemBuilder: (_, i) {
+                                        const student = StudentAttendance(
                                           student: "Student Name",
                                           attendanceStatus: "Present",
                                           attendanceOn: "2024-01-01",
                                           studentName: "Student Name",
                                           isChecked: false,
-                                        )
-                                      : homeState.attendanceList![i];
-                                  final isPresent =
-                                      student.attendanceStatus == "Present";
-                                  final isAbsent =
-                                      student.attendanceStatus == "Absent";
-                                  final isChecked = student.isChecked;
-        
-                                  return StudentCard(
-                                    isIndividual: false,
-                                    name: student.studentName,
-                                    id: student.student,
-                                    imageUrl:
-                                        "https://i.pravatar.cc/150?img=${i + 1}",
-                                    onPresent: () => ref
-                                        .read(homeProvider.notifier)
-                                        .toggleAttendance(i, true),
-                                    onAbsent: () => ref
-                                        .read(homeProvider.notifier)
-                                        .toggleAttendance(i, false),
-                                    onCheckboxChanged: (bool? value) => ref
-                                        .read(homeProvider.notifier)
-                                        .toggleSelection(student.student),
-                                    isPresent: isPresent,
-                                    isAbsent: isAbsent,
-                                    isChecked: isChecked,
-                                  );
-                                },
-                              ),
+                                        );
+                                        return StudentCard(
+                                          isIndividual: false,
+                                          name: student.studentName,
+                                          id: student.student,
+                                          imageUrl:
+                                              "https://i.pravatar.cc/150?img=${i + 1}",
+                                          onPresent: () {},
+                                          onAbsent: () {},
+                                          onCheckboxChanged: (_) {},
+                                          isPresent: true,
+                                          isAbsent: false,
+                                          isChecked: false,
+                                        );
+                                      },
+                                    )
+                                  : (homeState.attendanceList == null ||
+                                        homeState.attendanceList!.isEmpty)
+                                  ? Expanded(
+                                      child: Column(
+                                        mainAxisAlignment: .center,
+                                        children: [
+                                          // LottieBuilder.asset('assets/images/notfound.json',width: 200,),
+                                          Image.asset(
+                                            'assets/images/new-unscreen.gif',
+                                          ),
+                                          Text(
+                                            "No students found",
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                                  color: Colors.grey.shade600,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : ListView.builder(
+                                      physics: const BouncingScrollPhysics(),
+                                      padding: EdgeInsets.zero,
+                                      itemCount:
+                                          homeState.attendanceList!.length,
+                                      itemBuilder: (_, i) {
+                                        final student =
+                                            homeState.attendanceList![i];
+                                        final isPresent =
+                                            student.attendanceStatus ==
+                                            "Present";
+                                        final isAbsent =
+                                            student.attendanceStatus ==
+                                            "Absent";
+                                        final isChecked = student.isChecked;
+
+                                        return StudentCard(
+                                          isIndividual: false,
+                                          name: student.studentName,
+                                          id: student.student,
+                                          imageUrl:
+                                              "https://i.pravatar.cc/150?img=${i + 1}",
+                                          onPresent: () => ref
+                                              .read(homeProvider.notifier)
+                                              .toggleAttendance(i, true),
+                                          onAbsent: () => ref
+                                              .read(homeProvider.notifier)
+                                              .toggleAttendance(i, false),
+                                          onCheckboxChanged: (bool? value) =>
+                                              ref
+                                                  .read(homeProvider.notifier)
+                                                  .toggleSelection(
+                                                    student.student,
+                                                  ),
+                                          isPresent: isPresent,
+                                          isAbsent: isAbsent,
+                                          isChecked: isChecked,
+                                        );
+                                      },
+                                    ),
                             ),
-        
-        
-                             if (homeState.error != null)
+
+                          /// TAB 2 – INDIVIDUAL
+                          if (homeState.error != null)
                             Center(child: Text("Error: ${homeState.error}"))
                           else
                             Skeletonizer(
                               enabled: homeState.isLoading,
-                              child: ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                padding: EdgeInsets.all(0),
-                                itemCount: homeState.isLoading
-                                    ? 10
-                                    : (homeState.attendanceList?.length ?? 0),
-                                itemBuilder: (_, i) {
-                                  final student = homeState.isLoading
-                                      ? const StudentAttendance(
+                              child: homeState.isLoading
+                                  ? ListView.builder(
+                                      physics: const BouncingScrollPhysics(),
+                                      padding: EdgeInsets.zero,
+                                      itemCount: 10,
+                                      itemBuilder: (_, i) {
+                                        const student = StudentAttendance(
                                           student: "Student Name",
                                           attendanceStatus: "Present",
                                           attendanceOn: "2024-01-01",
                                           studentName: "Student Name",
                                           isChecked: false,
-                                        )
-                                      : homeState.attendanceList![i];
-                                  final isPresent =
-                                      student.attendanceStatus == "Present";
-                                  final isAbsent =
-                                      student.attendanceStatus == "Absent";
-                                  final isChecked = student.isChecked;
-        
-                                  return StudentCard(
-                                    isIndividual: true,
-                                    name: student.studentName,
-                                    id: student.student,
-                                    imageUrl:
-                                        "https://i.pravatar.cc/150?img=${i + 1}",
-                                    onPresent: () => ref
-                                        .read(homeProvider.notifier)
-                                        .toggleAttendance(i, true),
-                                    onAbsent: () => ref
-                                        .read(homeProvider.notifier)
-                                        .toggleAttendance(i, false),
-                                    onCheckboxChanged: (bool? value) => ref
-                                        .read(homeProvider.notifier)
-                                        .toggleSelection(student.student),
-                                    isPresent: isPresent,
-                                    isAbsent: isAbsent,
-                                    isChecked: isChecked,
-                                  );
-                                },
-                              ),
+                                        );
+                                        return StudentCard(
+                                          isIndividual: true,
+                                          name: student.studentName,
+                                          id: student.student,
+                                          imageUrl:
+                                              "https://i.pravatar.cc/150?img=${i + 1}",
+                                          onPresent: () {},
+                                          onAbsent: () {},
+                                          onCheckboxChanged: (_) {},
+                                          isPresent: true,
+                                          isAbsent: false,
+                                          isChecked: false,
+                                        );
+                                      },
+                                    )
+                                  : (homeState.attendanceList == null ||
+                                        homeState.attendanceList!.isEmpty)
+                                  ? Expanded(
+                                      child: Column(
+                                        mainAxisAlignment: .center,
+                                        children: [
+                                          // LottieBuilder.asset('assets/images/notfound.json',width: 200,),
+                                          Image.asset(
+                                            'assets/images/new-unscreen.gif',
+                                          ),
+                                          Text(
+                                            "No students found",
+                                            style: theme.textTheme.titleMedium
+                                                ?.copyWith(
+                                                  color: Colors.grey.shade600,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  : ListView.builder(
+                                      physics: const BouncingScrollPhysics(),
+                                      padding: EdgeInsets.zero,
+                                      itemCount:
+                                          homeState.attendanceList!.length,
+                                      itemBuilder: (_, i) {
+                                        final student =
+                                            homeState.attendanceList![i];
+                                        final isPresent =
+                                            student.attendanceStatus ==
+                                            "Present";
+                                        final isAbsent =
+                                            student.attendanceStatus ==
+                                            "Absent";
+                                        final isChecked = student.isChecked;
+
+                                        return StudentCard(
+                                          isIndividual: true,
+                                          name: student.studentName,
+                                          id: student.student,
+                                          imageUrl:
+                                              "https://i.pravatar.cc/150?img=${i + 1}",
+                                          onPresent: () => ref
+                                              .read(homeProvider.notifier)
+                                              .toggleAttendance(i, true),
+                                          onAbsent: () => ref
+                                              .read(homeProvider.notifier)
+                                              .toggleAttendance(i, false),
+                                          onCheckboxChanged: (bool? value) =>
+                                              ref
+                                                  .read(homeProvider.notifier)
+                                                  .toggleSelection(
+                                                    student.student,
+                                                  ),
+                                          isPresent: isPresent,
+                                          isAbsent: isAbsent,
+                                          isChecked: isChecked,
+                                        );
+                                      },
+                                    ),
                             ),
                         ],
                       ),
