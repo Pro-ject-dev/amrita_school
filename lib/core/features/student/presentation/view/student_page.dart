@@ -37,10 +37,13 @@ class _StudentPageState extends ConsumerState<StudentPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: const Color(0xffF5F7FA),
-        leading: IconButton(
-          icon: const Icon(LucideIcons.chevronLeft),
-          onPressed: () => context.go('/home'),
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(LucideIcons.chevronLeft),
+        //   onPressed: (){
+        //       // context.go('/mainScaffold');
+        //       context.pop();
+        //   },
+        // ),
         title: const Text("Student Page"),
         actions: [
           Padding(
