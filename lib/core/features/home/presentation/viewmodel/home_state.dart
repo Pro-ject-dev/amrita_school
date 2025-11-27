@@ -30,4 +30,5 @@ abstract class HomeState with _$HomeState {
     isIndividual:false,
 
   );
+  
 }

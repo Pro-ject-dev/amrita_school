@@ -12,6 +12,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   static const String standardFormat = 'dd-MM-yyyy';
   static const String displayFormat = 'MMM dd';
+  
 
   final PageController pageController = PageController();
 
