@@ -15,6 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AttendanceModel {
 
+// ignore: invalid_annotation_target
 @JsonKey(name: 'attendance_list') List<StudentAttendance> get attendanceList; String get message;
 /// Create a copy of AttendanceModel
 /// with the given fields replaced by the non-null parameter values.
@@ -213,7 +214,9 @@ class _AttendanceModel implements AttendanceModel {
   const _AttendanceModel({@JsonKey(name: 'attendance_list') required final  List<StudentAttendance> attendanceList, required this.message}): _attendanceList = attendanceList;
   factory _AttendanceModel.fromJson(Map<String, dynamic> json) => _$AttendanceModelFromJson(json);
 
+// ignore: invalid_annotation_target
  final  List<StudentAttendance> _attendanceList;
+// ignore: invalid_annotation_target
 @override@JsonKey(name: 'attendance_list') List<StudentAttendance> get attendanceList {
   if (_attendanceList is EqualUnmodifiableListView) return _attendanceList;
   // ignore: implicit_dynamic_type
@@ -287,7 +290,10 @@ as String,
 /// @nodoc
 mixin _$StudentAttendance {
 
- String get student;@JsonKey(name: 'student_name') String get studentName;@JsonKey(name: 'attendance_status') String get attendanceStatus;@JsonKey(name: 'attendance_on') String get attendanceOn; bool get isChecked;
+ String get student;// ignore: invalid_annotation_target
+@JsonKey(name: 'student_name') String get studentName;// ignore: invalid_annotation_target
+@JsonKey(name: 'attendance_status') String get attendanceStatus;// ignore: invalid_annotation_target
+@JsonKey(name: 'attendance_on') String get attendanceOn; bool get isChecked;
 /// Create a copy of StudentAttendance
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -489,8 +495,11 @@ class _StudentAttendance implements StudentAttendance {
   factory _StudentAttendance.fromJson(Map<String, dynamic> json) => _$StudentAttendanceFromJson(json);
 
 @override final  String student;
+// ignore: invalid_annotation_target
 @override@JsonKey(name: 'student_name') final  String studentName;
+// ignore: invalid_annotation_target
 @override@JsonKey(name: 'attendance_status') final  String attendanceStatus;
+// ignore: invalid_annotation_target
 @override@JsonKey(name: 'attendance_on') final  String attendanceOn;
 @override@JsonKey() final  bool isChecked;
 

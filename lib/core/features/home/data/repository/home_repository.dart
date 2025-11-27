@@ -36,4 +36,30 @@ HomeRepository homeRepository(Ref ref) {
       rethrow;
     }
   }
+
+
+  Future<AttendanceModel> postClassAttendance({
+    required String sclass,
+    required String date,
+    required List<Map<String,String>> absent_list,
+    required List<Map<String,String>> present_list,
+
+  }) async {
+    try {
+      final response = await _dio.post(
+        '/shikshak.utils.api.mark_attendance',
+        data: {
+          "student_class": sclass,
+          "date": date,
+          "present_students": present_list,
+          "absent_students": absent_list,
+        },
+      );
+     await Future.delayed(const Duration(seconds: 1));
+      return AttendanceModel.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 }
