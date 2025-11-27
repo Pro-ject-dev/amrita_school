@@ -6,6 +6,7 @@ part 'attendance_model.g.dart';
 @freezed
 abstract class AttendanceModel with _$AttendanceModel {
   const factory AttendanceModel({
+    // ignore: invalid_annotation_target
     @JsonKey(name: 'attendance_list') required List<StudentAttendance> attendanceList,
     required String message,
   }) = _AttendanceModel;
@@ -18,8 +19,11 @@ abstract class AttendanceModel with _$AttendanceModel {
 abstract class StudentAttendance with _$StudentAttendance {
   const factory StudentAttendance({
     required String student,
+    // ignore: invalid_annotation_target
     @JsonKey(name: 'student_name') required String studentName,
+    // ignore: invalid_annotation_target
     @JsonKey(name: 'attendance_status') required String attendanceStatus,
+    // ignore: invalid_annotation_target
     @JsonKey(name: 'attendance_on') required String attendanceOn,
     @Default(false) bool isChecked,
   }) = _StudentAttendance;

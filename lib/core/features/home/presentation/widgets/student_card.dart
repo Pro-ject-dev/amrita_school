@@ -8,6 +8,7 @@ class StudentCard extends StatefulWidget {
   final bool isPresent;
   final bool isAbsent;
   final bool isChecked;
+  final bool isIndividual;
   final VoidCallback? onPresent;
   final VoidCallback? onAbsent;
   final ValueChanged<bool?>? onCheckboxChanged;
@@ -22,7 +23,8 @@ class StudentCard extends StatefulWidget {
     required this.onCheckboxChanged,
     required this.isPresent,
     required this.isAbsent ,  
-    required this.isChecked ,
+    required this.isChecked, 
+    required this.isIndividual ,
   });
 
   @override
@@ -45,28 +47,15 @@ class _StudentCardState extends State<StudentCard> {
       ),
       child: Row(
         children: [
-          Checkbox(
-            value: widget.isChecked,
-            onChanged:widget.onCheckboxChanged,
-            fillColor: WidgetStateProperty.resolveWith((states) {
-              return Colors.white;
-            }),
-            side: WidgetStateBorderSide.resolveWith((states) {
-              return BorderSide(color: theme.primaryColor, width: 1);
-            }),
-            checkColor: theme.primaryColor,
-            visualDensity: VisualDensity.comfortable,
-
-            materialTapTargetSize: MaterialTapTargetSize.padded,
-          ),
-
+          
           CircleAvatar(
-            radius: 22.r,
-            // backgroundImage: NetworkImage(widget.imageUrl),
-            child: Image.asset('assets/images/student.gif'),
-            // child: Text('AJ',style: TextStyle(
-            //   fontWeight: FontWeight.w600
-            // ),),
+            radius: 24.r,
+            backgroundColor: Colors.grey.shade200,
+            child: CircleAvatar(
+              radius: 22.r,
+             backgroundImage: AssetImage("assets/images/student.gif"),
+                    
+            ),
           ),
 
           SizedBox(width: 12.w),
@@ -91,27 +80,26 @@ class _StudentCardState extends State<StudentCard> {
           ),
 
           Visibility(
-            visible: !widget.isChecked ,
-            child: GestureDetector(
-              onTap: widget.onPresent,
-              child: CircleAvatar(
-                radius: 20.r,
-                backgroundColor: widget.isPresent
-                    ? Colors.green.withOpacity(0.15)
-                    : Colors.grey.shade200,
-                child: Icon(
-                  Icons.check_circle,
-                  color:widget.isPresent ? Colors.green : Colors.grey,
+            visible: widget.isIndividual,
+            child: Wrap(
+              children:[ GestureDetector(
+                onTap: widget.onPresent,
+                child: CircleAvatar(
+                  radius: 20.r,
+                  backgroundColor: widget.isPresent
+                      ? Colors.green.withOpacity(0.15)
+                      : Colors.grey.shade200,
+                  child: Icon(
+                    Icons.check_circle,
+                    color:widget.isPresent ? Colors.green : Colors.grey,
+                  ),
                 ),
               ),
-            ),
-          ),
-
-          SizedBox(width: 10.w),
-
-          Visibility(
-            visible: !widget.isChecked ,
-            child: GestureDetector(
+            
+            
+            SizedBox(width: 10.w),
+            
+            GestureDetector(
               onTap:widget.onAbsent ,
               child: CircleAvatar(
                 radius: 20.r,
@@ -124,7 +112,27 @@ class _StudentCardState extends State<StudentCard> {
                 ),
               ),
             ),
+              ]),
           ),
+
+          Visibility(
+            visible: !widget.isIndividual,
+            child: Checkbox(
+              value: widget.isChecked,
+              onChanged:widget.onCheckboxChanged,
+              fillColor: WidgetStateProperty.resolveWith((states) {
+                return Colors.white;
+              }),
+              side: WidgetStateBorderSide.resolveWith((states) {
+                return BorderSide(color: theme.primaryColor, width: 1);
+              }),
+              checkColor: theme.primaryColor,
+              visualDensity: VisualDensity.comfortable,
+            
+              materialTapTargetSize: MaterialTapTargetSize.padded,
+            ),
+          ),
+
         ],
       ),
     );

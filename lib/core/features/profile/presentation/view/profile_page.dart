@@ -11,6 +11,13 @@ class ProfilePage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text("Profile Page")),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          TextButton(onPressed: (){}, child: Text(""))
+        ],
+      ),
      
     );
   }

@@ -1,5 +1,4 @@
 import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/view/home_page.dart';
-import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/viewmodel/home_viewmodel.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/mainscaffold/presentation/viewmodel/mainscaffold_viewmodel.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/profile/presentation/view/profile_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/reports/presentation/view/reports_page.dart';
@@ -8,7 +7,7 @@ import 'package:amrita_vidhyalayam_teacher/core/theme/strings/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:go_router/go_router.dart';
+
 
 class MainScaffold extends ConsumerWidget {
   const MainScaffold({super.key});
