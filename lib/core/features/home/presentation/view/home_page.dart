@@ -62,22 +62,13 @@ class _HomePageState extends ConsumerState<HomePage> {
           children: [
             Container(
               width: double.infinity,
-              // decoration: BoxDecoration(
-              //   image: DecorationImage(
-              //     image: AssetImage('assets/images/bg-test1.jpg'),
-              //     fit: BoxFit.contain,
-              //     colorFilter: ColorFilter.mode(
-              //       Colors.black.withOpacity(0.2), // overlay color
-              //       BlendMode.darken, // blending mode
-              //     ),
-              //   ),
-              // ),
+              // color: theme.primaryColor,
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 40.h),
-
+        
                   // Top Row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,9 +77,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                       Icon(LucideIcons.logOut, color: Colors.white),
                     ],
                   ),
-
+        
                   SizedBox(height: 22.h),
-
+        
                   Text(
                     AppStrings.welcome_title,
                     style: theme.textTheme.headlineSmall?.copyWith(
@@ -97,9 +88,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-
+        
                   SizedBox(height: 8.h),
-
+        
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
@@ -115,11 +106,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                       ),
                     ),
                   ),
-
+        
                   SizedBox(height: 10.h),
-
+        
                   Divider(color: Colors.white30, thickness: 0..h),
-
+        
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -136,7 +127,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 color: Colors.white,
                               ),
                             ),
-
+        
                             Text(
                               homeState.date,
                               style: theme.textTheme.bodyMedium?.copyWith(
@@ -163,7 +154,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ],
                         ),
                       ),
-
+        
                       SizedBox(
                         height: 30.h,
                         child: VerticalDivider(
@@ -171,7 +162,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           color: Colors.white30,
                         ),
                       ),
-
+        
                       // SizedBox(width: 5.w),
                       IconButton(
                         onPressed: () async {
@@ -179,9 +170,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                             context: context,
                             initialDate: homeState.date.startsWith("Today,")
                                 ? DateTime.now()
-                                : DateFormat(
-                                    'dd-MM-yyyy',
-                                  ).parse(homeState.date),
+                                : DateFormat('dd-MM-yyyy').parse(homeState.date),
                             firstDate: DateTime(2020),
                             lastDate: DateTime.now(),
                             builder: (context, child) {
@@ -200,7 +189,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                               );
                             },
                           );
-
+        
                           if (date != null) {
                             final formattedDate = DateFormat(
                               'dd-MM-yyyy',
@@ -226,7 +215,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ],
               ),
             ),
-            // ===== BOTTOM WHITE ROUNDED CONTAINER =====
+        
             Expanded(
               child: Container(
                 margin: EdgeInsets.only(top: 5.h),
@@ -250,7 +239,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         fontSize: 20.sp,
                       ),
                     ),
-
+        
                     Visibility(
                       visible: homeState.isChecked,
                       child: Column(
@@ -303,145 +292,286 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ],
                       ),
                     ),
-
-                    SizedBox(height: 15.h),
-
+        
+                    SizedBox(height: 10.h),
+        
                     // Search box
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16.w),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.r),
-                              border: Border.all(color: Colors.grey.shade300),
-                              color: Colors.grey.shade100,
-                            ),
-                            child: TextField(
-                              controller: searchController,
-                              onChanged: (value) => ref
-                                  .read(homeProvider.notifier)
-                                  .fetchAttendance(value, homeState.date),
-                              decoration: InputDecoration(
-                                hintText: "Search student",
-                                hintStyle: TextStyle(
-                                  color: const Color.fromARGB(
-                                    255,
-                                    202,
-                                    202,
-                                    202,
+                    Container(
+                      height: 45.h,
+                      // color: Colors.black,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.r),
+                                border: Border.all(color: Colors.grey.shade300),
+                                color: Colors.grey.shade100,
+                              ),
+                              child: TextField(
+                                controller: searchController,
+                                onChanged: (value) => ref
+                                    .read(homeProvider.notifier)
+                                    .fetchAttendance(value, homeState.date),
+                                decoration: InputDecoration(
+                                  hintText: "Search student",
+                                  hintStyle: TextStyle(
+                                    color: const Color.fromARGB(255, 202, 202, 202),
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  fontSize: 13.sp,
-                                  fontWeight: FontWeight.bold,
+                                  border: InputBorder.none,
+                                  icon: SvgPicture.asset(
+                                    AppIcons.search,
+                                    width: 18.w,
+                                    height: 18.h,
+                                  ),
                                 ),
-                                border: InputBorder.none,
-                                icon: SvgPicture.asset(
-                                  AppIcons.search,
-                                  width: 18.w,
-                                  height: 18.h,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10.w),
+                      
+                          Visibility(
+                            visible: !homeState.isIndividual,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Checkbox(
+                                  value: homeState.isCheckedSelectAll,
+                                  onChanged: (v) {
+                                    ref
+                                        .read(homeProvider.notifier)
+                                        .toggleSelectAll(v!);
+                                  },
+                                  fillColor: WidgetStateProperty.resolveWith((
+                                    states,
+                                  ) {
+                                    return Colors.white;
+                                  }),
+                                  side: WidgetStateBorderSide.resolveWith((states) {
+                                    return BorderSide(
+                                      color: theme.primaryColor,
+                                      width: 1,
+                                    );
+                                  }),
+                                  checkColor: theme.primaryColor,
+                                  visualDensity: VisualDensity.comfortable,
+                      
+                                  materialTapTargetSize:
+                                      MaterialTapTargetSize.padded,
+                                ),
+                      
+                                Text(
+                                  homeState.isCheckedSelectAll
+                                      ? "Unselect All"
+                                      : "Select All",
+                                  style: theme.textTheme.headlineSmall?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color.fromARGB(255, 117, 117, 117),
+                                    fontSize: 10.sp,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+        
+                    SizedBox(height: 5.h),
+                    Row(
+                      children: [
+                        
+                       
+                        InkWell(
+                          onTap: () {
+                            ref
+                                .read(homeProvider.notifier)
+                                .changePage(0);
+                          },
+                          child: Card(
+                            elevation: !homeState.isIndividual ? 4 : 2,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16.r),
+                            ),
+                            color: !homeState.isIndividual
+                                ? AppColors.primary
+                                : Colors.white,
+                            child: Padding(
+                              padding:  EdgeInsets.symmetric(
+                               horizontal: 15.0.w,
+                                vertical: 7.0.h,
+                              ),
+                              child: Text(
+                                "All",
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: !homeState.isIndividual
+                                      ? Colors.white
+                                      : const Color.fromARGB(255, 74, 74, 74),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(width: 10.w),
-
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Checkbox(
-                              value: homeState.isCheckedSelectAll,
-                              onChanged: (v) {
-                                ref
-                                    .read(homeProvider.notifier)
-                                    .toggleSelectAll(v!);
-                              },
-                              fillColor: WidgetStateProperty.resolveWith((
-                                states,
-                              ) {
-                                return Colors.white;
-                              }),
-                              side: WidgetStateBorderSide.resolveWith((states) {
-                                return BorderSide(
-                                  color: theme.primaryColor,
-                                  width: 1,
-                                );
-                              }),
-                              checkColor: theme.primaryColor,
-                              visualDensity: VisualDensity.comfortable,
-
-                              materialTapTargetSize:
-                                  MaterialTapTargetSize.padded,
+                         SizedBox(width: 5.w),
+                        InkWell(
+                          onTap: () {
+                           ref
+                                .read(homeProvider.notifier)
+                                .changePage(1);
+                          },
+                          child: Card(
+                            elevation: homeState.isIndividual ? 4 : 2,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.r),
                             ),
-
-                            Text(
-                              homeState.isCheckedSelectAll
-                                  ? "Unselect All"
-                                  : "Select All",
-                              style: theme.textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: const Color.fromARGB(255, 117, 117, 117),
-                                fontSize: 10.sp,
+                            color: homeState.isIndividual
+                                ? AppColors.primary
+                                : Colors.white,
+                            child: Padding(
+                              padding:  EdgeInsets.symmetric(
+                                horizontal: 15.0.w,
+                                vertical: 7.0.h,
+                              ),
+                              child: Text(
+                                "Individual",
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: homeState.isIndividual
+                                      ? Colors.white
+                                      : const Color.fromARGB(255, 74, 74, 74),
+                                ),
                               ),
                             ),
-                          ],
+                          ),
                         ),
                       ],
                     ),
-
-                    SizedBox(height: 15.h),
-                    if (homeState.error != null)
-                      Center(child: Text("Error: ${homeState.error}"))
-                    else
-                      Expanded(
-                        child: Skeletonizer(
-                          enabled: homeState.isLoading,
-                          child: ListView.builder(
-                            physics: BouncingScrollPhysics(),
-                            padding: EdgeInsets.all(0),
-                            itemCount: homeState.isLoading
-                                ? 10
-                                : (homeState.attendanceList?.length ?? 0),
-                            itemBuilder: (_, i) {
-                              final student = homeState.isLoading
-                                  ? const StudentAttendance(
-                                      student: "Student Name",
-                                      attendanceStatus: "Present",
-                                      attendanceOn: "2024-01-01",
-                                      studentName: "Student Name",
-                                      isChecked: false,
-                                    )
-                                  : homeState.attendanceList![i];
-                              final isPresent =
-                                  student.attendanceStatus == "Present";
-                              final isAbsent =
-                                  student.attendanceStatus == "Absent";
-                              final isChecked = student.isChecked;
-                              return StudentCard(
-                                name: student.studentName,
-                                id: student.student,
-                                imageUrl:
-                                    "https://i.pravatar.cc/150?img=${i + 1}",
-                                onPresent: () => ref
-                                    .read(homeProvider.notifier)
-                                    .toggleAttendance(i, true),
-                                onAbsent: () => ref
-                                    .read(homeProvider.notifier)
-                                    .toggleAttendance(i, false),
-                                onCheckboxChanged: (bool? value) => ref
-                                    .read(homeProvider.notifier)
-                                    .toggleSelection(student.student),
-                                isPresent: isPresent,
-                                isAbsent: isAbsent,
-                                isChecked: isChecked,
-                              );
-                            },
-                          ),
-                        ),
+                    SizedBox(height: 10.h),
+                    Expanded(
+                      child: PageView(
+                        controller: ref
+                            .read(homeProvider.notifier)
+                            .pageController,
+                        onPageChanged: (index) {
+                          ref
+                              .read(homeProvider.notifier)
+                              .changePage(  index);
+                        },
+                        children: [
+                         
+        
+                          if (homeState.error != null)
+                            Center(child: Text("Error: ${homeState.error}"))
+                          else
+                            Skeletonizer(
+                              enabled: homeState.isLoading,
+                              child: ListView.builder(
+                                physics: BouncingScrollPhysics(),
+                                padding: EdgeInsets.all(0),
+                                itemCount: homeState.isLoading
+                                    ? 10
+                                    : (homeState.attendanceList?.length ?? 0),
+                                itemBuilder: (_, i) {
+                                  final student = homeState.isLoading
+                                      ? const StudentAttendance(
+                                          student: "Student Name",
+                                          attendanceStatus: "Present",
+                                          attendanceOn: "2024-01-01",
+                                          studentName: "Student Name",
+                                          isChecked: false,
+                                        )
+                                      : homeState.attendanceList![i];
+                                  final isPresent =
+                                      student.attendanceStatus == "Present";
+                                  final isAbsent =
+                                      student.attendanceStatus == "Absent";
+                                  final isChecked = student.isChecked;
+        
+                                  return StudentCard(
+                                    isIndividual: false,
+                                    name: student.studentName,
+                                    id: student.student,
+                                    imageUrl:
+                                        "https://i.pravatar.cc/150?img=${i + 1}",
+                                    onPresent: () => ref
+                                        .read(homeProvider.notifier)
+                                        .toggleAttendance(i, true),
+                                    onAbsent: () => ref
+                                        .read(homeProvider.notifier)
+                                        .toggleAttendance(i, false),
+                                    onCheckboxChanged: (bool? value) => ref
+                                        .read(homeProvider.notifier)
+                                        .toggleSelection(student.student),
+                                    isPresent: isPresent,
+                                    isAbsent: isAbsent,
+                                    isChecked: isChecked,
+                                  );
+                                },
+                              ),
+                            ),
+        
+        
+                             if (homeState.error != null)
+                            Center(child: Text("Error: ${homeState.error}"))
+                          else
+                            Skeletonizer(
+                              enabled: homeState.isLoading,
+                              child: ListView.builder(
+                                physics: BouncingScrollPhysics(),
+                                padding: EdgeInsets.all(0),
+                                itemCount: homeState.isLoading
+                                    ? 10
+                                    : (homeState.attendanceList?.length ?? 0),
+                                itemBuilder: (_, i) {
+                                  final student = homeState.isLoading
+                                      ? const StudentAttendance(
+                                          student: "Student Name",
+                                          attendanceStatus: "Present",
+                                          attendanceOn: "2024-01-01",
+                                          studentName: "Student Name",
+                                          isChecked: false,
+                                        )
+                                      : homeState.attendanceList![i];
+                                  final isPresent =
+                                      student.attendanceStatus == "Present";
+                                  final isAbsent =
+                                      student.attendanceStatus == "Absent";
+                                  final isChecked = student.isChecked;
+        
+                                  return StudentCard(
+                                    isIndividual: true,
+                                    name: student.studentName,
+                                    id: student.student,
+                                    imageUrl:
+                                        "https://i.pravatar.cc/150?img=${i + 1}",
+                                    onPresent: () => ref
+                                        .read(homeProvider.notifier)
+                                        .toggleAttendance(i, true),
+                                    onAbsent: () => ref
+                                        .read(homeProvider.notifier)
+                                        .toggleAttendance(i, false),
+                                    onCheckboxChanged: (bool? value) => ref
+                                        .read(homeProvider.notifier)
+                                        .toggleSelection(student.student),
+                                    isPresent: isPresent,
+                                    isAbsent: isAbsent,
+                                    isChecked: isChecked,
+                                  );
+                                },
+                              ),
+                            ),
+                        ],
                       ),
+                    ),
                   ],
                 ),
               ),
