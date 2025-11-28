@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:amrita_vidhyalayam_teacher/core/features/home/data/models/post_attendance_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -11,9 +13,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   HomeViewModel(this._repository) : super(HomeState.initial());
 
-  static const String standardFormat = 'dd-MM-yyyy';
-  static const String poststandardFormat = 'yyyy-MM-dd';
-
+  static const String standardFormat = 'yyyy-MM-dd';
   static const String displayFormat = 'MMM dd';
   
 
@@ -46,13 +46,16 @@ class HomeViewModel extends StateNotifier<HomeState> {
   Future<void> fetchAttendance(String searchTxt, String date) async {
     state = state.copyWith(isLoading: true);
 
+    // Convert display format to standard format if needed
+    String formattedDate = date;
     if (date.startsWith("Today")) {
-      date = DateFormat(standardFormat).format(DateTime.now());
+      formattedDate = DateFormat(standardFormat).format(DateTime.now());
     }
+    
     try {
       final result = await _repository.getClassAttendance(
         sclass: "TS 25 CLASS 2 A",
-        attendanceOn: date,
+        attendanceOn: formattedDate,
         searchQuery: searchTxt,
       );
 
@@ -196,11 +199,13 @@ class HomeViewModel extends StateNotifier<HomeState> {
   }
 
   DateTime parseCurrentDate() {
-    final todayText =
-        "Today, ${DateFormat(displayFormat).format(DateTime.now())}";
-    if (state.date == todayText) {
+    final todayText = "Today, ${DateFormat(displayFormat).format(DateTime.now())}";
+    
+    if (state.date.startsWith("Today")) {
       return DateTime.now();
     }
+    
+    // Parse the date in standard format
     return DateFormat(standardFormat).parse(state.date);
   }
 
@@ -236,78 +241,100 @@ class HomeViewModel extends StateNotifier<HomeState> {
     }
   }
 
+  // Helper method to get actual date in standard format
+  String _getActualDate() {
+    if (state.date.startsWith("Today")) {
+      return DateFormat(standardFormat).format(DateTime.now());
+    }
+    // Date is already in standard format
+    return state.date;
+  }
+
   Future<void> updatedAttendanceList(bool isMarkPresent) async {
-    
     try {
-      String actualDate;
-      if(state.date.startsWith("Today")){
-        actualDate = DateFormat(poststandardFormat).format(DateTime.now());
-      }
-      else{
-        actualDate = DateFormat(poststandardFormat).format(
-          DateFormat(standardFormat).parse(state.date),
-        );
-      }
-      print(actualDate.toString());
-     final AttendanceUpdateResponse result = await _repository.postClassAttendance(
+      final actualDate = _getActualDate();
+      
+      print("Posting attendance for date: $actualDate");
+      
+      final AttendanceUpdateResponse result = await _repository.postClassAttendance(
         sclass: "TS 25 CLASS 2 A",
-        date: actualDate.toString(),
-        absent_list:!isMarkPresent? state.attendanceList!
-            .where((student) => state.selectedIds.contains(student.student))
-            .map((student) =>
-                {"student_id": student.student, "student_name": student.studentName}).toList():[],
-        present_list:isMarkPresent? state.attendanceList!
-            .where((student) => state.selectedIds.contains(student.student))
-            .map((student) =>
-                {"student_id": student.student, "student_name": student.studentName}).toList():[],
+        date: actualDate,
+        absent_list: !isMarkPresent
+            ? state.attendanceList!
+                .where((student) =>
+                    state.selectedIds.contains(student.student) &&
+                    state.originalAttendanceList!.any((original) =>
+                        original.student == student.student &&
+                        original.attendanceStatus == ""))
+                .map((student) => {
+                      "student_id": student.student,
+                      "student_name": student.studentName
+                    })
+                .toList()
+            : [],
+        present_list: isMarkPresent
+            ? state.attendanceList!
+                .where((student) =>
+                    state.selectedIds.contains(student.student) &&
+                    state.originalAttendanceList!.any((original) =>
+                        original.student == student.student &&
+                        original.attendanceStatus == ""))
+                .map((student) => {
+                      "student_id": student.student,
+                      "student_name": student.studentName
+                    })
+                .toList()
+            : [],
       );
 
-     print("Attendance Update Response: ${result.message.message}");
-     state = state.copyWith(isChecked: false);
+      print("Attendance Update Response: ${result.message.message}");
+      state = state.copyWith(isChecked: false);
 
-
-      fetchAttendance("", parseCurrentDate().toString());
-
-      
+      await fetchAttendance("", actualDate);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
 
-  Future<void>individualUpdatedAttendanceList() async {
+  Future<void> individualUpdatedAttendanceList() async {
     state = state.copyWith(isLoading: true);
     try {
-      String actualDate;
-      if(state.date.startsWith("Today")){
-        actualDate = DateFormat(poststandardFormat).format(DateTime.now());
-      }
-      else{
-        actualDate = DateFormat(poststandardFormat).format(
-          DateFormat(standardFormat).parse(state.date),
-        );
-      }
-      print(actualDate.toString());
-     final AttendanceUpdateResponse result = await _repository.postClassAttendance(
+      final actualDate = _getActualDate();
+      
+      print("Posting individual attendance for date: $actualDate");
+      
+      final AttendanceUpdateResponse result = await _repository.postClassAttendance(
         sclass: "TS 25 CLASS 2 A",
-        date: actualDate.toString(),
-        absent_list:state.attendanceList!.where((student)=> student.attendanceStatus=="Absent").map((student)=>
-                {"student_id": student.student,"student_name":student.studentName}).toList(),
-        present_list:state.attendanceList!.where((student)=> student.attendanceStatus=="Present").map((student)=>
-                {"student_id": student.student,"student_name":student.studentName}).toList(),
+        date: actualDate,
+        absent_list: state.attendanceList!
+            .where((student) => student.attendanceStatus == "Absent")
+            .map((student) => {
+                  "student_id": student.student,
+                  "student_name": student.studentName
+                })
+            .toList(),
+        present_list: state.attendanceList!
+            .where((student) => student.attendanceStatus == "Present")
+            .map((student) => {
+                  "student_id": student.student,
+                  "student_name": student.studentName
+                })
+            .toList(),
       );
-fetchAttendance("", parseCurrentDate().toString());
-     print("Attendance Update Response: ${result.message.message}");
+
+      print("Attendance Update Response: ${result.message.message}");
+      
+      await fetchAttendance("", actualDate);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
-  
-}
+  }
 
-bool isSelectAll(){
-  final bool status= state.attendanceList!=null&&state.attendanceList!.any((e)=>e.attendanceStatus=="");
-  return status;
-
-}
+  bool isSelectAll() {
+    final bool status = state.attendanceList != null &&
+        state.attendanceList!.any((e) => e.attendanceStatus == "");
+    return status;
+  }
 }
 
 final homeProvider = StateNotifierProvider<HomeViewModel, HomeState>(

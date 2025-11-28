@@ -30,7 +30,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref
           .read(homeProvider.notifier)
-          .fetchAttendance("", DateFormat('dd-MM-yyyy').format(DateTime.now()));
+          .fetchAttendance("", DateFormat('yyyy-MM-dd').format(DateTime.now()));
     });
   }
 
@@ -156,7 +156,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                             initialDate: homeState.date.startsWith("Today,")
                                 ? DateTime.now()
                                 : DateFormat(
-                                    'dd-MM-yyyy',
+                                    'yyyy-MM-dd',
                                   ).parse(homeState.date),
                             firstDate: DateTime(2020),
                             lastDate: DateTime.now(),
@@ -178,11 +178,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                           );
                           if (date != null) {
                             final formattedDate = DateFormat(
-                              'dd-MM-yyyy',
+                              'yyyy-MM-dd',
                             ).format(date);
                             final notifier = ref.read(homeProvider.notifier);
                             final currentFormatted = DateFormat(
-                              'dd-MM-yyyy',
+                              'yyyy-MM-dd',
                             ).format(notifier.parseCurrentDate());
                             if (formattedDate != currentFormatted) {
                               await notifier.getDate(formattedDate);
