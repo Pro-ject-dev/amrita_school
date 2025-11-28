@@ -156,8 +156,12 @@ class StudentCard extends StatelessWidget {
                                   colors: [Color(0xff4CAF50), Color(0xff204921)],
                                   begin: Alignment.centerLeft,
                                   end: Alignment.centerRight,
-                                ):LinearGradient(
+                                ):attendanceStatus=="Absent"?LinearGradient(
                                   colors: [Color(0xffE53935), Color(0xff7F201D)],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ):LinearGradient(
+                                  colors: [const Color.fromARGB(255, 190, 190, 190), const Color.fromARGB(255, 202, 202, 202)],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                 ),

@@ -511,7 +511,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     }
 
     final itemCount = homeState.isLoading
-        ? 10
+        ? 5
         : (homeState.attendanceList?.length ?? 0);
 
     return ListView.builder(
@@ -522,37 +522,23 @@ class _HomePageState extends ConsumerState<HomePage> {
         if (homeState.isLoading) {
           return Skeletonizer(
             enabled: true,
-            child: Container(
-              margin: EdgeInsets.only(bottom: 14.h),
-              padding: EdgeInsets.all(12.w),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16.r),
-                border: Border.all(color: Colors.grey.shade300),
-                color: Colors.white,
-              ),
-              child: Row(
-                children: [
-                  CircleAvatar(radius: 24.r),
-                  SizedBox(width: 12.w),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 120.w,
-                        height: 16.h,
-                        color: Colors.grey.shade300,
-                      ),
-                      SizedBox(height: 4.h),
-                      Container(
-                        width: 80.w,
-                        height: 14.h,
-                        color: Colors.grey.shade300,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            child: StudentCard(
+          isIndividual: isIndividual,
+          attendanceStatus: "hng",
+          name:"Temp",
+          id: "Temp 487548",
+          imageUrl: "https://i.pravatar.cc/150?img=${i + 1}",
+          onPresent: () =>
+              ref.read(homeProvider.notifier).toggleAttendance(i, true),
+          onAbsent: () =>
+              ref.read(homeProvider.notifier).toggleAttendance(i, false),
+          onCheckboxChanged: (bool? value) =>
+              ref.read(homeProvider.notifier).toggleSelection(""),
+          isPresent:true,
+          isAbsent: true,
+          isChecked: false,
+        )
+            ,
           );
         }
 
