@@ -44,7 +44,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
   }
 
   Future<void> fetchAttendance(String searchTxt, String date) async {
-    state = state.copyWith(isLoading: true,isChecked:false);
+    state = state.copyWith(isLoading: true);
 
     if (date.startsWith("Today")) {
       date = DateFormat(standardFormat).format(DateTime.now());
@@ -67,7 +67,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
         originalAttendanceList: result.attendanceList,
         filteredAttendanceList: null,
         selectedIds: newSelectedIds,
-        isChecked:newSelectedIds.isNotEmpty,
+        isChecked:false,
         isCheckedSelectAll: false,
         isInvidualChecked: false
 
@@ -237,7 +237,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
   }
 
   Future<void> updatedAttendanceList(bool isMarkPresent) async {
-    state = state.copyWith(isLoading: true);
+    
     try {
       String actualDate;
       if(state.date.startsWith("Today")){
@@ -263,6 +263,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
       );
 
      print("Attendance Update Response: ${result.message.message}");
+     state = state.copyWith(isChecked: false);
 
 
       fetchAttendance("", parseCurrentDate().toString());
