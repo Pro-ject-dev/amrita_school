@@ -93,8 +93,13 @@ class HomeViewModel extends StateNotifier<HomeState> {
     final currentSelectedIds = Set<String>.from(state.selectedIds);
     if (currentSelectedIds.contains(studentId)) {
       currentSelectedIds.remove(studentId);
+      state=state.copyWith(isCheckedSelectAll: false);
     } else {
       currentSelectedIds.add(studentId);
+      final unMarkedStudentIds = state.originalAttendanceList!.where((e)=>e.attendanceStatus=="").map((e)=>e.student).toSet();
+      if(currentSelectedIds.containsAll(unMarkedStudentIds)){
+         state=state.copyWith(isCheckedSelectAll: true);
+      }
     }
 
     final updatedAttendanceList = state.attendanceList != null
