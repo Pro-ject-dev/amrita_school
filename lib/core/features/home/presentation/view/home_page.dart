@@ -24,6 +24,7 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   final searchController = TextEditingController();
 
+
   @override
   void initState() {
     super.initState();
@@ -40,12 +41,12 @@ class _HomePageState extends ConsumerState<HomePage> {
     final theme = Theme.of(context);
     final homeState = ref.watch(homeProvider);
 
+
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
     );
 
     return Scaffold(
-      backgroundColor: AppColors.primary,
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
