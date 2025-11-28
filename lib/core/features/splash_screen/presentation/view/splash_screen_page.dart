@@ -32,7 +32,7 @@ class _SplashScreenPageState extends ConsumerState<SplashScreenPage>
     // Primary animation controller
     _primaryController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1800),
+      duration: const Duration(milliseconds: 500),
     );
 
     // Shimmer effect controller
@@ -200,25 +200,19 @@ class _SplashScreenPageState extends ConsumerState<SplashScreenPage>
                             
                             SizedBox(height: 8.h),
                             
-                            ShaderMask(
-                              shaderCallback: (bounds) {
-                                return LinearGradient(
-                                  colors: [
-                                    Theme.of(context).primaryColor,
-                                    Theme.of(context).primaryColor.withOpacity(0.7),
-                                  ],
-                                ).createShader(bounds);
-                              },
-                              child: Text(
-                                'My Amrita',
-                                style: TextStyle(
-                                  fontSize: 24.sp,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1.5,
-                                ),
-                              ),
-                            ),
+                           
+                              //  Text(
+                              //   'My Amrita',
+                              //   style: TextStyle(
+                              //     fontSize: 24.sp,
+                              //     color: Colors.white,
+                              //     fontWeight: FontWeight.bold,
+                              //     letterSpacing: 1.5,
+                              //   ),
+                              // ),
+                              
+                              Image.asset('assets/images/myamrita2.gif',width: 100.w,),
+                        
                             
                             SizedBox(height: 16.h),
                             
