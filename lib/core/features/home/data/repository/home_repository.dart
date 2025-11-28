@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../network/dio_client.dart';
 import '../models/attendance_model.dart';
+import '../models/post_attendance_model.dart';
 
 part 'home_repository.g.dart';
 
@@ -38,7 +39,7 @@ HomeRepository homeRepository(Ref ref) {
   }
 
 
-  Future<AttendanceModel> postClassAttendance({
+  Future<AttendanceUpdateResponse> postClassAttendance({
     required String sclass,
     required String date,
     required List<Map<String,String>> absent_list,
@@ -56,7 +57,7 @@ HomeRepository homeRepository(Ref ref) {
         },
       );
      await Future.delayed(const Duration(seconds: 1));
-      return AttendanceModel.fromJson(response.data);
+      return AttendanceUpdateResponse.fromJson(response.data);
     } catch (e) {
       rethrow;
     }

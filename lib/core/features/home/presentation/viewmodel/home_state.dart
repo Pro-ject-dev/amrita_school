@@ -11,7 +11,9 @@ abstract class HomeState with _$HomeState {
     required String data,
     List<StudentAttendance>? attendanceList,
     List<StudentAttendance>? filteredAttendanceList,
+    List<StudentAttendance>? originalAttendanceList,
     required bool isIndividual,
+    required bool isInvidualChecked,
     required bool isChecked,
     required String date,
     String? error,
@@ -23,12 +25,14 @@ abstract class HomeState with _$HomeState {
     isLoading: false,
     data: "",
     attendanceList: null,
+    filteredAttendanceList: null,
+    originalAttendanceList: null,
     isChecked: false,
     date: "Today, ${DateFormat('MMM dd').format(DateTime.now()).toString()}",
     isCheckedSelectAll: false,
     selectedIds: {},
-    isIndividual:false,
+    isIndividual: false,
+    isInvidualChecked: false
 
   );
-  
 }

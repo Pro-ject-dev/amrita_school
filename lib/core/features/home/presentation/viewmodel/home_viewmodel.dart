@@ -1,3 +1,4 @@
+import 'package:amrita_vidhyalayam_teacher/core/features/home/data/models/post_attendance_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod/legacy.dart';
@@ -11,6 +12,8 @@ class HomeViewModel extends StateNotifier<HomeState> {
   HomeViewModel(this._repository) : super(HomeState.initial());
 
   static const String standardFormat = 'dd-MM-yyyy';
+  static const String poststandardFormat = 'yyyy-MM-dd';
+
   static const String displayFormat = 'MMM dd';
   
 
@@ -27,11 +30,12 @@ class HomeViewModel extends StateNotifier<HomeState> {
       isCheckedSelectAll: false,
       isChecked: false,
       selectedIds: {},
+      isInvidualChecked: false
       
     );
     state = index == 0
-        ? state.copyWith(isIndividual: false)
-        : state.copyWith(isIndividual: true);
+        ? state.copyWith(isIndividual: false,attendanceList: state.originalAttendanceList)
+        : state.copyWith(isIndividual: true,attendanceList: state.originalAttendanceList);
     pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 300),
@@ -40,7 +44,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
   }
 
   Future<void> fetchAttendance(String searchTxt, String date) async {
-    state = state.copyWith(isLoading: true);
+    state = state.copyWith(isLoading: true,isChecked:false);
 
     if (date.startsWith("Today")) {
       date = DateFormat(standardFormat).format(DateTime.now());
@@ -53,24 +57,27 @@ class HomeViewModel extends StateNotifier<HomeState> {
       );
 
       final newSelectedIds = state.selectedIds;
-      final syncedList = _syncListWithSelection(
+      final syncedList = syncListWithSelection(
         result.attendanceList,
         newSelectedIds,
       );
       state = state.copyWith(
         isLoading: false,
         attendanceList: syncedList,
+        originalAttendanceList: result.attendanceList,
         filteredAttendanceList: null,
         selectedIds: newSelectedIds,
-        isChecked: newSelectedIds.isNotEmpty,
+        isChecked:newSelectedIds.isNotEmpty,
         isCheckedSelectAll: false,
+        isInvidualChecked: false
+
       );
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
 
-  List<StudentAttendance> _syncListWithSelection(
+  List<StudentAttendance> syncListWithSelection(
     List<StudentAttendance> list,
     Set<String> selectedIds,
   ) {
@@ -88,11 +95,11 @@ class HomeViewModel extends StateNotifier<HomeState> {
     }
 
     final updatedAttendanceList = state.attendanceList != null
-        ? _syncListWithSelection(state.attendanceList!, currentSelectedIds)
+        ? syncListWithSelection(state.attendanceList!, currentSelectedIds)
         : null;
 
     final updatedFilteredList = state.filteredAttendanceList != null
-        ? _syncListWithSelection(
+        ? syncListWithSelection(
             state.filteredAttendanceList!,
             currentSelectedIds,
           )
@@ -152,6 +159,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
       state = state.copyWith(
         attendanceList: mainList,
         filteredAttendanceList: newFilteredList,
+        isInvidualChecked: true
       );
     }
   }
@@ -164,7 +172,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
       date: date == todayDate
           ? "Today, ${DateFormat(displayFormat).format(DateTime.now())}"
           : date,
-      selectedIds: {}, // Clear selections when date changes
+      selectedIds: {},
       isChecked: false,
       isCheckedSelectAll: false,
     );
@@ -200,7 +208,6 @@ class HomeViewModel extends StateNotifier<HomeState> {
     if (state.attendanceList != null) {
       final targetList = state.filteredAttendanceList ?? state.attendanceList!;
       final targetIds = targetList.map((e) => e.student).toSet();
-
       final newSelectedIds = Set<String>.from(state.selectedIds);
       if (isSelected) {
         newSelectedIds.addAll(targetIds);
@@ -208,12 +215,12 @@ class HomeViewModel extends StateNotifier<HomeState> {
         newSelectedIds.removeAll(targetIds);
       }
 
-      final updatedAttendanceList = _syncListWithSelection(
+      final updatedAttendanceList = syncListWithSelection(
         state.attendanceList!,
         newSelectedIds,
       );
       final updatedFilteredList = state.filteredAttendanceList != null
-          ? _syncListWithSelection(
+          ? syncListWithSelection(
               state.filteredAttendanceList!,
               newSelectedIds,
             )
@@ -228,6 +235,78 @@ class HomeViewModel extends StateNotifier<HomeState> {
       );
     }
   }
+
+  Future<void> updatedAttendanceList(bool isMarkPresent) async {
+    state = state.copyWith(isLoading: true);
+    try {
+      String actualDate;
+      if(state.date.startsWith("Today")){
+        actualDate = DateFormat(poststandardFormat).format(DateTime.now());
+      }
+      else{
+        actualDate = DateFormat(poststandardFormat).format(
+          DateFormat(standardFormat).parse(state.date),
+        );
+      }
+      print(actualDate.toString());
+     final AttendanceUpdateResponse result = await _repository.postClassAttendance(
+        sclass: "TS 25 CLASS 2 A",
+        date: actualDate.toString(),
+        absent_list:!isMarkPresent? state.attendanceList!
+            .where((student) => state.selectedIds.contains(student.student))
+            .map((student) =>
+                {"student_id": student.student, "student_name": student.studentName}).toList():[],
+        present_list:isMarkPresent? state.attendanceList!
+            .where((student) => state.selectedIds.contains(student.student))
+            .map((student) =>
+                {"student_id": student.student, "student_name": student.studentName}).toList():[],
+      );
+
+     print("Attendance Update Response: ${result.message.message}");
+
+
+      fetchAttendance("", parseCurrentDate().toString());
+
+      
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: e.toString());
+    }
+  }
+
+  Future<void>individualUpdatedAttendanceList() async {
+    state = state.copyWith(isLoading: true);
+    try {
+      String actualDate;
+      if(state.date.startsWith("Today")){
+        actualDate = DateFormat(poststandardFormat).format(DateTime.now());
+      }
+      else{
+        actualDate = DateFormat(poststandardFormat).format(
+          DateFormat(standardFormat).parse(state.date),
+        );
+      }
+      print(actualDate.toString());
+     final AttendanceUpdateResponse result = await _repository.postClassAttendance(
+        sclass: "TS 25 CLASS 2 A",
+        date: actualDate.toString(),
+        absent_list:state.attendanceList!.where((student)=> student.attendanceStatus=="Absent").map((student)=>
+                {"student_id": student.student,"student_name":student.studentName}).toList(),
+        present_list:state.attendanceList!.where((student)=> student.attendanceStatus=="Present").map((student)=>
+                {"student_id": student.student,"student_name":student.studentName}).toList(),
+      );
+fetchAttendance("", parseCurrentDate().toString());
+     print("Attendance Update Response: ${result.message.message}");
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: e.toString());
+    }
+  
+}
+
+bool isSelectAll(){
+  final bool status= state.attendanceList!=null&&state.attendanceList!.any((e)=>e.attendanceStatus=="");
+  return status;
+
+}
 }
 
 final homeProvider = StateNotifierProvider<HomeViewModel, HomeState>(

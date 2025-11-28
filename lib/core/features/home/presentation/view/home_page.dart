@@ -23,15 +23,14 @@ class HomePage extends ConsumerStatefulWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   final searchController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref
-          .read(homeProvider.notifier)
-          .fetchAttendance(
+      ref.read(homeProvider.notifier).fetchAttendance(
             "",
-            DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
+            DateFormat('dd-MM-yyyy').format(DateTime.now()),
           );
     });
   }
@@ -40,6 +39,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final homeState = ref.watch(homeProvider);
+
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
     );
@@ -49,6 +49,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
+          // Header Section
           Container(
             width: double.infinity,
             color: theme.primaryColor,
@@ -57,7 +58,6 @@ class _HomePageState extends ConsumerState<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 40.h),
-
                 // Top Row
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,9 +66,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     Icon(LucideIcons.logOut, color: Colors.white),
                   ],
                 ),
-
                 SizedBox(height: 22.h),
-
                 Text(
                   AppStrings.welcome_title,
                   style: theme.textTheme.headlineSmall?.copyWith(
@@ -77,14 +75,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 SizedBox(height: 8.h),
-
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(16)),
-                    color: Color(0xff254671),
+                    color: const Color(0xff254671),
                   ),
                   child: Text(
                     AppStrings.class_txt,
@@ -95,11 +91,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ),
                   ),
                 ),
-
                 SizedBox(height: 10.h),
-
-                Divider(color: Colors.white30, thickness: 0..h),
-
+                Divider(color: Colors.white30, thickness: 0.5.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -116,7 +109,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                               color: Colors.white,
                             ),
                           ),
-
                           Text(
                             homeState.date,
                             style: theme.textTheme.bodyMedium?.copyWith(
@@ -127,9 +119,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ),
                           IconButton(
                             onPressed: () {
-                              if (homeState.date.startsWith("Today,")) {
-                                return;
-                              } else {
+                              if (!homeState.date.startsWith("Today,")) {
                                 ref.read(homeProvider.notifier).nextDate();
                               }
                             },
@@ -143,7 +133,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ],
                       ),
                     ),
-
                     SizedBox(
                       height: 30.h,
                       child: VerticalDivider(
@@ -151,8 +140,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                         color: Colors.white30,
                       ),
                     ),
-
-                    // SizedBox(width: 5.w),
                     IconButton(
                       onPressed: () async {
                         final DateTime? date = await showDatePicker(
@@ -178,15 +165,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                             );
                           },
                         );
-
                         if (date != null) {
-                          final formattedDate = DateFormat(
-                            'dd-MM-yyyy',
-                          ).format(date);
+                          final formattedDate =
+                              DateFormat('dd-MM-yyyy').format(date);
                           final notifier = ref.read(homeProvider.notifier);
-                          final currentFormatted = DateFormat(
-                            'dd-MM-yyyy',
-                          ).format(notifier.parseCurrentDate());
+                          final currentFormatted = DateFormat('dd-MM-yyyy')
+                              .format(notifier.parseCurrentDate());
                           if (formattedDate != currentFormatted) {
                             await notifier.getDate(formattedDate);
                             await notifier.fetchAttendance("", formattedDate);
@@ -204,7 +188,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               ],
             ),
           ),
-
+          // Content Section
           Expanded(
             child: Container(
               margin: EdgeInsets.only(top: 5.h),
@@ -221,78 +205,96 @@ class _HomePageState extends ConsumerState<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 10.h),
-                  Text(
-                    "Student List (${homeState.attendanceList?.length ?? 0})",
-                    style: theme.textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20.sp,
-                    ),
+                  Row(
+                    mainAxisAlignment: .spaceBetween,
+                    crossAxisAlignment: .center,
+                    children: [
+                      Text(
+                        "Student List (${homeState.attendanceList?.length ?? 0})",
+                        style: theme.textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20.sp,
+                        ),
+                      ),
+                      Visibility(
+                        visible: homeState.isInvidualChecked,
+                        child: MaterialButton(
+                          shape:RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                          color: AppColors.primary,
+                          onPressed: (){
+                            ref.read(homeProvider.notifier).individualUpdatedAttendanceList();
+                          },child: Text("Mark Attendetance",style:TextStyle(color: Colors.white) ),),
+                      )
+                    ],
                   ),
-
                   Visibility(
                     visible: homeState.isChecked,
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10.h),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              MaterialButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.r),
-                                ),
-                                color: theme.primaryColor,
-                                onPressed: () {},
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "Mark Present",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10.h),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: MaterialButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.r),
+                              ),
+                              color: theme.primaryColor,
+                              onPressed: () {
+                                ref
+                                    .read(homeProvider.notifier)
+                                    .updatedAttendanceList(true);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Mark Present",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 20.w),
-                              MaterialButton(
-                                onPressed: () {},
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.r),
-                                ),
-                                color: Colors.red,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "Mark Absent",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ],
+                          SizedBox(width: 20.w),
+                          Expanded(
+                            child: MaterialButton(
+                              onPressed: () {
+                                ref
+                                    .read(homeProvider.notifier)
+                                    .updatedAttendanceList(false);
+                              },
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.r),
+                              ),
+                              color: Colors.red,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Mark Absent",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-
                   SizedBox(height: 10.h),
-
                   // Search box
-                  Container(
-                    height: 45.h,
-                    // color: Colors.black,
+                  SizedBox(
+                    height: 52.h,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Flexible(
+                        Expanded(
                           child: Container(
                             padding: EdgeInsets.symmetric(horizontal: 16.w),
                             decoration: BoxDecoration(
@@ -323,9 +325,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ),
                         ),
                         SizedBox(width: 10.w),
-                    
                         Visibility(
-                          visible: !homeState.isIndividual,
+                          visible: !homeState.isIndividual && ref.read(homeProvider.notifier).isSelectAll(),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -337,24 +338,20 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       .read(homeProvider.notifier)
                                       .toggleSelectAll(v!);
                                 },
-                                fillColor: WidgetStateProperty.resolveWith((
-                                  states,
-                                ) {
-                                  return Colors.white;
-                                }),
-                                side: WidgetStateBorderSide.resolveWith((states) {
-                                  return BorderSide(
+                                fillColor: MaterialStateProperty.resolveWith(
+                                  (_) => Colors.white,
+                                ),
+                                side: MaterialStateBorderSide.resolveWith(
+                                  (_) => BorderSide(
                                     color: theme.primaryColor,
                                     width: 1,
-                                  );
-                                }),
+                                  ),
+                                ),
                                 checkColor: theme.primaryColor,
                                 visualDensity: VisualDensity.comfortable,
-                    
                                 materialTapTargetSize:
                                     MaterialTapTargetSize.padded,
                               ),
-                    
                               Text(
                                 homeState.isCheckedSelectAll
                                     ? "Unselect All"
@@ -371,18 +368,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                       ],
                     ),
                   ),
-
                   SizedBox(height: 5.h),
                   Row(
                     children: [
-                      
-                     
                       InkWell(
-                        onTap: () {
-                          ref
-                              .read(homeProvider.notifier)
-                              .changePage(0);
-                        },
+                        onTap: () => ref.read(homeProvider.notifier).changePage(0),
                         child: Card(
                           elevation: !homeState.isIndividual ? 4 : 2,
                           shape: RoundedRectangleBorder(
@@ -392,9 +382,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                               ? AppColors.primary
                               : Colors.white,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 18.0,
-                              vertical: 8.0,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 18.0.w,
+                              vertical: 8.0.h,
                             ),
                             child: Text(
                               "All",
@@ -409,13 +399,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ),
                         ),
                       ),
-                       SizedBox(width: 5.w),
+                      SizedBox(width: 5.w),
                       InkWell(
-                        onTap: () {
-                         ref
-                              .read(homeProvider.notifier)
-                              .changePage(1);
-                        },
+                        onTap: () => ref.read(homeProvider.notifier).changePage(1),
                         child: Card(
                           elevation: homeState.isIndividual ? 4 : 2,
                           shape: RoundedRectangleBorder(
@@ -425,9 +411,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                               ? AppColors.primary
                               : Colors.white,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 18.0,
-                              vertical: 8.0,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 18.0.w,
+                              vertical: 8.0.h,
                             ),
                             child: Text(
                               "Individual",
@@ -445,119 +431,15 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ],
                   ),
                   SizedBox(height: 10.h),
+                  // PageView
                   Expanded(
                     child: PageView(
-                      controller: ref
-                          .read(homeProvider.notifier)
-                          .pageController,
-                      onPageChanged: (index) {
-                        ref
-                            .read(homeProvider.notifier)
-                            .changePage(  index);
-                      },
+                      controller: ref.read(homeProvider.notifier).pageController,
+                      onPageChanged: (index) =>
+                          ref.read(homeProvider.notifier).changePage(index),
                       children: [
-                       
-
-                        if (homeState.error != null)
-                          Center(child: Text("Error: ${homeState.error}"))
-                        else
-                          Skeletonizer(
-                            enabled: homeState.isLoading,
-                            child: ListView.builder(
-                              physics: BouncingScrollPhysics(),
-                              padding: EdgeInsets.all(0),
-                              itemCount: homeState.isLoading
-                                  ? 10
-                                  : (homeState.attendanceList?.length ?? 0),
-                              itemBuilder: (_, i) {
-                                final student = homeState.isLoading
-                                    ? const StudentAttendance(
-                                        student: "Student Name",
-                                        attendanceStatus: "Present",
-                                        attendanceOn: "2024-01-01",
-                                        studentName: "Student Name",
-                                        isChecked: false,
-                                      )
-                                    : homeState.attendanceList![i];
-                                final isPresent =
-                                    student.attendanceStatus == "Present";
-                                final isAbsent =
-                                    student.attendanceStatus == "Absent";
-                                final isChecked = student.isChecked;
-
-                                return StudentCard(
-                                  isIndividual: false,
-                                  name: student.studentName,
-                                  id: student.student,
-                                  imageUrl:
-                                      "https://i.pravatar.cc/150?img=${i + 1}",
-                                  onPresent: () => ref
-                                      .read(homeProvider.notifier)
-                                      .toggleAttendance(i, true),
-                                  onAbsent: () => ref
-                                      .read(homeProvider.notifier)
-                                      .toggleAttendance(i, false),
-                                  onCheckboxChanged: (bool? value) => ref
-                                      .read(homeProvider.notifier)
-                                      .toggleSelection(student.student),
-                                  isPresent: isPresent,
-                                  isAbsent: isAbsent,
-                                  isChecked: isChecked,
-                                );
-                              },
-                            ),
-                          ),
-
-
-                           if (homeState.error != null)
-                          Center(child: Text("Error: ${homeState.error}"))
-                        else
-                          Skeletonizer(
-                            enabled: homeState.isLoading,
-                            child: ListView.builder(
-                              physics: BouncingScrollPhysics(),
-                              padding: EdgeInsets.all(0),
-                              itemCount: homeState.isLoading
-                                  ? 10
-                                  : (homeState.attendanceList?.length ?? 0),
-                              itemBuilder: (_, i) {
-                                final student = homeState.isLoading
-                                    ? const StudentAttendance(
-                                        student: "Student Name",
-                                        attendanceStatus: "Present",
-                                        attendanceOn: "2024-01-01",
-                                        studentName: "Student Name",
-                                        isChecked: false,
-                                      )
-                                    : homeState.attendanceList![i];
-                                final isPresent =
-                                    student.attendanceStatus == "Present";
-                                final isAbsent =
-                                    student.attendanceStatus == "Absent";
-                                final isChecked = student.isChecked;
-
-                                return StudentCard(
-                                  isIndividual: true,
-                                  name: student.studentName,
-                                  id: student.student,
-                                  imageUrl:
-                                      "https://i.pravatar.cc/150?img=${i + 1}",
-                                  onPresent: () => ref
-                                      .read(homeProvider.notifier)
-                                      .toggleAttendance(i, true),
-                                  onAbsent: () => ref
-                                      .read(homeProvider.notifier)
-                                      .toggleAttendance(i, false),
-                                  onCheckboxChanged: (bool? value) => ref
-                                      .read(homeProvider.notifier)
-                                      .toggleSelection(student.student),
-                                  isPresent: isPresent,
-                                  isAbsent: isAbsent,
-                                  isChecked: isChecked,
-                                );
-                              },
-                            ),
-                          ),
+                        buildStudentList(homeState, theme, ref, isIndividual: false),
+                        buildStudentList(homeState, theme, ref, isIndividual: true),
                       ],
                     ),
                   ),
@@ -567,6 +449,88 @@ class _HomePageState extends ConsumerState<HomePage> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget buildStudentList(
+    dynamic homeState,
+    ThemeData theme,
+    WidgetRef ref, {
+    required bool isIndividual,
+  }) {
+    if (homeState.error != null) {
+      return Center(child: Text("Error: ${homeState.error}"));
+    }
+
+    final itemCount = homeState.isLoading ? 10 : (homeState.attendanceList?.length ?? 0);
+
+    return ListView.builder(
+      physics: const BouncingScrollPhysics(),
+      padding: EdgeInsets.zero,
+      itemCount: itemCount,
+      itemBuilder: (context, i) {
+        if (homeState.isLoading) {
+          return Skeletonizer(
+            enabled: true,
+            child: Container(
+              margin: EdgeInsets.only(bottom: 14.h),
+              padding: EdgeInsets.all(12.w),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.r),
+                border: Border.all(color: Colors.grey.shade300),
+                color: Colors.white,
+              ),
+              child: Row(
+                children: [
+                  CircleAvatar(radius: 24.r),
+                  SizedBox(width: 12.w),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 120.w,
+                        height: 16.h,
+                        color: Colors.grey.shade300,
+                      ),
+                      SizedBox(height: 4.h),
+                      Container(
+                        width: 80.w,
+                        height: 14.h,
+                        color: Colors.grey.shade300,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
+        final student = homeState.attendanceList![i];
+        final isPresent = student.attendanceStatus == "Present";
+        final isAbsent = student.attendanceStatus == "Absent";
+        final isChecked = student.isChecked;
+
+        final originalStatus = homeState.originalAttendanceList != null &&
+                homeState.originalAttendanceList!.length > i
+            ? homeState.originalAttendanceList![i].attendanceStatus
+            : "";
+
+        return StudentCard(
+          isIndividual: isIndividual,
+          attendanceStatus: originalStatus,
+          name: student.studentName,
+          id: student.student,
+          imageUrl: "https://i.pravatar.cc/150?img=${i + 1}",
+          onPresent: () => ref.read(homeProvider.notifier).toggleAttendance(i, true),
+          onAbsent: () => ref.read(homeProvider.notifier).toggleAttendance(i, false),
+          onCheckboxChanged: (bool? value) =>
+              ref.read(homeProvider.notifier).toggleSelection(student.student),
+          isPresent: isPresent,
+          isAbsent: isAbsent,
+          isChecked: isChecked,
+        );
+      },
     );
   }
 }
