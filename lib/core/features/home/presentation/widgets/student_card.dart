@@ -53,11 +53,12 @@ class StudentCard extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(12.w),
             child: Row(
+
               children: [
                 
                 CircleAvatar(
                   radius: 24.r,
-                  backgroundColor:attendanceStatus=="Present"?Colors.green:attendanceStatus=="Absent"?Colors.red: Colors.grey.shade200,
+                  // backgroundColor:attendanceStatus=="Present"?const Color(0xFF347936):attendanceStatus=="Absent"?Colors.red: Colors.grey.shade200,
                   child: CircleAvatar(
                     radius: 22.r,
                     backgroundImage: AssetImage("assets/images/student.gif"),

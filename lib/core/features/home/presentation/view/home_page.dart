@@ -1,4 +1,5 @@
 import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/widgets/student_card.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/widgets/successModalBottomSheet%20copy.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/colors/app_colors.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/icons/app_icons.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/images/app_images.dart';
@@ -8,7 +9,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../data/models/attendance_model.dart';
 import '../viewmodel/home_viewmodel.dart';
@@ -51,8 +54,8 @@ class _HomePageState extends ConsumerState<HomePage> {
             image: AssetImage('assets/images/bg-test2.jpg'),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.2), // overlay color + opacity
-              BlendMode.darken, // blend
+              Colors.black.withOpacity(0.2),
+              BlendMode.darken,
             ),
           ),
         ),
@@ -72,7 +75,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Image.asset(AppImages.app_logo, width: 100.w),
-                      Icon(LucideIcons.logOut, color: Colors.white),
+                      InkWell(
+                        onTap: () {
+                          successDialog(theme, context);
+                        },
+                        child: Icon(LucideIcons.logOut, color: Colors.white),
+                      ),
                     ],
                   ),
                   SizedBox(height: 22.h),
@@ -523,22 +531,21 @@ class _HomePageState extends ConsumerState<HomePage> {
           return Skeletonizer(
             enabled: true,
             child: StudentCard(
-          isIndividual: isIndividual,
-          attendanceStatus: "hng",
-          name:"Temp",
-          id: "Temp 487548",
-          imageUrl: "https://i.pravatar.cc/150?img=${i + 1}",
-          onPresent: () =>
-              ref.read(homeProvider.notifier).toggleAttendance(i, true),
-          onAbsent: () =>
-              ref.read(homeProvider.notifier).toggleAttendance(i, false),
-          onCheckboxChanged: (bool? value) =>
-              ref.read(homeProvider.notifier).toggleSelection(""),
-          isPresent:true,
-          isAbsent: true,
-          isChecked: false,
-        )
-            ,
+              isIndividual: isIndividual,
+              attendanceStatus: "hng",
+              name: "Temp",
+              id: "Temp 487548",
+              imageUrl: "https://i.pravatar.cc/150?img=${i + 1}",
+              onPresent: () =>
+                  ref.read(homeProvider.notifier).toggleAttendance(i, true),
+              onAbsent: () =>
+                  ref.read(homeProvider.notifier).toggleAttendance(i, false),
+              onCheckboxChanged: (bool? value) =>
+                  ref.read(homeProvider.notifier).toggleSelection(""),
+              isPresent: true,
+              isAbsent: true,
+              isChecked: false,
+            ),
           );
         }
 
