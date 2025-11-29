@@ -102,6 +102,7 @@ class _StudentPageState extends ConsumerState<StudentPage> {
                         children: [
                           // LottieBuilder.asset('assets/images/notfound.json',width: 200,),
                           Image.asset('assets/images/new-unscreen.gif'),
+
                           Text(
                             "No students found",
                             style: theme.textTheme.titleMedium?.copyWith(
