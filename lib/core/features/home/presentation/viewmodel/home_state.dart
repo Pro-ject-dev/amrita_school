@@ -16,6 +16,7 @@ abstract class HomeState with _$HomeState {
     required bool isInvidualChecked,
     required bool isChecked,
     required String date,
+    required String greetingText,
     String? error,
     required bool isCheckedSelectAll,
     @Default({}) Set<String> selectedIds,
@@ -32,7 +33,9 @@ abstract class HomeState with _$HomeState {
     isCheckedSelectAll: false,
     selectedIds: {},
     isIndividual: false,
-    isInvidualChecked: false
+    isInvidualChecked: false, greetingText: ''
+
+
 
   );
 }

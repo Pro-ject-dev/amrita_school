@@ -7,8 +7,8 @@ class AppStrings {
   static const profileTitle = 'Profile';
 
   static const b_nav_1 = 'Home';
-  static const b_nav_2 = 'Students';
-  static const b_nav_3 = 'Reports';
+  static const b_nav_2 = 'My Class';
+  static const b_nav_3 = 'E-Track';
   static const b_nav_4 = 'Profile';
 
 

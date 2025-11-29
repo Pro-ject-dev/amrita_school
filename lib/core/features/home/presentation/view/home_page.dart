@@ -1,5 +1,5 @@
 import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/widgets/student_card.dart';
-import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/widgets/successModalBottomSheet%20copy.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/widgets/successDialog.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/colors/app_colors.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/icons/app_icons.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/images/app_images.dart';
@@ -34,7 +34,9 @@ class _HomePageState extends ConsumerState<HomePage> {
       ref
           .read(homeProvider.notifier)
           .fetchAttendance("", DateFormat('yyyy-MM-dd').format(DateTime.now()));
+      ref.read(homeProvider.notifier).greeting();
     });
+    
   }
 
   @override
@@ -84,13 +86,19 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ],
                   ),
                   SizedBox(height: 22.h),
-                  Text(
-                    AppStrings.welcome_title,
-                    style: theme.textTheme.headlineSmall?.copyWith(
-                      fontSize: 20.sp,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        '${homeState.greetingText} 👋',
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          fontSize: 20.sp,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        
+                      ),
+                      // LottieBuilder.asset('assets/images/hellojson.json',repeat: false,width: 30.h,)
+                    ],
                   ),
                   SizedBox(height: 8.h),
                   Container(
