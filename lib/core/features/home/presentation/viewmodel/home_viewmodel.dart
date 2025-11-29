@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:developer';
 import 'package:amrita_vidhyalayam_teacher/core/features/home/data/models/post_attendance_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -340,8 +340,29 @@ class HomeViewModel extends StateNotifier<HomeState> {
         state.attendanceList!.any((e) => e.attendanceStatus == "");
     return status;
   }
+
+  greeting() {
+
+   final currentTime = DateTime.now();
+   final hour = currentTime.hour;
+   String greeting = '';
+
+   if(hour <12){
+    greeting =  'Good Morning';
+   }else if(hour < 17 ){
+    greeting = 'Good Afternoon';
+   }else {
+    greeting =  'Good Evening';
+   }
+
+   state = state.copyWith(greetingText: greeting);
+   
+  }
+
+
 }
 
 final homeProvider = StateNotifierProvider<HomeViewModel, HomeState>(
   (ref) => HomeViewModel(ref.watch(homeRepositoryProvider)),
 );
+

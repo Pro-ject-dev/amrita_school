@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:amrita_vidhyalayam_teacher/core/features/student/presentation/widgets/student_card.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/colors/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -18,12 +20,28 @@ class StudentPage extends ConsumerStatefulWidget {
 
 class _StudentPageState extends ConsumerState<StudentPage> {
   final searchController = TextEditingController();
+  Timer? _searchDebounce;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(studentProvider.notifier).fetchStudent("");
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchDebounce?.cancel();
+    searchController.dispose();
+    super.dispose();
+  }
+
+  void _onSearchChanged(String value) {
+    // debounce: wait for user to stop typing for 400ms
+    _searchDebounce?.cancel();
+    _searchDebounce = Timer(const Duration(milliseconds: 400), () {
+      ref.read(studentProvider.notifier).fetchStudent(value);
     });
   }
 
@@ -37,7 +55,6 @@ class _StudentPageState extends ConsumerState<StudentPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: const Color(0xffF5F7FA),
-  
         title: const Text("Student Page"),
         actions: [
           Padding(
@@ -61,9 +78,7 @@ class _StudentPageState extends ConsumerState<StudentPage> {
               ),
               child: TextField(
                 controller: searchController,
-                onChanged: (value) {
-                  ref.read(studentProvider.notifier).fetchStudent(value);
-                },
+                onChanged: _onSearchChanged,
                 decoration: InputDecoration(
                   hintText: 'Search student',
                   icon: Icon(LucideIcons.search, color: AppColors.grey500),
@@ -81,6 +96,7 @@ class _StudentPageState extends ConsumerState<StudentPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Builder(
                 builder: (_) {
+                  // Error state
                   if (state.error != null) {
                     return Center(
                       child: Text(
@@ -92,17 +108,17 @@ class _StudentPageState extends ConsumerState<StudentPage> {
                     );
                   }
 
-                  // ⛔ No students found
+                  // No students found
                   if (!state.isLoading &&
                       (state.studentList == null ||
                           state.studentList!.isEmpty)) {
-                    return Expanded(
+                    return Center(
                       child: Column(
-                        mainAxisAlignment: .center,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          // LottieBuilder.asset('assets/images/notfound.json',width: 200,),
+                          // LottieBuilder.asset('assets/images/notfound.json', width: 200),
                           Image.asset('assets/images/new-unscreen.gif'),
-
+                          SizedBox(height: 12.h),
                           Text(
                             "No students found",
                             style: theme.textTheme.titleMedium?.copyWith(
@@ -115,6 +131,7 @@ class _StudentPageState extends ConsumerState<StudentPage> {
                     );
                   }
 
+                  // List / skeleton state
                   return Skeletonizer(
                     enabled: state.isLoading,
                     child: ListView.builder(
@@ -146,7 +163,7 @@ class _StudentPageState extends ConsumerState<StudentPage> {
                 },
               ),
             ),
-          )
+          ),
         ],
       ),
     );
