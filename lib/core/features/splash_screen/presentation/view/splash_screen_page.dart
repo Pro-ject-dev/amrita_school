@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:amrita_vidhyalayam_teacher/core/features/splash_screen/presentation/viewmodel/splash_screen_state.dart';
+import 'package:amrita_vidhyalayam_teacher/core/providers/common_providers.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/images/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -102,9 +105,18 @@ class _SplashScreenPageState extends ConsumerState<SplashScreenPage>
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<SplashScreenState>(splashScreenProvider, (previous, next) {
+    ref.listen<SplashScreenState>(splashScreenProvider, (previous, next) async{
       if (next.isFinished) {
-        context.go('/auth');
+      final isAuth = await  ref.read(authServiceProvider).isAuthenticated();
+      log(isAuth.toString());
+      if(isAuth==true){
+        context.go("/home");
+
+      }
+      else{
+        context.go("/auth");
+      }
+       
       }
     });
 

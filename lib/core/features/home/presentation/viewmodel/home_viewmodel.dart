@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:amrita_vidhyalayam_teacher/core/features/home/data/models/post_attendance_model.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/home/data/models/ui_response_model.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/widgets/successBottomSheet.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod/legacy.dart';
@@ -15,7 +17,6 @@ class HomeViewModel extends StateNotifier<HomeState> {
 
   static const String standardFormat = 'yyyy-MM-dd';
   static const String displayFormat = 'MMM dd';
-  
 
   final PageController pageController = PageController();
 
@@ -30,12 +31,17 @@ class HomeViewModel extends StateNotifier<HomeState> {
       isCheckedSelectAll: false,
       isChecked: false,
       selectedIds: {},
-      isInvidualChecked: false
-      
+      isInvidualChecked: false,
     );
     state = index == 0
-        ? state.copyWith(isIndividual: false,attendanceList: state.originalAttendanceList)
-        : state.copyWith(isIndividual: true,attendanceList: state.originalAttendanceList);
+        ? state.copyWith(
+            isIndividual: false,
+            attendanceList: state.originalAttendanceList,
+          )
+        : state.copyWith(
+            isIndividual: true,
+            attendanceList: state.originalAttendanceList,
+          );
     pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 300),
@@ -51,7 +57,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
     if (date.startsWith("Today")) {
       formattedDate = DateFormat(standardFormat).format(DateTime.now());
     }
-    
+
     try {
       final result = await _repository.getClassAttendance(
         sclass: "TS 25 CLASS 2 A",
@@ -70,10 +76,9 @@ class HomeViewModel extends StateNotifier<HomeState> {
         originalAttendanceList: result.attendanceList,
         filteredAttendanceList: null,
         selectedIds: newSelectedIds,
-        isChecked:false,
+        isChecked: false,
         isCheckedSelectAll: false,
-        isInvidualChecked: false
-
+        isInvidualChecked: false,
       );
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
@@ -93,12 +98,15 @@ class HomeViewModel extends StateNotifier<HomeState> {
     final currentSelectedIds = Set<String>.from(state.selectedIds);
     if (currentSelectedIds.contains(studentId)) {
       currentSelectedIds.remove(studentId);
-      state=state.copyWith(isCheckedSelectAll: false);
+      state = state.copyWith(isCheckedSelectAll: false);
     } else {
       currentSelectedIds.add(studentId);
-      final unMarkedStudentIds = state.originalAttendanceList!.where((e)=>e.attendanceStatus=="").map((e)=>e.student).toSet();
-      if(currentSelectedIds.containsAll(unMarkedStudentIds)){
-         state=state.copyWith(isCheckedSelectAll: true);
+      final unMarkedStudentIds = state.originalAttendanceList!
+          .where((e) => e.attendanceStatus == "")
+          .map((e) => e.student)
+          .toSet();
+      if (currentSelectedIds.containsAll(unMarkedStudentIds)) {
+        state = state.copyWith(isCheckedSelectAll: true);
       }
     }
 
@@ -167,7 +175,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
       state = state.copyWith(
         attendanceList: mainList,
         filteredAttendanceList: newFilteredList,
-        isInvidualChecked: true
+        isInvidualChecked: true,
       );
     }
   }
@@ -204,12 +212,13 @@ class HomeViewModel extends StateNotifier<HomeState> {
   }
 
   DateTime parseCurrentDate() {
-    final todayText = "Today, ${DateFormat(displayFormat).format(DateTime.now())}";
-    
+    final todayText =
+        "Today, ${DateFormat(displayFormat).format(DateTime.now())}";
+
     if (state.date.startsWith("Today")) {
       return DateTime.now();
     }
-    
+
     // Parse the date in standard format
     return DateFormat(standardFormat).parse(state.date);
   }
@@ -230,10 +239,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
         newSelectedIds,
       );
       final updatedFilteredList = state.filteredAttendanceList != null
-          ? syncListWithSelection(
-              state.filteredAttendanceList!,
-              newSelectedIds,
-            )
+          ? syncListWithSelection(state.filteredAttendanceList!, newSelectedIds)
           : null;
 
       state = state.copyWith(
@@ -258,43 +264,71 @@ class HomeViewModel extends StateNotifier<HomeState> {
   Future<void> updatedAttendanceList(bool isMarkPresent) async {
     try {
       final actualDate = _getActualDate();
-      
+
       print("Posting attendance for date: $actualDate");
-      
-      final AttendanceUpdateResponse result = await _repository.postClassAttendance(
-        sclass: "TS 25 CLASS 2 A",
-        date: actualDate,
-        absent_list: !isMarkPresent
-            ? state.attendanceList!
-                .where((student) =>
-                    state.selectedIds.contains(student.student) &&
-                    state.originalAttendanceList!.any((original) =>
-                        original.student == student.student &&
-                        original.attendanceStatus == ""))
-                .map((student) => {
-                      "student_id": student.student,
-                      "student_name": student.studentName
-                    })
-                .toList()
-            : [],
-        present_list: isMarkPresent
-            ? state.attendanceList!
-                .where((student) =>
-                    state.selectedIds.contains(student.student) &&
-                    state.originalAttendanceList!.any((original) =>
-                        original.student == student.student &&
-                        original.attendanceStatus == ""))
-                .map((student) => {
-                      "student_id": student.student,
-                      "student_name": student.studentName
-                    })
-                .toList()
-            : [],
-      );
 
-      print("Attendance Update Response: ${result.message.message}");
-      state = state.copyWith(isChecked: false);
+      final AttendanceUpdateResponse result = await _repository
+          .postClassAttendance(
+            sclass: "TS 25 CLASS 2 A",
+            date: actualDate,
+            absent_list: !isMarkPresent
+                ? state.attendanceList!
+                      .where(
+                        (student) =>
+                            state.selectedIds.contains(student.student) &&
+                            state.originalAttendanceList!.any(
+                              (original) =>
+                                  original.student == student.student &&
+                                  original.attendanceStatus == "",
+                            ),
+                      )
+                      .map(
+                        (student) => {
+                          "student_id": student.student,
+                          "student_name": student.studentName,
+                        },
+                      )
+                      .toList()
+                : [],
+            present_list: isMarkPresent
+                ? state.attendanceList!
+                      .where(
+                        (student) =>
+                            state.selectedIds.contains(student.student) &&
+                            state.originalAttendanceList!.any(
+                              (original) =>
+                                  original.student == student.student &&
+                                  original.attendanceStatus == "",
+                            ),
+                      )
+                      .map(
+                        (student) => {
+                          "student_id": student.student,
+                          "student_name": student.studentName,
+                        },
+                      )
+                      .toList()
+                : [],
+          );
 
+      if (result.message.status == "success") {
+        state = state.copyWith(
+          updateResponse: UiResponseModel(
+            isSuccess: true,
+            presentCount: result.message.summary.present.created,
+            absentCount: result.message.summary.absent.created,
+            totalCount: result.message.totalCreated,
+            message: result.message.message,
+          ),
+        );
+      } else {
+        state = state.copyWith(
+          updateResponse: UiResponseModel(
+            isSuccess: false,
+            message: result.message.message,
+          ),
+        );
+      }
       await fetchAttendance("", actualDate);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
@@ -305,30 +339,53 @@ class HomeViewModel extends StateNotifier<HomeState> {
     state = state.copyWith(isLoading: true);
     try {
       final actualDate = _getActualDate();
-      
+
       print("Posting individual attendance for date: $actualDate");
-      
-      final AttendanceUpdateResponse result = await _repository.postClassAttendance(
-        sclass: "TS 25 CLASS 2 A",
-        date: actualDate,
-        absent_list: state.attendanceList!
-            .where((student) => student.attendanceStatus == "Absent")
-            .map((student) => {
-                  "student_id": student.student,
-                  "student_name": student.studentName
-                })
-            .toList(),
-        present_list: state.attendanceList!
-            .where((student) => student.attendanceStatus == "Present")
-            .map((student) => {
-                  "student_id": student.student,
-                  "student_name": student.studentName
-                })
-            .toList(),
-      );
+
+      final AttendanceUpdateResponse result = await _repository
+          .postClassAttendance(
+            sclass: "TS 25 CLASS 2 A",
+            date: actualDate,
+            absent_list: state.attendanceList!
+                .where((student) => student.attendanceStatus == "Absent")
+                .map(
+                  (student) => {
+                    "student_id": student.student,
+                    "student_name": student.studentName,
+                  },
+                )
+                .toList(),
+            present_list: state.attendanceList!
+                .where((student) => student.attendanceStatus == "Present")
+                .map(
+                  (student) => {
+                    "student_id": student.student,
+                    "student_name": student.studentName,
+                  },
+                )
+                .toList(),
+          );
+          if (result.message.status == "success") {
+        state = state.copyWith(
+          updateResponse: UiResponseModel(
+            isSuccess: true,
+            presentCount: result.message.summary.present.created,
+            absentCount: result.message.summary.absent.created,
+            totalCount: result.message.totalCreated,
+            message: result.message.message,
+          ),
+        );
+      } else {
+        state = state.copyWith(
+          updateResponse: UiResponseModel(
+            isSuccess: false,
+            message: result.message.message,
+          ),
+        );
+      }
 
       print("Attendance Update Response: ${result.message.message}");
-      
+
       await fetchAttendance("", actualDate);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
@@ -336,33 +393,29 @@ class HomeViewModel extends StateNotifier<HomeState> {
   }
 
   bool isSelectAll() {
-    final bool status = state.attendanceList != null &&
+    final bool status =
+        state.attendanceList != null &&
         state.attendanceList!.any((e) => e.attendanceStatus == "");
     return status;
   }
 
   greeting() {
+    final currentTime = DateTime.now();
+    final hour = currentTime.hour;
+    String greeting = '';
 
-   final currentTime = DateTime.now();
-   final hour = currentTime.hour;
-   String greeting = '';
+    if (hour < 12) {
+      greeting = 'Good Morning';
+    } else if (hour < 17) {
+      greeting = 'Good Afternoon';
+    } else {
+      greeting = 'Good Evening';
+    }
 
-   if(hour <12){
-    greeting =  'Good Morning';
-   }else if(hour < 17 ){
-    greeting = 'Good Afternoon';
-   }else {
-    greeting =  'Good Evening';
-   }
-
-   state = state.copyWith(greetingText: greeting);
-   
+    state = state.copyWith(greetingText: greeting);
   }
-
-
 }
 
 final homeProvider = StateNotifierProvider<HomeViewModel, HomeState>(
   (ref) => HomeViewModel(ref.watch(homeRepositoryProvider)),
 );
-

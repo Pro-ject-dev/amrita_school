@@ -1,19 +1,22 @@
 import 'package:amrita_vidhyalayam_teacher/core/features/auth/presentation/view/auth_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/view/home_page.dart';
-import 'package:amrita_vidhyalayam_teacher/core/features/mainscaffold/presentation/view/mainscaffold_page.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/main_scaffold/presentation/view/mainscaffold_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/profile/presentation/view/profile_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/reports/presentation/view/reports_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/splash_screen/presentation/view/splash_screen_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/student/presentation/view/student_page.dart';
+import 'package:amrita_vidhyalayam_teacher/main.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
-
 final routerProvider = Provider<GoRouter>((ref) {
+
   return GoRouter(
+    
     initialLocation: '/',
+     navigatorKey: navigatorKey,
     routes: [
        GoRoute(
         path: '/',
@@ -22,6 +25,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       
       GoRoute(
+       
         path: '/auth',
         name: 'authentication',
         builder: (_, __) => const AuthPage(),

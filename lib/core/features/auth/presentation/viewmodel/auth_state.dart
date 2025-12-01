@@ -6,12 +6,12 @@ part 'auth_state.freezed.dart';
 abstract class AuthState with _$AuthState {
   const factory AuthState({
     required bool isLoading,
-    required String data,
+    required bool isValid,
     String? error,
   }) = _AuthState;
 
   factory AuthState.initial() => const AuthState(
         isLoading: false,
-        data: "",
+        isValid: false,
       );
 }

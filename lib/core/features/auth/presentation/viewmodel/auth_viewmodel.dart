@@ -1,25 +1,73 @@
+import 'package:amrita_vidhyalayam_teacher/core/providers/common_providers.dart';
+import 'package:amrita_vidhyalayam_teacher/core/services/storage_serice.dart';
+import 'package:flutter_riverpod/legacy.dart';
+import 'package:riverpod/riverpod.dart';
+import '../../data/repository/auth_repository.dart';
 import 'auth_state.dart';
-import '../../domain/usecases/auth_usecase.dart';
-import 'package:riverpod/legacy.dart';
 
 class AuthViewModel extends StateNotifier<AuthState> {
-  final AuthUseCase _useCase = AuthUseCase();
+  final AuthRepository _repository;
+  final Ref ref; // add ref
 
-  AuthViewModel() : super(AuthState.initial());
+  AuthViewModel(this._repository, this.ref) : super(AuthState.initial()) {
+    _checkAuthStatus();
+  }
 
-  Future<void> load() async {
+  Future<void> _checkAuthStatus() async {
+    try {
+      final isAuth = await _repository.checkAuthStatus();
+      if (isAuth) {
+        await _loadUserData();
+      }
+    } catch (_) {}
+  }
+
+  Future<void> _loadUserData() async {
+    try {
+      await _repository.getCurrentUser();
+    } catch (_) {}
+  }
+
+  Future<void> login() async {
     state = state.copyWith(isLoading: true);
 
     try {
-      final result = await _useCase.execute();
-      state = state.copyWith(isLoading: false, data: result.value);
+      final isLoggedIn = await _repository.login();
+
+      if (isLoggedIn) {
+        final validStatus = await _repository.isValidUser();
+
+        if (validStatus.message.isInstructor) {
+          // now ref works
+          await ref.read(storageServiceProvider).write(
+                "isLoggedIn",
+                true
+              );
+
+          state = state.copyWith(
+            isValid: true,
+            isLoading: false,
+          );
+        } else {
+          state = state.copyWith(
+            isValid: false,
+            isLoading: false,
+            error: "Not a valid teacher account",
+          );
+        }
+      }
     } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
+      state = state.copyWith(
+        isLoading: false,
+        error: e.toString(),
+      );
     }
   }
-}
 
-final authProvider =
-    StateNotifierProvider<AuthViewModel, AuthState>(
-  (ref) => AuthViewModel(),
-);
+  Future<void> logout() async {
+    try {
+      await _repository.logout();
+      await ref.read(storageServiceProvider).clear();
+    } catch (_) {}
+  }
+}

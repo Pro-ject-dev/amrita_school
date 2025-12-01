@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HomeState {
 
- bool get isLoading; String get data; List<StudentAttendance>? get attendanceList; List<StudentAttendance>? get filteredAttendanceList; List<StudentAttendance>? get originalAttendanceList; bool get isIndividual; bool get isInvidualChecked; bool get isChecked; String get date; String get greetingText; String? get error; bool get isCheckedSelectAll; Set<String> get selectedIds;
+ bool get isLoading; String get data; UiResponseModel get updateResponse; bool get attendanceUpdatedSuccess; bool get attendanceUpdatedFaliure; List<StudentAttendance>? get attendanceList; List<StudentAttendance>? get filteredAttendanceList; List<StudentAttendance>? get originalAttendanceList; bool get isIndividual; bool get isInvidualChecked; bool get isChecked; String get date; String get greetingText; String? get error; bool get isCheckedSelectAll; Set<String> get selectedIds;
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $HomeStateCopyWith<HomeState> get copyWith => _$HomeStateCopyWithImpl<HomeState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&const DeepCollectionEquality().equals(other.attendanceList, attendanceList)&&const DeepCollectionEquality().equals(other.filteredAttendanceList, filteredAttendanceList)&&const DeepCollectionEquality().equals(other.originalAttendanceList, originalAttendanceList)&&(identical(other.isIndividual, isIndividual) || other.isIndividual == isIndividual)&&(identical(other.isInvidualChecked, isInvidualChecked) || other.isInvidualChecked == isInvidualChecked)&&(identical(other.isChecked, isChecked) || other.isChecked == isChecked)&&(identical(other.date, date) || other.date == date)&&(identical(other.greetingText, greetingText) || other.greetingText == greetingText)&&(identical(other.error, error) || other.error == error)&&(identical(other.isCheckedSelectAll, isCheckedSelectAll) || other.isCheckedSelectAll == isCheckedSelectAll)&&const DeepCollectionEquality().equals(other.selectedIds, selectedIds));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.updateResponse, updateResponse) || other.updateResponse == updateResponse)&&(identical(other.attendanceUpdatedSuccess, attendanceUpdatedSuccess) || other.attendanceUpdatedSuccess == attendanceUpdatedSuccess)&&(identical(other.attendanceUpdatedFaliure, attendanceUpdatedFaliure) || other.attendanceUpdatedFaliure == attendanceUpdatedFaliure)&&const DeepCollectionEquality().equals(other.attendanceList, attendanceList)&&const DeepCollectionEquality().equals(other.filteredAttendanceList, filteredAttendanceList)&&const DeepCollectionEquality().equals(other.originalAttendanceList, originalAttendanceList)&&(identical(other.isIndividual, isIndividual) || other.isIndividual == isIndividual)&&(identical(other.isInvidualChecked, isInvidualChecked) || other.isInvidualChecked == isInvidualChecked)&&(identical(other.isChecked, isChecked) || other.isChecked == isChecked)&&(identical(other.date, date) || other.date == date)&&(identical(other.greetingText, greetingText) || other.greetingText == greetingText)&&(identical(other.error, error) || other.error == error)&&(identical(other.isCheckedSelectAll, isCheckedSelectAll) || other.isCheckedSelectAll == isCheckedSelectAll)&&const DeepCollectionEquality().equals(other.selectedIds, selectedIds));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,data,const DeepCollectionEquality().hash(attendanceList),const DeepCollectionEquality().hash(filteredAttendanceList),const DeepCollectionEquality().hash(originalAttendanceList),isIndividual,isInvidualChecked,isChecked,date,greetingText,error,isCheckedSelectAll,const DeepCollectionEquality().hash(selectedIds));
+int get hashCode => Object.hash(runtimeType,isLoading,data,updateResponse,attendanceUpdatedSuccess,attendanceUpdatedFaliure,const DeepCollectionEquality().hash(attendanceList),const DeepCollectionEquality().hash(filteredAttendanceList),const DeepCollectionEquality().hash(originalAttendanceList),isIndividual,isInvidualChecked,isChecked,date,greetingText,error,isCheckedSelectAll,const DeepCollectionEquality().hash(selectedIds));
 
 @override
 String toString() {
-  return 'HomeState(isLoading: $isLoading, data: $data, attendanceList: $attendanceList, filteredAttendanceList: $filteredAttendanceList, originalAttendanceList: $originalAttendanceList, isIndividual: $isIndividual, isInvidualChecked: $isInvidualChecked, isChecked: $isChecked, date: $date, greetingText: $greetingText, error: $error, isCheckedSelectAll: $isCheckedSelectAll, selectedIds: $selectedIds)';
+  return 'HomeState(isLoading: $isLoading, data: $data, updateResponse: $updateResponse, attendanceUpdatedSuccess: $attendanceUpdatedSuccess, attendanceUpdatedFaliure: $attendanceUpdatedFaliure, attendanceList: $attendanceList, filteredAttendanceList: $filteredAttendanceList, originalAttendanceList: $originalAttendanceList, isIndividual: $isIndividual, isInvidualChecked: $isInvidualChecked, isChecked: $isChecked, date: $date, greetingText: $greetingText, error: $error, isCheckedSelectAll: $isCheckedSelectAll, selectedIds: $selectedIds)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $HomeStateCopyWith<$Res>  {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) _then) = _$HomeStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, String data, List<StudentAttendance>? attendanceList, List<StudentAttendance>? filteredAttendanceList, List<StudentAttendance>? originalAttendanceList, bool isIndividual, bool isInvidualChecked, bool isChecked, String date, String greetingText, String? error, bool isCheckedSelectAll, Set<String> selectedIds
+ bool isLoading, String data, UiResponseModel updateResponse, bool attendanceUpdatedSuccess, bool attendanceUpdatedFaliure, List<StudentAttendance>? attendanceList, List<StudentAttendance>? filteredAttendanceList, List<StudentAttendance>? originalAttendanceList, bool isIndividual, bool isInvidualChecked, bool isChecked, String date, String greetingText, String? error, bool isCheckedSelectAll, Set<String> selectedIds
 });
 
 
@@ -62,11 +62,14 @@ class _$HomeStateCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? data = null,Object? attendanceList = freezed,Object? filteredAttendanceList = freezed,Object? originalAttendanceList = freezed,Object? isIndividual = null,Object? isInvidualChecked = null,Object? isChecked = null,Object? date = null,Object? greetingText = null,Object? error = freezed,Object? isCheckedSelectAll = null,Object? selectedIds = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? data = null,Object? updateResponse = null,Object? attendanceUpdatedSuccess = null,Object? attendanceUpdatedFaliure = null,Object? attendanceList = freezed,Object? filteredAttendanceList = freezed,Object? originalAttendanceList = freezed,Object? isIndividual = null,Object? isInvidualChecked = null,Object? isChecked = null,Object? date = null,Object? greetingText = null,Object? error = freezed,Object? isCheckedSelectAll = null,Object? selectedIds = null,}) {
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as String,attendanceList: freezed == attendanceList ? _self.attendanceList : attendanceList // ignore: cast_nullable_to_non_nullable
+as String,updateResponse: null == updateResponse ? _self.updateResponse : updateResponse // ignore: cast_nullable_to_non_nullable
+as UiResponseModel,attendanceUpdatedSuccess: null == attendanceUpdatedSuccess ? _self.attendanceUpdatedSuccess : attendanceUpdatedSuccess // ignore: cast_nullable_to_non_nullable
+as bool,attendanceUpdatedFaliure: null == attendanceUpdatedFaliure ? _self.attendanceUpdatedFaliure : attendanceUpdatedFaliure // ignore: cast_nullable_to_non_nullable
+as bool,attendanceList: freezed == attendanceList ? _self.attendanceList : attendanceList // ignore: cast_nullable_to_non_nullable
 as List<StudentAttendance>?,filteredAttendanceList: freezed == filteredAttendanceList ? _self.filteredAttendanceList : filteredAttendanceList // ignore: cast_nullable_to_non_nullable
 as List<StudentAttendance>?,originalAttendanceList: freezed == originalAttendanceList ? _self.originalAttendanceList : originalAttendanceList // ignore: cast_nullable_to_non_nullable
 as List<StudentAttendance>?,isIndividual: null == isIndividual ? _self.isIndividual : isIndividual // ignore: cast_nullable_to_non_nullable
@@ -162,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  String data,  List<StudentAttendance>? attendanceList,  List<StudentAttendance>? filteredAttendanceList,  List<StudentAttendance>? originalAttendanceList,  bool isIndividual,  bool isInvidualChecked,  bool isChecked,  String date,  String greetingText,  String? error,  bool isCheckedSelectAll,  Set<String> selectedIds)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  String data,  UiResponseModel updateResponse,  bool attendanceUpdatedSuccess,  bool attendanceUpdatedFaliure,  List<StudentAttendance>? attendanceList,  List<StudentAttendance>? filteredAttendanceList,  List<StudentAttendance>? originalAttendanceList,  bool isIndividual,  bool isInvidualChecked,  bool isChecked,  String date,  String greetingText,  String? error,  bool isCheckedSelectAll,  Set<String> selectedIds)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _HomeState() when $default != null:
-return $default(_that.isLoading,_that.data,_that.attendanceList,_that.filteredAttendanceList,_that.originalAttendanceList,_that.isIndividual,_that.isInvidualChecked,_that.isChecked,_that.date,_that.greetingText,_that.error,_that.isCheckedSelectAll,_that.selectedIds);case _:
+return $default(_that.isLoading,_that.data,_that.updateResponse,_that.attendanceUpdatedSuccess,_that.attendanceUpdatedFaliure,_that.attendanceList,_that.filteredAttendanceList,_that.originalAttendanceList,_that.isIndividual,_that.isInvidualChecked,_that.isChecked,_that.date,_that.greetingText,_that.error,_that.isCheckedSelectAll,_that.selectedIds);case _:
   return orElse();
 
 }
@@ -183,10 +186,10 @@ return $default(_that.isLoading,_that.data,_that.attendanceList,_that.filteredAt
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  String data,  List<StudentAttendance>? attendanceList,  List<StudentAttendance>? filteredAttendanceList,  List<StudentAttendance>? originalAttendanceList,  bool isIndividual,  bool isInvidualChecked,  bool isChecked,  String date,  String greetingText,  String? error,  bool isCheckedSelectAll,  Set<String> selectedIds)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  String data,  UiResponseModel updateResponse,  bool attendanceUpdatedSuccess,  bool attendanceUpdatedFaliure,  List<StudentAttendance>? attendanceList,  List<StudentAttendance>? filteredAttendanceList,  List<StudentAttendance>? originalAttendanceList,  bool isIndividual,  bool isInvidualChecked,  bool isChecked,  String date,  String greetingText,  String? error,  bool isCheckedSelectAll,  Set<String> selectedIds)  $default,) {final _that = this;
 switch (_that) {
 case _HomeState():
-return $default(_that.isLoading,_that.data,_that.attendanceList,_that.filteredAttendanceList,_that.originalAttendanceList,_that.isIndividual,_that.isInvidualChecked,_that.isChecked,_that.date,_that.greetingText,_that.error,_that.isCheckedSelectAll,_that.selectedIds);case _:
+return $default(_that.isLoading,_that.data,_that.updateResponse,_that.attendanceUpdatedSuccess,_that.attendanceUpdatedFaliure,_that.attendanceList,_that.filteredAttendanceList,_that.originalAttendanceList,_that.isIndividual,_that.isInvidualChecked,_that.isChecked,_that.date,_that.greetingText,_that.error,_that.isCheckedSelectAll,_that.selectedIds);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -203,10 +206,10 @@ return $default(_that.isLoading,_that.data,_that.attendanceList,_that.filteredAt
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  String data,  List<StudentAttendance>? attendanceList,  List<StudentAttendance>? filteredAttendanceList,  List<StudentAttendance>? originalAttendanceList,  bool isIndividual,  bool isInvidualChecked,  bool isChecked,  String date,  String greetingText,  String? error,  bool isCheckedSelectAll,  Set<String> selectedIds)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  String data,  UiResponseModel updateResponse,  bool attendanceUpdatedSuccess,  bool attendanceUpdatedFaliure,  List<StudentAttendance>? attendanceList,  List<StudentAttendance>? filteredAttendanceList,  List<StudentAttendance>? originalAttendanceList,  bool isIndividual,  bool isInvidualChecked,  bool isChecked,  String date,  String greetingText,  String? error,  bool isCheckedSelectAll,  Set<String> selectedIds)?  $default,) {final _that = this;
 switch (_that) {
 case _HomeState() when $default != null:
-return $default(_that.isLoading,_that.data,_that.attendanceList,_that.filteredAttendanceList,_that.originalAttendanceList,_that.isIndividual,_that.isInvidualChecked,_that.isChecked,_that.date,_that.greetingText,_that.error,_that.isCheckedSelectAll,_that.selectedIds);case _:
+return $default(_that.isLoading,_that.data,_that.updateResponse,_that.attendanceUpdatedSuccess,_that.attendanceUpdatedFaliure,_that.attendanceList,_that.filteredAttendanceList,_that.originalAttendanceList,_that.isIndividual,_that.isInvidualChecked,_that.isChecked,_that.date,_that.greetingText,_that.error,_that.isCheckedSelectAll,_that.selectedIds);case _:
   return null;
 
 }
@@ -218,11 +221,14 @@ return $default(_that.isLoading,_that.data,_that.attendanceList,_that.filteredAt
 
 
 class _HomeState implements HomeState {
-  const _HomeState({required this.isLoading, required this.data, final  List<StudentAttendance>? attendanceList, final  List<StudentAttendance>? filteredAttendanceList, final  List<StudentAttendance>? originalAttendanceList, required this.isIndividual, required this.isInvidualChecked, required this.isChecked, required this.date, required this.greetingText, this.error, required this.isCheckedSelectAll, final  Set<String> selectedIds = const {}}): _attendanceList = attendanceList,_filteredAttendanceList = filteredAttendanceList,_originalAttendanceList = originalAttendanceList,_selectedIds = selectedIds;
+  const _HomeState({required this.isLoading, required this.data, required this.updateResponse, required this.attendanceUpdatedSuccess, required this.attendanceUpdatedFaliure, final  List<StudentAttendance>? attendanceList, final  List<StudentAttendance>? filteredAttendanceList, final  List<StudentAttendance>? originalAttendanceList, required this.isIndividual, required this.isInvidualChecked, required this.isChecked, required this.date, required this.greetingText, this.error, required this.isCheckedSelectAll, final  Set<String> selectedIds = const {}}): _attendanceList = attendanceList,_filteredAttendanceList = filteredAttendanceList,_originalAttendanceList = originalAttendanceList,_selectedIds = selectedIds;
   
 
 @override final  bool isLoading;
 @override final  String data;
+@override final  UiResponseModel updateResponse;
+@override final  bool attendanceUpdatedSuccess;
+@override final  bool attendanceUpdatedFaliure;
  final  List<StudentAttendance>? _attendanceList;
 @override List<StudentAttendance>? get attendanceList {
   final value = _attendanceList;
@@ -275,16 +281,16 @@ _$HomeStateCopyWith<_HomeState> get copyWith => __$HomeStateCopyWithImpl<_HomeSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&const DeepCollectionEquality().equals(other._attendanceList, _attendanceList)&&const DeepCollectionEquality().equals(other._filteredAttendanceList, _filteredAttendanceList)&&const DeepCollectionEquality().equals(other._originalAttendanceList, _originalAttendanceList)&&(identical(other.isIndividual, isIndividual) || other.isIndividual == isIndividual)&&(identical(other.isInvidualChecked, isInvidualChecked) || other.isInvidualChecked == isInvidualChecked)&&(identical(other.isChecked, isChecked) || other.isChecked == isChecked)&&(identical(other.date, date) || other.date == date)&&(identical(other.greetingText, greetingText) || other.greetingText == greetingText)&&(identical(other.error, error) || other.error == error)&&(identical(other.isCheckedSelectAll, isCheckedSelectAll) || other.isCheckedSelectAll == isCheckedSelectAll)&&const DeepCollectionEquality().equals(other._selectedIds, _selectedIds));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.updateResponse, updateResponse) || other.updateResponse == updateResponse)&&(identical(other.attendanceUpdatedSuccess, attendanceUpdatedSuccess) || other.attendanceUpdatedSuccess == attendanceUpdatedSuccess)&&(identical(other.attendanceUpdatedFaliure, attendanceUpdatedFaliure) || other.attendanceUpdatedFaliure == attendanceUpdatedFaliure)&&const DeepCollectionEquality().equals(other._attendanceList, _attendanceList)&&const DeepCollectionEquality().equals(other._filteredAttendanceList, _filteredAttendanceList)&&const DeepCollectionEquality().equals(other._originalAttendanceList, _originalAttendanceList)&&(identical(other.isIndividual, isIndividual) || other.isIndividual == isIndividual)&&(identical(other.isInvidualChecked, isInvidualChecked) || other.isInvidualChecked == isInvidualChecked)&&(identical(other.isChecked, isChecked) || other.isChecked == isChecked)&&(identical(other.date, date) || other.date == date)&&(identical(other.greetingText, greetingText) || other.greetingText == greetingText)&&(identical(other.error, error) || other.error == error)&&(identical(other.isCheckedSelectAll, isCheckedSelectAll) || other.isCheckedSelectAll == isCheckedSelectAll)&&const DeepCollectionEquality().equals(other._selectedIds, _selectedIds));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,data,const DeepCollectionEquality().hash(_attendanceList),const DeepCollectionEquality().hash(_filteredAttendanceList),const DeepCollectionEquality().hash(_originalAttendanceList),isIndividual,isInvidualChecked,isChecked,date,greetingText,error,isCheckedSelectAll,const DeepCollectionEquality().hash(_selectedIds));
+int get hashCode => Object.hash(runtimeType,isLoading,data,updateResponse,attendanceUpdatedSuccess,attendanceUpdatedFaliure,const DeepCollectionEquality().hash(_attendanceList),const DeepCollectionEquality().hash(_filteredAttendanceList),const DeepCollectionEquality().hash(_originalAttendanceList),isIndividual,isInvidualChecked,isChecked,date,greetingText,error,isCheckedSelectAll,const DeepCollectionEquality().hash(_selectedIds));
 
 @override
 String toString() {
-  return 'HomeState(isLoading: $isLoading, data: $data, attendanceList: $attendanceList, filteredAttendanceList: $filteredAttendanceList, originalAttendanceList: $originalAttendanceList, isIndividual: $isIndividual, isInvidualChecked: $isInvidualChecked, isChecked: $isChecked, date: $date, greetingText: $greetingText, error: $error, isCheckedSelectAll: $isCheckedSelectAll, selectedIds: $selectedIds)';
+  return 'HomeState(isLoading: $isLoading, data: $data, updateResponse: $updateResponse, attendanceUpdatedSuccess: $attendanceUpdatedSuccess, attendanceUpdatedFaliure: $attendanceUpdatedFaliure, attendanceList: $attendanceList, filteredAttendanceList: $filteredAttendanceList, originalAttendanceList: $originalAttendanceList, isIndividual: $isIndividual, isInvidualChecked: $isInvidualChecked, isChecked: $isChecked, date: $date, greetingText: $greetingText, error: $error, isCheckedSelectAll: $isCheckedSelectAll, selectedIds: $selectedIds)';
 }
 
 
@@ -295,7 +301,7 @@ abstract mixin class _$HomeStateCopyWith<$Res> implements $HomeStateCopyWith<$Re
   factory _$HomeStateCopyWith(_HomeState value, $Res Function(_HomeState) _then) = __$HomeStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, String data, List<StudentAttendance>? attendanceList, List<StudentAttendance>? filteredAttendanceList, List<StudentAttendance>? originalAttendanceList, bool isIndividual, bool isInvidualChecked, bool isChecked, String date, String greetingText, String? error, bool isCheckedSelectAll, Set<String> selectedIds
+ bool isLoading, String data, UiResponseModel updateResponse, bool attendanceUpdatedSuccess, bool attendanceUpdatedFaliure, List<StudentAttendance>? attendanceList, List<StudentAttendance>? filteredAttendanceList, List<StudentAttendance>? originalAttendanceList, bool isIndividual, bool isInvidualChecked, bool isChecked, String date, String greetingText, String? error, bool isCheckedSelectAll, Set<String> selectedIds
 });
 
 
@@ -312,11 +318,14 @@ class __$HomeStateCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? data = null,Object? attendanceList = freezed,Object? filteredAttendanceList = freezed,Object? originalAttendanceList = freezed,Object? isIndividual = null,Object? isInvidualChecked = null,Object? isChecked = null,Object? date = null,Object? greetingText = null,Object? error = freezed,Object? isCheckedSelectAll = null,Object? selectedIds = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? data = null,Object? updateResponse = null,Object? attendanceUpdatedSuccess = null,Object? attendanceUpdatedFaliure = null,Object? attendanceList = freezed,Object? filteredAttendanceList = freezed,Object? originalAttendanceList = freezed,Object? isIndividual = null,Object? isInvidualChecked = null,Object? isChecked = null,Object? date = null,Object? greetingText = null,Object? error = freezed,Object? isCheckedSelectAll = null,Object? selectedIds = null,}) {
   return _then(_HomeState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as String,attendanceList: freezed == attendanceList ? _self._attendanceList : attendanceList // ignore: cast_nullable_to_non_nullable
+as String,updateResponse: null == updateResponse ? _self.updateResponse : updateResponse // ignore: cast_nullable_to_non_nullable
+as UiResponseModel,attendanceUpdatedSuccess: null == attendanceUpdatedSuccess ? _self.attendanceUpdatedSuccess : attendanceUpdatedSuccess // ignore: cast_nullable_to_non_nullable
+as bool,attendanceUpdatedFaliure: null == attendanceUpdatedFaliure ? _self.attendanceUpdatedFaliure : attendanceUpdatedFaliure // ignore: cast_nullable_to_non_nullable
+as bool,attendanceList: freezed == attendanceList ? _self._attendanceList : attendanceList // ignore: cast_nullable_to_non_nullable
 as List<StudentAttendance>?,filteredAttendanceList: freezed == filteredAttendanceList ? _self._filteredAttendanceList : filteredAttendanceList // ignore: cast_nullable_to_non_nullable
 as List<StudentAttendance>?,originalAttendanceList: freezed == originalAttendanceList ? _self._originalAttendanceList : originalAttendanceList // ignore: cast_nullable_to_non_nullable
 as List<StudentAttendance>?,isIndividual: null == isIndividual ? _self.isIndividual : isIndividual // ignore: cast_nullable_to_non_nullable

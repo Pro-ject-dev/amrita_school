@@ -1,5 +1,5 @@
 import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/view/home_page.dart';
-import 'package:amrita_vidhyalayam_teacher/core/features/mainscaffold/presentation/viewmodel/mainscaffold_viewmodel.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/main_scaffold/presentation/viewmodel/mainscaffold_viewmodel.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/profile/presentation/view/profile_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/reports/presentation/view/reports_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/student/presentation/view/student_page.dart';

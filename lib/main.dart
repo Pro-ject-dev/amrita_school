@@ -11,7 +11,9 @@ void main() {
   runApp(ProviderScope(child: MyApp()));
 }
 
+    final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class MyApp extends ConsumerWidget {
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,7 +21,7 @@ class MyApp extends ConsumerWidget {
       const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
     );
     final router = ref.read(routerProvider);
-    final isDarkMode = ref.watch(AppProviders().isDarkModeProvider);
+    final isDarkMode = ref.watch(isDarkModeProvider);
     return ScreenUtilInit(
       designSize: const Size(360, 690),
       minTextAdapt: true,
@@ -27,11 +29,11 @@ class MyApp extends ConsumerWidget {
       builder: (_, child) {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
-          
           title: AppStrings.appTitle ,
           themeMode:isDarkMode? ThemeMode.dark : ThemeMode.light,
           theme: AppTheme.light(),
           darkTheme: AppTheme.dark(),
+          
           
           routerConfig: router,
         );

@@ -4,25 +4,25 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 
-successDialog(ThemeData theme, BuildContext context) => showDialog(
+confirmationDialog(ThemeData theme, BuildContext context,String title,String subTitle,VoidCallback confirmBtn) => showDialog(
   context: context,
   builder: (context) {
     return AlertDialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      title: const Text(
-        'Are you sure?',
+      title:Text(
+        title,
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
       ),
-      content: const Text(
-        'This action cannot be undone.',
+      content:  Text(
+        subTitle,
         style: TextStyle(fontSize: 14, color: Colors.grey),
       ),
       actionsPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.pop(context);
+          context.pop();
           },
           style: TextButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
@@ -42,7 +42,7 @@ successDialog(ThemeData theme, BuildContext context) => showDialog(
           ),
         ),
         InkWell(
-          onTap: () {},
+          onTap:confirmBtn,
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             decoration: BoxDecoration(

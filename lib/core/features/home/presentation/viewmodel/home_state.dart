@@ -1,6 +1,8 @@
+import 'package:amrita_vidhyalayam_teacher/core/features/home/data/models/ui_response_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 import '../../data/models/attendance_model.dart';
+import '../../data/models/post_attendance_model.dart';
 
 part 'home_state.freezed.dart';
 
@@ -9,6 +11,9 @@ abstract class HomeState with _$HomeState {
   const factory HomeState({
     required bool isLoading,
     required String data,
+    required UiResponseModel updateResponse,
+    required bool attendanceUpdatedSuccess,
+    required bool attendanceUpdatedFaliure,
     List<StudentAttendance>? attendanceList,
     List<StudentAttendance>? filteredAttendanceList,
     List<StudentAttendance>? originalAttendanceList,
@@ -33,9 +38,9 @@ abstract class HomeState with _$HomeState {
     isCheckedSelectAll: false,
     selectedIds: {},
     isIndividual: false,
-    isInvidualChecked: false, greetingText: ''
-
-
-
+    isInvidualChecked: false, greetingText: '',
+    attendanceUpdatedSuccess: false,
+    attendanceUpdatedFaliure: false,
+    updateResponse: UiResponseModel(isSuccess: null, presentCount: 0, absentCount: 0, totalCount: 0, message:"")
   );
 }
