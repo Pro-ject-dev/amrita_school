@@ -56,7 +56,7 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
       //     previous?.message == next.message) {
       //   return;
       // }
-
+ 
       if (next.isSuccess == true) {
         showModalBottomSheet(
           context: context,
@@ -92,194 +92,122 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(backgroundColor: AppColors.primary,),
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/bg-test2.jpg'),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.2),
-              BlendMode.darken,
-            ),
-          ),
-        ),
+        
+        color: AppColors.primary,
         child: Column(
           children: [
             // ---------------------- YOUR ORIGINAL UI ----------------------
             // NOTHING CHANGED HERE
             // --------------------------------------------------------------
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 40.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Image.asset(AppImages.app_logo, width: 100.w),
-                      InkWell(
-                        onTap: () {
-                          confirmationDialog(
-                            theme,
-                            context,
-                            "Log Out",
-                            "Are you sure you want to log out of your account ?",
-                            () {
-                              ref.read(authViewModelProvider.notifier).logout();
-                              context.go("/auth");
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    "Logged Out",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  behavior: SnackBarBehavior.floating,
-                                  backgroundColor: const Color.fromARGB(
-                                    255,
-                                    112,
-                                    112,
-                                    112,
-                                  ),
-                                  duration: Duration(seconds: 3),
+            SafeArea(
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                   
+                  
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  ref.read(homeProvider.notifier).previousDate();
+                                },
+                                icon: Icon(
+                                  LucideIcons.chevronLeft,
+                                  color: Colors.white,
                                 ),
-                              );
-                            },
-                          );
-                        },
-                        child: Icon(LucideIcons.logOut, color: Colors.white),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 22.h),
-                  Row(
-                    children: [
-                      Text(
-                        '${homeState.greetingText} 👋',
-                        style: theme.textTheme.headlineSmall?.copyWith(
-                          fontSize: 20.sp,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8.h),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(16)),
-                      color: const Color(0xff254671),
-                    ),
-                    child: Text(
-                      AppStrings.class_txt,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12.sp,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10.h),
-                  Divider(color: Colors.white30, thickness: 0.5.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                ref.read(homeProvider.notifier).previousDate();
-                              },
-                              icon: Icon(
-                                LucideIcons.chevronLeft,
-                                color: Colors.white,
                               ),
-                            ),
-                            Text(
-                              homeState.date,
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                                fontSize: 13.67.sp,
+                              Text(
+                                homeState.date,
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                  fontSize: 13.67.sp,
+                                ),
                               ),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                if (!homeState.date.startsWith("Today,")) {
-                                  ref.read(homeProvider.notifier).nextDate();
-                                }
-                              },
-                              icon: Icon(
-                                LucideIcons.chevronRight,
-                                color: homeState.date.startsWith("Today,")
-                                    ? const Color.fromARGB(255, 152, 152, 152)
-                                    : Colors.white,
+                              IconButton(
+                                onPressed: () {
+                                  if (!homeState.date.startsWith("Today,")) {
+                                    ref.read(homeProvider.notifier).nextDate();
+                                  }
+                                },
+                                icon: Icon(
+                                  LucideIcons.chevronRight,
+                                  color: homeState.date.startsWith("Today,")
+                                      ? const Color.fromARGB(255, 152, 152, 152)
+                                      : Colors.white,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 30.h,
-                        child: VerticalDivider(
-                          thickness: 1,
-                          color: Colors.white30,
+                        SizedBox(
+                          height: 30.h,
+                          child: VerticalDivider(
+                            thickness: 1,
+                            color: Colors.white30,
+                          ),
                         ),
-                      ),
-                      IconButton(
-                        onPressed: () async {
-                          final DateTime? date = await showDatePicker(
-                            context: context,
-                            initialDate: homeState.date.startsWith("Today,")
-                                ? DateTime.now()
-                                : DateFormat(
-                                    'yyyy-MM-dd',
-                                  ).parse(homeState.date),
-                            firstDate: DateTime(2020),
-                            lastDate: DateTime.now(),
-                            builder: (context, child) {
-                              return Theme(
-                                data: Theme.of(context).copyWith(
-                                  colorScheme: const ColorScheme.light(
-                                    primary: AppColors.primary,
-                                  ),
-                                  textButtonTheme: TextButtonThemeData(
-                                    style: TextButton.styleFrom(
-                                      foregroundColor: AppColors.primary,
+                        IconButton(
+                          onPressed: () async {
+                            final DateTime? date = await showDatePicker(
+                              context: context,
+                              initialDate: homeState.date.startsWith("Today,")
+                                  ? DateTime.now()
+                                  : DateFormat(
+                                      'yyyy',
+                                    ).parse(homeState.date),
+                              firstDate: DateTime(2020),
+                              lastDate: DateTime.now(),
+                              builder: (context, child) {
+                                return Theme(
+                                  data: Theme.of(context).copyWith(
+                                    colorScheme: const ColorScheme.light(
+                                      primary: AppColors.primary,
+                                    ),
+                                    textButtonTheme: TextButtonThemeData(
+                                      style: TextButton.styleFrom(
+                                        foregroundColor: AppColors.primary,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                child: child!,
-                              );
-                            },
-                          );
-                          if (date != null) {
-                            final formattedDate = DateFormat(
-                              'yyyy-MM-dd',
-                            ).format(date);
-                            final notifier = ref.read(homeProvider.notifier);
-                            final currentFormatted = DateFormat(
-                              'yyyy-MM-dd',
-                            ).format(notifier.parseCurrentDate());
-                            if (formattedDate != currentFormatted) {
-                              await notifier.getDate(formattedDate);
-                              await notifier.fetchAttendance("", formattedDate);
+                                  child: child!,
+                                );
+                              },
+                            );
+                            if (date != null) {
+                              final formattedDate = DateFormat(
+                                'yyyy-MM-dd',
+                              ).format(date);
+                              final notifier = ref.read(homeProvider.notifier);
+                              final currentFormatted = DateFormat(
+                                'yyyy-MM-dd',
+                              ).format(notifier.parseCurrentDate());
+                              if (formattedDate != currentFormatted) {
+                                await notifier.getDate(formattedDate);
+                                await notifier.fetchAttendance("", formattedDate);
+                              }
                             }
-                          }
-                        },
-                        icon: const Icon(
-                          LucideIcons.calendar,
-                          color: Colors.white,
+                          },
+                          icon: const Icon(
+                            LucideIcons.calendar,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 2.w),
-                    ],
-                  ),
-                ],
+                        SizedBox(width: 2.w),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
 

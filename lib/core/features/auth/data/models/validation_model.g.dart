@@ -16,9 +16,9 @@ Map<String, dynamic> _$ValidationModelToJson(_ValidationModel instance) =>
 
 _Message _$MessageFromJson(Map<String, dynamic> json) => _Message(
   isInstructor: json['is_instructor'] as bool,
-  classIncharge: json['class_incharge'] as String,
-  classSubject: (json['class_subject'] as List<dynamic>)
-      .map((e) => ClassSubject.fromJson(e as Map<String, dynamic>))
+  classIncharge: json['class_incharge'] as String?,
+  classSubject: (json['class_subject'] as List<dynamic>?)
+      ?.map((e) => ClassSubject.fromJson(e as Map<String, dynamic>))
       .toList(),
 );
 
@@ -30,8 +30,8 @@ Map<String, dynamic> _$MessageToJson(_Message instance) => <String, dynamic>{
 
 _ClassSubject _$ClassSubjectFromJson(Map<String, dynamic> json) =>
     _ClassSubject(
-      studentClass: json['student_class'] as String,
-      subjectName: json['subject_name'] as String,
+      studentClass: json['student_class'] as String?,
+      subjectName: json['subject_name'] as String?,
     );
 
 Map<String, dynamic> _$ClassSubjectToJson(_ClassSubject instance) =>

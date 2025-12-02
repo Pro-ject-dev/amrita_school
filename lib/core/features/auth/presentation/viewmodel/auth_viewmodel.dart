@@ -36,9 +36,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
 
       if (isLoggedIn) {
         final validStatus = await _repository.isValidUser();
-
         if (validStatus.message.isInstructor) {
-          // now ref works
           await ref.read(storageServiceProvider).write(
                 "isLoggedIn",
                 true

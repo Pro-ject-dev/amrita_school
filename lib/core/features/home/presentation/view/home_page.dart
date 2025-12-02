@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+
+import '../../../../providers/common_providers.dart';
+import '../../../attendance/presentation/widgets/confirmationDialog.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -85,6 +89,7 @@ class HeaderSection extends ConsumerStatefulWidget {
 class HeaderSectionState extends ConsumerState<HeaderSection> {
   @override
   Widget build(BuildContext context) {
+    final theme =   Theme.of(context);
     return Padding(
       padding: EdgeInsets.all(20.0.w),
       child: Column(
@@ -98,16 +103,46 @@ class HeaderSectionState extends ConsumerState<HeaderSection> {
                 height: 23.h,
                 width: 100.w,
               ),
-              Container(
-                padding: EdgeInsets.all(8.w),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  LucideIcons.logOut,
-                  color: Colors.white,
-                  size: 20.sp,
+              InkWell(
+                onTap: (){
+                   confirmationDialog(
+                            theme,
+                            context,
+                            "Log Out",
+                            "Are you sure you want to log out of your account ?",
+                            () {
+                              ref.read(authViewModelProvider.notifier).logout();
+                              context.go("/auth");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    "Logged Out",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  behavior: SnackBarBehavior.floating,
+                                  backgroundColor: const Color.fromARGB(
+                                    255,
+                                    112,
+                                    112,
+                                    112,
+                                  ),
+                                  duration: Duration(seconds: 3),
+                                ),
+                              );
+                            },
+                          );
+                },
+                child: Container(
+                  padding: EdgeInsets.all(8.w),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.2),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    LucideIcons.logOut,
+                    color: Colors.white,
+                    size: 20.sp,
+                  ),
                 ),
               ),
             ],
@@ -163,7 +198,7 @@ class OverviewHeaderState extends ConsumerState<OverviewHeader> {
             ),
             child: Row(
               children: [
-                Icon(Icons.calendar_today, size: 14.sp, color: Colors.grey),
+                Icon(LucideIcons.calendarDays, size: 14.sp, color: AppColors.primary),
                 SizedBox(width: 6.w),
                 Text(
                   'Wed, Jul 22 2024',

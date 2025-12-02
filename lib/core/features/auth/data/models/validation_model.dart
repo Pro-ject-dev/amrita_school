@@ -17,8 +17,8 @@ abstract class ValidationModel with _$ValidationModel {
 abstract class Message with _$Message {
   const factory Message({
     @JsonKey(name: 'is_instructor') required bool isInstructor,
-    @JsonKey(name: 'class_incharge') required String classIncharge,
-    @JsonKey(name: 'class_subject') required List<ClassSubject> classSubject,
+    @JsonKey(name: 'class_incharge')  String? classIncharge,
+    @JsonKey(name: 'class_subject') List<ClassSubject>? classSubject,
   }) = _Message;
 
   factory Message.fromJson(Map<String, dynamic> json) =>
@@ -28,8 +28,8 @@ abstract class Message with _$Message {
 @freezed
 abstract class ClassSubject with _$ClassSubject {
   const factory ClassSubject({
-    @JsonKey(name: 'student_class') required String studentClass,
-    @JsonKey(name: 'subject_name') required String subjectName,
+    @JsonKey(name: 'student_class')  String? studentClass,
+    @JsonKey(name: 'subject_name')  String? subjectName,
   }) = _ClassSubject;
 
   factory ClassSubject.fromJson(Map<String, dynamic> json) =>

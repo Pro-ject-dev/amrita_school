@@ -296,7 +296,7 @@ $MessageCopyWith<$Res> get message {
 /// @nodoc
 mixin _$Message {
 
-@JsonKey(name: 'is_instructor') bool get isInstructor;@JsonKey(name: 'class_incharge') String get classIncharge;@JsonKey(name: 'class_subject') List<ClassSubject> get classSubject;
+@JsonKey(name: 'is_instructor') bool get isInstructor;@JsonKey(name: 'class_incharge') String? get classIncharge;@JsonKey(name: 'class_subject') List<ClassSubject>? get classSubject;
 /// Create a copy of Message
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -329,7 +329,7 @@ abstract mixin class $MessageCopyWith<$Res>  {
   factory $MessageCopyWith(Message value, $Res Function(Message) _then) = _$MessageCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'is_instructor') bool isInstructor,@JsonKey(name: 'class_incharge') String classIncharge,@JsonKey(name: 'class_subject') List<ClassSubject> classSubject
+@JsonKey(name: 'is_instructor') bool isInstructor,@JsonKey(name: 'class_incharge') String? classIncharge,@JsonKey(name: 'class_subject') List<ClassSubject>? classSubject
 });
 
 
@@ -346,12 +346,12 @@ class _$MessageCopyWithImpl<$Res>
 
 /// Create a copy of Message
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isInstructor = null,Object? classIncharge = null,Object? classSubject = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isInstructor = null,Object? classIncharge = freezed,Object? classSubject = freezed,}) {
   return _then(_self.copyWith(
 isInstructor: null == isInstructor ? _self.isInstructor : isInstructor // ignore: cast_nullable_to_non_nullable
-as bool,classIncharge: null == classIncharge ? _self.classIncharge : classIncharge // ignore: cast_nullable_to_non_nullable
-as String,classSubject: null == classSubject ? _self.classSubject : classSubject // ignore: cast_nullable_to_non_nullable
-as List<ClassSubject>,
+as bool,classIncharge: freezed == classIncharge ? _self.classIncharge : classIncharge // ignore: cast_nullable_to_non_nullable
+as String?,classSubject: freezed == classSubject ? _self.classSubject : classSubject // ignore: cast_nullable_to_non_nullable
+as List<ClassSubject>?,
   ));
 }
 
@@ -436,7 +436,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'is_instructor')  bool isInstructor, @JsonKey(name: 'class_incharge')  String classIncharge, @JsonKey(name: 'class_subject')  List<ClassSubject> classSubject)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'is_instructor')  bool isInstructor, @JsonKey(name: 'class_incharge')  String? classIncharge, @JsonKey(name: 'class_subject')  List<ClassSubject>? classSubject)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Message() when $default != null:
 return $default(_that.isInstructor,_that.classIncharge,_that.classSubject);case _:
@@ -457,7 +457,7 @@ return $default(_that.isInstructor,_that.classIncharge,_that.classSubject);case 
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'is_instructor')  bool isInstructor, @JsonKey(name: 'class_incharge')  String classIncharge, @JsonKey(name: 'class_subject')  List<ClassSubject> classSubject)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'is_instructor')  bool isInstructor, @JsonKey(name: 'class_incharge')  String? classIncharge, @JsonKey(name: 'class_subject')  List<ClassSubject>? classSubject)  $default,) {final _that = this;
 switch (_that) {
 case _Message():
 return $default(_that.isInstructor,_that.classIncharge,_that.classSubject);case _:
@@ -477,7 +477,7 @@ return $default(_that.isInstructor,_that.classIncharge,_that.classSubject);case 
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'is_instructor')  bool isInstructor, @JsonKey(name: 'class_incharge')  String classIncharge, @JsonKey(name: 'class_subject')  List<ClassSubject> classSubject)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'is_instructor')  bool isInstructor, @JsonKey(name: 'class_incharge')  String? classIncharge, @JsonKey(name: 'class_subject')  List<ClassSubject>? classSubject)?  $default,) {final _that = this;
 switch (_that) {
 case _Message() when $default != null:
 return $default(_that.isInstructor,_that.classIncharge,_that.classSubject);case _:
@@ -492,16 +492,18 @@ return $default(_that.isInstructor,_that.classIncharge,_that.classSubject);case 
 @JsonSerializable()
 
 class _Message implements Message {
-  const _Message({@JsonKey(name: 'is_instructor') required this.isInstructor, @JsonKey(name: 'class_incharge') required this.classIncharge, @JsonKey(name: 'class_subject') required final  List<ClassSubject> classSubject}): _classSubject = classSubject;
+  const _Message({@JsonKey(name: 'is_instructor') required this.isInstructor, @JsonKey(name: 'class_incharge') this.classIncharge, @JsonKey(name: 'class_subject') final  List<ClassSubject>? classSubject}): _classSubject = classSubject;
   factory _Message.fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);
 
 @override@JsonKey(name: 'is_instructor') final  bool isInstructor;
-@override@JsonKey(name: 'class_incharge') final  String classIncharge;
- final  List<ClassSubject> _classSubject;
-@override@JsonKey(name: 'class_subject') List<ClassSubject> get classSubject {
+@override@JsonKey(name: 'class_incharge') final  String? classIncharge;
+ final  List<ClassSubject>? _classSubject;
+@override@JsonKey(name: 'class_subject') List<ClassSubject>? get classSubject {
+  final value = _classSubject;
+  if (value == null) return null;
   if (_classSubject is EqualUnmodifiableListView) return _classSubject;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_classSubject);
+  return EqualUnmodifiableListView(value);
 }
 
 
@@ -538,7 +540,7 @@ abstract mixin class _$MessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
   factory _$MessageCopyWith(_Message value, $Res Function(_Message) _then) = __$MessageCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'is_instructor') bool isInstructor,@JsonKey(name: 'class_incharge') String classIncharge,@JsonKey(name: 'class_subject') List<ClassSubject> classSubject
+@JsonKey(name: 'is_instructor') bool isInstructor,@JsonKey(name: 'class_incharge') String? classIncharge,@JsonKey(name: 'class_subject') List<ClassSubject>? classSubject
 });
 
 
@@ -555,12 +557,12 @@ class __$MessageCopyWithImpl<$Res>
 
 /// Create a copy of Message
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isInstructor = null,Object? classIncharge = null,Object? classSubject = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isInstructor = null,Object? classIncharge = freezed,Object? classSubject = freezed,}) {
   return _then(_Message(
 isInstructor: null == isInstructor ? _self.isInstructor : isInstructor // ignore: cast_nullable_to_non_nullable
-as bool,classIncharge: null == classIncharge ? _self.classIncharge : classIncharge // ignore: cast_nullable_to_non_nullable
-as String,classSubject: null == classSubject ? _self._classSubject : classSubject // ignore: cast_nullable_to_non_nullable
-as List<ClassSubject>,
+as bool,classIncharge: freezed == classIncharge ? _self.classIncharge : classIncharge // ignore: cast_nullable_to_non_nullable
+as String?,classSubject: freezed == classSubject ? _self._classSubject : classSubject // ignore: cast_nullable_to_non_nullable
+as List<ClassSubject>?,
   ));
 }
 
@@ -571,7 +573,7 @@ as List<ClassSubject>,
 /// @nodoc
 mixin _$ClassSubject {
 
-@JsonKey(name: 'student_class') String get studentClass;@JsonKey(name: 'subject_name') String get subjectName;
+@JsonKey(name: 'student_class') String? get studentClass;@JsonKey(name: 'subject_name') String? get subjectName;
 /// Create a copy of ClassSubject
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -604,7 +606,7 @@ abstract mixin class $ClassSubjectCopyWith<$Res>  {
   factory $ClassSubjectCopyWith(ClassSubject value, $Res Function(ClassSubject) _then) = _$ClassSubjectCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'student_class') String studentClass,@JsonKey(name: 'subject_name') String subjectName
+@JsonKey(name: 'student_class') String? studentClass,@JsonKey(name: 'subject_name') String? subjectName
 });
 
 
@@ -621,11 +623,11 @@ class _$ClassSubjectCopyWithImpl<$Res>
 
 /// Create a copy of ClassSubject
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? studentClass = null,Object? subjectName = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? studentClass = freezed,Object? subjectName = freezed,}) {
   return _then(_self.copyWith(
-studentClass: null == studentClass ? _self.studentClass : studentClass // ignore: cast_nullable_to_non_nullable
-as String,subjectName: null == subjectName ? _self.subjectName : subjectName // ignore: cast_nullable_to_non_nullable
-as String,
+studentClass: freezed == studentClass ? _self.studentClass : studentClass // ignore: cast_nullable_to_non_nullable
+as String?,subjectName: freezed == subjectName ? _self.subjectName : subjectName // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -710,7 +712,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'student_class')  String studentClass, @JsonKey(name: 'subject_name')  String subjectName)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'student_class')  String? studentClass, @JsonKey(name: 'subject_name')  String? subjectName)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ClassSubject() when $default != null:
 return $default(_that.studentClass,_that.subjectName);case _:
@@ -731,7 +733,7 @@ return $default(_that.studentClass,_that.subjectName);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'student_class')  String studentClass, @JsonKey(name: 'subject_name')  String subjectName)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'student_class')  String? studentClass, @JsonKey(name: 'subject_name')  String? subjectName)  $default,) {final _that = this;
 switch (_that) {
 case _ClassSubject():
 return $default(_that.studentClass,_that.subjectName);case _:
@@ -751,7 +753,7 @@ return $default(_that.studentClass,_that.subjectName);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'student_class')  String studentClass, @JsonKey(name: 'subject_name')  String subjectName)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'student_class')  String? studentClass, @JsonKey(name: 'subject_name')  String? subjectName)?  $default,) {final _that = this;
 switch (_that) {
 case _ClassSubject() when $default != null:
 return $default(_that.studentClass,_that.subjectName);case _:
@@ -766,11 +768,11 @@ return $default(_that.studentClass,_that.subjectName);case _:
 @JsonSerializable()
 
 class _ClassSubject implements ClassSubject {
-  const _ClassSubject({@JsonKey(name: 'student_class') required this.studentClass, @JsonKey(name: 'subject_name') required this.subjectName});
+  const _ClassSubject({@JsonKey(name: 'student_class') this.studentClass, @JsonKey(name: 'subject_name') this.subjectName});
   factory _ClassSubject.fromJson(Map<String, dynamic> json) => _$ClassSubjectFromJson(json);
 
-@override@JsonKey(name: 'student_class') final  String studentClass;
-@override@JsonKey(name: 'subject_name') final  String subjectName;
+@override@JsonKey(name: 'student_class') final  String? studentClass;
+@override@JsonKey(name: 'subject_name') final  String? subjectName;
 
 /// Create a copy of ClassSubject
 /// with the given fields replaced by the non-null parameter values.
@@ -805,7 +807,7 @@ abstract mixin class _$ClassSubjectCopyWith<$Res> implements $ClassSubjectCopyWi
   factory _$ClassSubjectCopyWith(_ClassSubject value, $Res Function(_ClassSubject) _then) = __$ClassSubjectCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'student_class') String studentClass,@JsonKey(name: 'subject_name') String subjectName
+@JsonKey(name: 'student_class') String? studentClass,@JsonKey(name: 'subject_name') String? subjectName
 });
 
 
@@ -822,11 +824,11 @@ class __$ClassSubjectCopyWithImpl<$Res>
 
 /// Create a copy of ClassSubject
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? studentClass = null,Object? subjectName = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? studentClass = freezed,Object? subjectName = freezed,}) {
   return _then(_ClassSubject(
-studentClass: null == studentClass ? _self.studentClass : studentClass // ignore: cast_nullable_to_non_nullable
-as String,subjectName: null == subjectName ? _self.subjectName : subjectName // ignore: cast_nullable_to_non_nullable
-as String,
+studentClass: freezed == studentClass ? _self.studentClass : studentClass // ignore: cast_nullable_to_non_nullable
+as String?,subjectName: freezed == subjectName ? _self.subjectName : subjectName // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

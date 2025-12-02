@@ -55,6 +55,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         name: 'profile',
         builder: (_, __) =>  ProfilePage(),
       ),
+       GoRoute(
+        path: '/attendance',
+        name: 'attendance',
+        builder: (_, __) =>  AttendancePage(),
+      ),
       
 
       

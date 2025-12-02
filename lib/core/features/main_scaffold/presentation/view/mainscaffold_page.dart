@@ -65,14 +65,15 @@ class MainScaffold extends ConsumerWidget {
               BottomNavigationBarItem(
                 icon: Padding(
                   padding: const EdgeInsets.only(top: 8),
-                  child: SvgPicture.asset(
-                    'assets/images/myClass.svg',
-                    width: state.currentIndex == 1 ? 22 : 20,
-                    height: state.currentIndex == 1 ? 22 : 20,
-                    color: state.currentIndex == 1
-                        ? Colors.white
-                        : Colors.white70,
-                  ),
+                  // child: SvgPicture.asset(
+                  //   'assets/images/myClass.svg',
+                  //   width: state.currentIndex == 1 ? 22 : 20,
+                  //   height: state.currentIndex == 1 ? 22 : 20,
+                  //   color: state.currentIndex == 1
+                  //       ? Colors.white
+                  //       : Colors.white70,
+                  // ),
+                  child: Icon(LucideIcons.school),
                 ),
                 label: AppStrings.b_nav_2,
               ),
