@@ -110,7 +110,7 @@ class _SplashScreenPageState extends ConsumerState<SplashScreenPage>
       final isAuth = await  ref.read(authServiceProvider).isAuthenticated();
       log(isAuth.toString());
       if(isAuth==true){
-        context.go("/home");
+        context.go("/mainScaffold");
 
       }
       else{

@@ -1,12 +1,9 @@
 import 'dart:async';
-
 import 'package:amrita_vidhyalayam_teacher/core/features/student/presentation/widgets/student_card.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:lottie/lottie.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../viewmodel/student_viewmodel.dart';
@@ -20,7 +17,7 @@ class StudentPage extends ConsumerStatefulWidget {
 
 class _StudentPageState extends ConsumerState<StudentPage> {
   final searchController = TextEditingController();
-  Timer? _searchDebounce;
+  Timer? searchDebounce;
 
   @override
   void initState() {
@@ -32,15 +29,14 @@ class _StudentPageState extends ConsumerState<StudentPage> {
 
   @override
   void dispose() {
-    _searchDebounce?.cancel();
+    searchDebounce?.cancel();
     searchController.dispose();
     super.dispose();
   }
 
   void _onSearchChanged(String value) {
-    // debounce: wait for user to stop typing for 400ms
-    _searchDebounce?.cancel();
-    _searchDebounce = Timer(const Duration(milliseconds: 400), () {
+    searchDebounce?.cancel();
+    searchDebounce = Timer(const Duration(milliseconds: 400), () {
       ref.read(studentProvider.notifier).fetchStudent(value);
     });
   }
@@ -66,7 +62,11 @@ class _StudentPageState extends ConsumerState<StudentPage> {
       body: Column(
         children: [
           SizedBox(height: 10.h),
-
+Row(
+  children: [
+    MaterialButton(onPressed: (){},child: Text("Take Attendance"),),
+  ],
+),
           // Search Bar
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),

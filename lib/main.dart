@@ -1,3 +1,4 @@
+import 'package:amrita_vidhyalayam_teacher/core/features/student/presentation/widgets/test.dart';
 import 'package:amrita_vidhyalayam_teacher/core/providers/common_providers.dart';
 import 'package:amrita_vidhyalayam_teacher/core/router/router.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/strings/app_strings.dart';
@@ -27,6 +28,12 @@ class MyApp extends ConsumerWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
+      //  return MaterialApp(home: Scaffold(body: Center(child: Column(
+      //   mainAxisAlignment: .center,
+      //    children: [
+      //      CalanderCard(),
+      //    ],
+      //  )),),);
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: AppStrings.appTitle ,
