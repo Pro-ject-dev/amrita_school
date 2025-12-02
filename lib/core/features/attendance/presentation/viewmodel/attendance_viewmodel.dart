@@ -1,19 +1,17 @@
 import 'dart:async';
-import 'dart:developer';
-import 'package:amrita_vidhyalayam_teacher/core/features/home/data/models/post_attendance_model.dart';
-import 'package:amrita_vidhyalayam_teacher/core/features/home/data/models/ui_response_model.dart';
-import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/widgets/successBottomSheet.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/attendance/data/models/post_attendance_model.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/attendance/data/models/ui_response_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod/legacy.dart';
 import '../../data/models/attendance_model.dart';
-import '../../data/repository/home_repository.dart';
-import 'home_state.dart';
+import '../../data/repository/attendance_repository.dart';
+import 'attendance_state.dart';
 
-class HomeViewModel extends StateNotifier<HomeState> {
-  final HomeRepository _repository;
+class AttendanceViewModel extends StateNotifier<AttendanceState> {
+  final AttendanceRepository _repository;
 
-  HomeViewModel(this._repository) : super(HomeState.initial());
+  AttendanceViewModel(this._repository) : super(AttendanceState.initial());
 
   static const String standardFormat = 'yyyy-MM-dd';
   static const String displayFormat = 'MMM dd';
@@ -416,6 +414,6 @@ class HomeViewModel extends StateNotifier<HomeState> {
   }
 }
 
-final homeProvider = StateNotifierProvider<HomeViewModel, HomeState>(
-  (ref) => HomeViewModel(ref.watch(homeRepositoryProvider)),
+final homeProvider = StateNotifierProvider<AttendanceViewModel, AttendanceState>(
+  (ref) => AttendanceViewModel(ref.watch(attendanceRepositoryProvider)),
 );

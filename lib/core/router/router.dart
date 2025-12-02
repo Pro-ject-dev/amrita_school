@@ -1,5 +1,5 @@
 import 'package:amrita_vidhyalayam_teacher/core/features/auth/presentation/view/auth_page.dart';
-import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/view/home_page.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/attendance/presentation/view/attendance_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/main_scaffold/presentation/view/mainscaffold_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/profile/presentation/view/profile_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/reports/presentation/view/reports_page.dart';
@@ -33,7 +33,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/home',
         name: 'home',
-        builder: (_, __) => const HomePage(),
+        builder: (_, __) => const AttendancePage(),
       ),
       GoRoute(
         path: '/student',

@@ -1,4 +1,4 @@
-import 'package:amrita_vidhyalayam_teacher/core/features/home/data/models/attendance_model.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/attendance/data/models/attendance_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'student_state.freezed.dart';

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'home_state.dart';
+part of 'attendance_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,20 +12,20 @@ part of 'home_state.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$HomeState {
+mixin _$AttendanceState {
 
  bool get isLoading; String get data; UiResponseModel get updateResponse; bool get attendanceUpdatedSuccess; bool get attendanceUpdatedFaliure; List<StudentAttendance>? get attendanceList; List<StudentAttendance>? get filteredAttendanceList; List<StudentAttendance>? get originalAttendanceList; bool get isIndividual; bool get isInvidualChecked; bool get isChecked; String get date; String get greetingText; String? get error; bool get isCheckedSelectAll; Set<String> get selectedIds;
-/// Create a copy of HomeState
+/// Create a copy of AttendanceState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$HomeStateCopyWith<HomeState> get copyWith => _$HomeStateCopyWithImpl<HomeState>(this as HomeState, _$identity);
+$AttendanceStateCopyWith<AttendanceState> get copyWith => _$AttendanceStateCopyWithImpl<AttendanceState>(this as AttendanceState, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.updateResponse, updateResponse) || other.updateResponse == updateResponse)&&(identical(other.attendanceUpdatedSuccess, attendanceUpdatedSuccess) || other.attendanceUpdatedSuccess == attendanceUpdatedSuccess)&&(identical(other.attendanceUpdatedFaliure, attendanceUpdatedFaliure) || other.attendanceUpdatedFaliure == attendanceUpdatedFaliure)&&const DeepCollectionEquality().equals(other.attendanceList, attendanceList)&&const DeepCollectionEquality().equals(other.filteredAttendanceList, filteredAttendanceList)&&const DeepCollectionEquality().equals(other.originalAttendanceList, originalAttendanceList)&&(identical(other.isIndividual, isIndividual) || other.isIndividual == isIndividual)&&(identical(other.isInvidualChecked, isInvidualChecked) || other.isInvidualChecked == isInvidualChecked)&&(identical(other.isChecked, isChecked) || other.isChecked == isChecked)&&(identical(other.date, date) || other.date == date)&&(identical(other.greetingText, greetingText) || other.greetingText == greetingText)&&(identical(other.error, error) || other.error == error)&&(identical(other.isCheckedSelectAll, isCheckedSelectAll) || other.isCheckedSelectAll == isCheckedSelectAll)&&const DeepCollectionEquality().equals(other.selectedIds, selectedIds));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AttendanceState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.updateResponse, updateResponse) || other.updateResponse == updateResponse)&&(identical(other.attendanceUpdatedSuccess, attendanceUpdatedSuccess) || other.attendanceUpdatedSuccess == attendanceUpdatedSuccess)&&(identical(other.attendanceUpdatedFaliure, attendanceUpdatedFaliure) || other.attendanceUpdatedFaliure == attendanceUpdatedFaliure)&&const DeepCollectionEquality().equals(other.attendanceList, attendanceList)&&const DeepCollectionEquality().equals(other.filteredAttendanceList, filteredAttendanceList)&&const DeepCollectionEquality().equals(other.originalAttendanceList, originalAttendanceList)&&(identical(other.isIndividual, isIndividual) || other.isIndividual == isIndividual)&&(identical(other.isInvidualChecked, isInvidualChecked) || other.isInvidualChecked == isInvidualChecked)&&(identical(other.isChecked, isChecked) || other.isChecked == isChecked)&&(identical(other.date, date) || other.date == date)&&(identical(other.greetingText, greetingText) || other.greetingText == greetingText)&&(identical(other.error, error) || other.error == error)&&(identical(other.isCheckedSelectAll, isCheckedSelectAll) || other.isCheckedSelectAll == isCheckedSelectAll)&&const DeepCollectionEquality().equals(other.selectedIds, selectedIds));
 }
 
 
@@ -34,15 +34,15 @@ int get hashCode => Object.hash(runtimeType,isLoading,data,updateResponse,attend
 
 @override
 String toString() {
-  return 'HomeState(isLoading: $isLoading, data: $data, updateResponse: $updateResponse, attendanceUpdatedSuccess: $attendanceUpdatedSuccess, attendanceUpdatedFaliure: $attendanceUpdatedFaliure, attendanceList: $attendanceList, filteredAttendanceList: $filteredAttendanceList, originalAttendanceList: $originalAttendanceList, isIndividual: $isIndividual, isInvidualChecked: $isInvidualChecked, isChecked: $isChecked, date: $date, greetingText: $greetingText, error: $error, isCheckedSelectAll: $isCheckedSelectAll, selectedIds: $selectedIds)';
+  return 'AttendanceState(isLoading: $isLoading, data: $data, updateResponse: $updateResponse, attendanceUpdatedSuccess: $attendanceUpdatedSuccess, attendanceUpdatedFaliure: $attendanceUpdatedFaliure, attendanceList: $attendanceList, filteredAttendanceList: $filteredAttendanceList, originalAttendanceList: $originalAttendanceList, isIndividual: $isIndividual, isInvidualChecked: $isInvidualChecked, isChecked: $isChecked, date: $date, greetingText: $greetingText, error: $error, isCheckedSelectAll: $isCheckedSelectAll, selectedIds: $selectedIds)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $HomeStateCopyWith<$Res>  {
-  factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) _then) = _$HomeStateCopyWithImpl;
+abstract mixin class $AttendanceStateCopyWith<$Res>  {
+  factory $AttendanceStateCopyWith(AttendanceState value, $Res Function(AttendanceState) _then) = _$AttendanceStateCopyWithImpl;
 @useResult
 $Res call({
  bool isLoading, String data, UiResponseModel updateResponse, bool attendanceUpdatedSuccess, bool attendanceUpdatedFaliure, List<StudentAttendance>? attendanceList, List<StudentAttendance>? filteredAttendanceList, List<StudentAttendance>? originalAttendanceList, bool isIndividual, bool isInvidualChecked, bool isChecked, String date, String greetingText, String? error, bool isCheckedSelectAll, Set<String> selectedIds
@@ -53,14 +53,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$HomeStateCopyWithImpl<$Res>
-    implements $HomeStateCopyWith<$Res> {
-  _$HomeStateCopyWithImpl(this._self, this._then);
+class _$AttendanceStateCopyWithImpl<$Res>
+    implements $AttendanceStateCopyWith<$Res> {
+  _$AttendanceStateCopyWithImpl(this._self, this._then);
 
-  final HomeState _self;
-  final $Res Function(HomeState) _then;
+  final AttendanceState _self;
+  final $Res Function(AttendanceState) _then;
 
-/// Create a copy of HomeState
+/// Create a copy of AttendanceState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? data = null,Object? updateResponse = null,Object? attendanceUpdatedSuccess = null,Object? attendanceUpdatedFaliure = null,Object? attendanceList = freezed,Object? filteredAttendanceList = freezed,Object? originalAttendanceList = freezed,Object? isIndividual = null,Object? isInvidualChecked = null,Object? isChecked = null,Object? date = null,Object? greetingText = null,Object? error = freezed,Object? isCheckedSelectAll = null,Object? selectedIds = null,}) {
   return _then(_self.copyWith(
@@ -87,8 +87,8 @@ as Set<String>,
 }
 
 
-/// Adds pattern-matching-related methods to [HomeState].
-extension HomeStatePatterns on HomeState {
+/// Adds pattern-matching-related methods to [AttendanceState].
+extension AttendanceStatePatterns on AttendanceState {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -101,10 +101,10 @@ extension HomeStatePatterns on HomeState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _HomeState value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _AttendanceState value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _HomeState() when $default != null:
+case _AttendanceState() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -123,10 +123,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _HomeState value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _AttendanceState value)  $default,){
 final _that = this;
 switch (_that) {
-case _HomeState():
+case _AttendanceState():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -144,10 +144,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _HomeState value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _AttendanceState value)?  $default,){
 final _that = this;
 switch (_that) {
-case _HomeState() when $default != null:
+case _AttendanceState() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -167,7 +167,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  String data,  UiResponseModel updateResponse,  bool attendanceUpdatedSuccess,  bool attendanceUpdatedFaliure,  List<StudentAttendance>? attendanceList,  List<StudentAttendance>? filteredAttendanceList,  List<StudentAttendance>? originalAttendanceList,  bool isIndividual,  bool isInvidualChecked,  bool isChecked,  String date,  String greetingText,  String? error,  bool isCheckedSelectAll,  Set<String> selectedIds)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _HomeState() when $default != null:
+case _AttendanceState() when $default != null:
 return $default(_that.isLoading,_that.data,_that.updateResponse,_that.attendanceUpdatedSuccess,_that.attendanceUpdatedFaliure,_that.attendanceList,_that.filteredAttendanceList,_that.originalAttendanceList,_that.isIndividual,_that.isInvidualChecked,_that.isChecked,_that.date,_that.greetingText,_that.error,_that.isCheckedSelectAll,_that.selectedIds);case _:
   return orElse();
 
@@ -188,7 +188,7 @@ return $default(_that.isLoading,_that.data,_that.updateResponse,_that.attendance
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  String data,  UiResponseModel updateResponse,  bool attendanceUpdatedSuccess,  bool attendanceUpdatedFaliure,  List<StudentAttendance>? attendanceList,  List<StudentAttendance>? filteredAttendanceList,  List<StudentAttendance>? originalAttendanceList,  bool isIndividual,  bool isInvidualChecked,  bool isChecked,  String date,  String greetingText,  String? error,  bool isCheckedSelectAll,  Set<String> selectedIds)  $default,) {final _that = this;
 switch (_that) {
-case _HomeState():
+case _AttendanceState():
 return $default(_that.isLoading,_that.data,_that.updateResponse,_that.attendanceUpdatedSuccess,_that.attendanceUpdatedFaliure,_that.attendanceList,_that.filteredAttendanceList,_that.originalAttendanceList,_that.isIndividual,_that.isInvidualChecked,_that.isChecked,_that.date,_that.greetingText,_that.error,_that.isCheckedSelectAll,_that.selectedIds);case _:
   throw StateError('Unexpected subclass');
 
@@ -208,7 +208,7 @@ return $default(_that.isLoading,_that.data,_that.updateResponse,_that.attendance
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  String data,  UiResponseModel updateResponse,  bool attendanceUpdatedSuccess,  bool attendanceUpdatedFaliure,  List<StudentAttendance>? attendanceList,  List<StudentAttendance>? filteredAttendanceList,  List<StudentAttendance>? originalAttendanceList,  bool isIndividual,  bool isInvidualChecked,  bool isChecked,  String date,  String greetingText,  String? error,  bool isCheckedSelectAll,  Set<String> selectedIds)?  $default,) {final _that = this;
 switch (_that) {
-case _HomeState() when $default != null:
+case _AttendanceState() when $default != null:
 return $default(_that.isLoading,_that.data,_that.updateResponse,_that.attendanceUpdatedSuccess,_that.attendanceUpdatedFaliure,_that.attendanceList,_that.filteredAttendanceList,_that.originalAttendanceList,_that.isIndividual,_that.isInvidualChecked,_that.isChecked,_that.date,_that.greetingText,_that.error,_that.isCheckedSelectAll,_that.selectedIds);case _:
   return null;
 
@@ -220,8 +220,8 @@ return $default(_that.isLoading,_that.data,_that.updateResponse,_that.attendance
 /// @nodoc
 
 
-class _HomeState implements HomeState {
-  const _HomeState({required this.isLoading, required this.data, required this.updateResponse, required this.attendanceUpdatedSuccess, required this.attendanceUpdatedFaliure, final  List<StudentAttendance>? attendanceList, final  List<StudentAttendance>? filteredAttendanceList, final  List<StudentAttendance>? originalAttendanceList, required this.isIndividual, required this.isInvidualChecked, required this.isChecked, required this.date, required this.greetingText, this.error, required this.isCheckedSelectAll, final  Set<String> selectedIds = const {}}): _attendanceList = attendanceList,_filteredAttendanceList = filteredAttendanceList,_originalAttendanceList = originalAttendanceList,_selectedIds = selectedIds;
+class _AttendanceState implements AttendanceState {
+  const _AttendanceState({required this.isLoading, required this.data, required this.updateResponse, required this.attendanceUpdatedSuccess, required this.attendanceUpdatedFaliure, final  List<StudentAttendance>? attendanceList, final  List<StudentAttendance>? filteredAttendanceList, final  List<StudentAttendance>? originalAttendanceList, required this.isIndividual, required this.isInvidualChecked, required this.isChecked, required this.date, required this.greetingText, this.error, required this.isCheckedSelectAll, final  Set<String> selectedIds = const {}}): _attendanceList = attendanceList,_filteredAttendanceList = filteredAttendanceList,_originalAttendanceList = originalAttendanceList,_selectedIds = selectedIds;
   
 
 @override final  bool isLoading;
@@ -271,17 +271,17 @@ class _HomeState implements HomeState {
 }
 
 
-/// Create a copy of HomeState
+/// Create a copy of AttendanceState
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$HomeStateCopyWith<_HomeState> get copyWith => __$HomeStateCopyWithImpl<_HomeState>(this, _$identity);
+_$AttendanceStateCopyWith<_AttendanceState> get copyWith => __$AttendanceStateCopyWithImpl<_AttendanceState>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.updateResponse, updateResponse) || other.updateResponse == updateResponse)&&(identical(other.attendanceUpdatedSuccess, attendanceUpdatedSuccess) || other.attendanceUpdatedSuccess == attendanceUpdatedSuccess)&&(identical(other.attendanceUpdatedFaliure, attendanceUpdatedFaliure) || other.attendanceUpdatedFaliure == attendanceUpdatedFaliure)&&const DeepCollectionEquality().equals(other._attendanceList, _attendanceList)&&const DeepCollectionEquality().equals(other._filteredAttendanceList, _filteredAttendanceList)&&const DeepCollectionEquality().equals(other._originalAttendanceList, _originalAttendanceList)&&(identical(other.isIndividual, isIndividual) || other.isIndividual == isIndividual)&&(identical(other.isInvidualChecked, isInvidualChecked) || other.isInvidualChecked == isInvidualChecked)&&(identical(other.isChecked, isChecked) || other.isChecked == isChecked)&&(identical(other.date, date) || other.date == date)&&(identical(other.greetingText, greetingText) || other.greetingText == greetingText)&&(identical(other.error, error) || other.error == error)&&(identical(other.isCheckedSelectAll, isCheckedSelectAll) || other.isCheckedSelectAll == isCheckedSelectAll)&&const DeepCollectionEquality().equals(other._selectedIds, _selectedIds));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AttendanceState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.updateResponse, updateResponse) || other.updateResponse == updateResponse)&&(identical(other.attendanceUpdatedSuccess, attendanceUpdatedSuccess) || other.attendanceUpdatedSuccess == attendanceUpdatedSuccess)&&(identical(other.attendanceUpdatedFaliure, attendanceUpdatedFaliure) || other.attendanceUpdatedFaliure == attendanceUpdatedFaliure)&&const DeepCollectionEquality().equals(other._attendanceList, _attendanceList)&&const DeepCollectionEquality().equals(other._filteredAttendanceList, _filteredAttendanceList)&&const DeepCollectionEquality().equals(other._originalAttendanceList, _originalAttendanceList)&&(identical(other.isIndividual, isIndividual) || other.isIndividual == isIndividual)&&(identical(other.isInvidualChecked, isInvidualChecked) || other.isInvidualChecked == isInvidualChecked)&&(identical(other.isChecked, isChecked) || other.isChecked == isChecked)&&(identical(other.date, date) || other.date == date)&&(identical(other.greetingText, greetingText) || other.greetingText == greetingText)&&(identical(other.error, error) || other.error == error)&&(identical(other.isCheckedSelectAll, isCheckedSelectAll) || other.isCheckedSelectAll == isCheckedSelectAll)&&const DeepCollectionEquality().equals(other._selectedIds, _selectedIds));
 }
 
 
@@ -290,15 +290,15 @@ int get hashCode => Object.hash(runtimeType,isLoading,data,updateResponse,attend
 
 @override
 String toString() {
-  return 'HomeState(isLoading: $isLoading, data: $data, updateResponse: $updateResponse, attendanceUpdatedSuccess: $attendanceUpdatedSuccess, attendanceUpdatedFaliure: $attendanceUpdatedFaliure, attendanceList: $attendanceList, filteredAttendanceList: $filteredAttendanceList, originalAttendanceList: $originalAttendanceList, isIndividual: $isIndividual, isInvidualChecked: $isInvidualChecked, isChecked: $isChecked, date: $date, greetingText: $greetingText, error: $error, isCheckedSelectAll: $isCheckedSelectAll, selectedIds: $selectedIds)';
+  return 'AttendanceState(isLoading: $isLoading, data: $data, updateResponse: $updateResponse, attendanceUpdatedSuccess: $attendanceUpdatedSuccess, attendanceUpdatedFaliure: $attendanceUpdatedFaliure, attendanceList: $attendanceList, filteredAttendanceList: $filteredAttendanceList, originalAttendanceList: $originalAttendanceList, isIndividual: $isIndividual, isInvidualChecked: $isInvidualChecked, isChecked: $isChecked, date: $date, greetingText: $greetingText, error: $error, isCheckedSelectAll: $isCheckedSelectAll, selectedIds: $selectedIds)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$HomeStateCopyWith<$Res> implements $HomeStateCopyWith<$Res> {
-  factory _$HomeStateCopyWith(_HomeState value, $Res Function(_HomeState) _then) = __$HomeStateCopyWithImpl;
+abstract mixin class _$AttendanceStateCopyWith<$Res> implements $AttendanceStateCopyWith<$Res> {
+  factory _$AttendanceStateCopyWith(_AttendanceState value, $Res Function(_AttendanceState) _then) = __$AttendanceStateCopyWithImpl;
 @override @useResult
 $Res call({
  bool isLoading, String data, UiResponseModel updateResponse, bool attendanceUpdatedSuccess, bool attendanceUpdatedFaliure, List<StudentAttendance>? attendanceList, List<StudentAttendance>? filteredAttendanceList, List<StudentAttendance>? originalAttendanceList, bool isIndividual, bool isInvidualChecked, bool isChecked, String date, String greetingText, String? error, bool isCheckedSelectAll, Set<String> selectedIds
@@ -309,17 +309,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$HomeStateCopyWithImpl<$Res>
-    implements _$HomeStateCopyWith<$Res> {
-  __$HomeStateCopyWithImpl(this._self, this._then);
+class __$AttendanceStateCopyWithImpl<$Res>
+    implements _$AttendanceStateCopyWith<$Res> {
+  __$AttendanceStateCopyWithImpl(this._self, this._then);
 
-  final _HomeState _self;
-  final $Res Function(_HomeState) _then;
+  final _AttendanceState _self;
+  final $Res Function(_AttendanceState) _then;
 
-/// Create a copy of HomeState
+/// Create a copy of AttendanceState
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? data = null,Object? updateResponse = null,Object? attendanceUpdatedSuccess = null,Object? attendanceUpdatedFaliure = null,Object? attendanceList = freezed,Object? filteredAttendanceList = freezed,Object? originalAttendanceList = freezed,Object? isIndividual = null,Object? isInvidualChecked = null,Object? isChecked = null,Object? date = null,Object? greetingText = null,Object? error = freezed,Object? isCheckedSelectAll = null,Object? selectedIds = null,}) {
-  return _then(_HomeState(
+  return _then(_AttendanceState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
 as String,updateResponse: null == updateResponse ? _self.updateResponse : updateResponse // ignore: cast_nullable_to_non_nullable

@@ -13,20 +13,20 @@ import '../../../../theme/colors/app_colors.dart';
 import '../../../../theme/icons/app_icons.dart';
 import '../../../../theme/images/app_images.dart';
 import '../../../../theme/strings/app_strings.dart';
-import '../viewmodel/home_state.dart';
-import '../viewmodel/home_viewmodel.dart';
+import '../viewmodel/attendance_state.dart';
+import '../viewmodel/attendance_viewmodel.dart';
 import '../widgets/confirmationDialog.dart';
 import '../widgets/student_card.dart';
 import '../widgets/successBottomSheet.dart';
 
-class HomePage extends ConsumerStatefulWidget {
-  const HomePage({super.key});
+class AttendancePage extends ConsumerStatefulWidget {
+  const AttendancePage({super.key});
 
   @override
-  ConsumerState<HomePage> createState() => _HomePageState();
+  ConsumerState<AttendancePage> createState() => _AttendanceState();
 }
 
-class _HomePageState extends ConsumerState<HomePage> {
+class _AttendanceState extends ConsumerState<AttendancePage> {
   final searchController = TextEditingController();
 
   @override

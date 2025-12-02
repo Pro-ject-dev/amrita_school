@@ -1,14 +1,14 @@
-import 'package:amrita_vidhyalayam_teacher/core/features/home/data/models/ui_response_model.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/attendance/data/models/ui_response_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 import '../../data/models/attendance_model.dart';
-import '../../data/models/post_attendance_model.dart';
 
-part 'home_state.freezed.dart';
+
+part 'attendance_state.freezed.dart';
 
 @freezed
-abstract class HomeState with _$HomeState {
-  const factory HomeState({
+abstract class AttendanceState with _$AttendanceState {
+  const factory AttendanceState({
     required bool isLoading,
     required String data,
     required UiResponseModel updateResponse,
@@ -25,9 +25,9 @@ abstract class HomeState with _$HomeState {
     String? error,
     required bool isCheckedSelectAll,
     @Default({}) Set<String> selectedIds,
-  }) = _HomeState;
+  }) = _AttendanceState;
 
-  factory HomeState.initial() => HomeState(
+  factory AttendanceState.initial() => AttendanceState(
     isLoading: false,
     data: "",
     attendanceList: null,

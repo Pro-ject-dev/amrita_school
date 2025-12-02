@@ -1,12 +1,12 @@
 
 import 'package:intl/intl.dart';
 import 'package:riverpod/legacy.dart';
-import '../../../home/data/repository/home_repository.dart';
+import '../../../attendance/data/repository/attendance_repository.dart';
 import 'student_state.dart';
 
 
 class StudentViewModel extends StateNotifier<StudentState> {
-  final HomeRepository _repository;
+  final AttendanceRepository _repository;
 
   StudentViewModel(this._repository) : super(StudentState.initial());
 
@@ -25,7 +25,7 @@ class StudentViewModel extends StateNotifier<StudentState> {
 
   final studentProvider =
     StateNotifierProvider<StudentViewModel, StudentState>(
-  (ref) => StudentViewModel(ref.watch(homeRepositoryProvider)));
+  (ref) => StudentViewModel(ref.watch(attendanceRepositoryProvider)));
 
 
 

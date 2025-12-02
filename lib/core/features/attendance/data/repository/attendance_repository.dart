@@ -5,17 +5,17 @@ import '../../../../network/dio_client.dart';
 import '../models/attendance_model.dart';
 import '../models/post_attendance_model.dart';
 
-part 'home_repository.g.dart';
+part 'attendance_repository.g.dart';
 
 @riverpod
-HomeRepository homeRepository(Ref ref) {
-  return HomeRepository(ref.watch(dioProvider));
+AttendanceRepository attendanceRepository(Ref ref) {
+  return AttendanceRepository(ref.watch(dioProvider));
 }
 
- class HomeRepository {
+ class AttendanceRepository {
   final Dio _dio;
 
-  HomeRepository(this._dio);
+  AttendanceRepository(this._dio);
 
   Future<AttendanceModel> getClassAttendance({
     required String sclass,

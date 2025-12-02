@@ -1,4 +1,4 @@
-class HomeRemoteSource {
+class AttendanceRemoteSource {
   Future<String> fetchValue() async {
     await Future.delayed(const Duration(milliseconds: 400));
     return "Fetched value from API";
