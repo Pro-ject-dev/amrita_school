@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'reports_state.dart';
+part of 'e_track_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,20 +12,20 @@ part of 'reports_state.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$ReportsState {
+mixin _$ETrackState {
 
  bool get isLoading; String get data; String? get error;
-/// Create a copy of ReportsState
+/// Create a copy of ETrackState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$ReportsStateCopyWith<ReportsState> get copyWith => _$ReportsStateCopyWithImpl<ReportsState>(this as ReportsState, _$identity);
+$ETrackStateCopyWith<ETrackState> get copyWith => _$ETrackStateCopyWithImpl<ETrackState>(this as ETrackState, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ReportsState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ETrackState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.error, error) || other.error == error));
 }
 
 
@@ -34,15 +34,15 @@ int get hashCode => Object.hash(runtimeType,isLoading,data,error);
 
 @override
 String toString() {
-  return 'ReportsState(isLoading: $isLoading, data: $data, error: $error)';
+  return 'ETrackState(isLoading: $isLoading, data: $data, error: $error)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $ReportsStateCopyWith<$Res>  {
-  factory $ReportsStateCopyWith(ReportsState value, $Res Function(ReportsState) _then) = _$ReportsStateCopyWithImpl;
+abstract mixin class $ETrackStateCopyWith<$Res>  {
+  factory $ETrackStateCopyWith(ETrackState value, $Res Function(ETrackState) _then) = _$ETrackStateCopyWithImpl;
 @useResult
 $Res call({
  bool isLoading, String data, String? error
@@ -53,14 +53,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$ReportsStateCopyWithImpl<$Res>
-    implements $ReportsStateCopyWith<$Res> {
-  _$ReportsStateCopyWithImpl(this._self, this._then);
+class _$ETrackStateCopyWithImpl<$Res>
+    implements $ETrackStateCopyWith<$Res> {
+  _$ETrackStateCopyWithImpl(this._self, this._then);
 
-  final ReportsState _self;
-  final $Res Function(ReportsState) _then;
+  final ETrackState _self;
+  final $Res Function(ETrackState) _then;
 
-/// Create a copy of ReportsState
+/// Create a copy of ETrackState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? data = null,Object? error = freezed,}) {
   return _then(_self.copyWith(
@@ -74,8 +74,8 @@ as String?,
 }
 
 
-/// Adds pattern-matching-related methods to [ReportsState].
-extension ReportsStatePatterns on ReportsState {
+/// Adds pattern-matching-related methods to [ETrackState].
+extension ETrackStatePatterns on ETrackState {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -88,10 +88,10 @@ extension ReportsStatePatterns on ReportsState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ReportsState value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ETrackState value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _ReportsState() when $default != null:
+case _ETrackState() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -110,10 +110,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ReportsState value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ETrackState value)  $default,){
 final _that = this;
 switch (_that) {
-case _ReportsState():
+case _ETrackState():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -131,10 +131,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ReportsState value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ETrackState value)?  $default,){
 final _that = this;
 switch (_that) {
-case _ReportsState() when $default != null:
+case _ETrackState() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -154,7 +154,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  String data,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _ReportsState() when $default != null:
+case _ETrackState() when $default != null:
 return $default(_that.isLoading,_that.data,_that.error);case _:
   return orElse();
 
@@ -175,7 +175,7 @@ return $default(_that.isLoading,_that.data,_that.error);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  String data,  String? error)  $default,) {final _that = this;
 switch (_that) {
-case _ReportsState():
+case _ETrackState():
 return $default(_that.isLoading,_that.data,_that.error);case _:
   throw StateError('Unexpected subclass');
 
@@ -195,7 +195,7 @@ return $default(_that.isLoading,_that.data,_that.error);case _:
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  String data,  String? error)?  $default,) {final _that = this;
 switch (_that) {
-case _ReportsState() when $default != null:
+case _ETrackState() when $default != null:
 return $default(_that.isLoading,_that.data,_that.error);case _:
   return null;
 
@@ -207,25 +207,25 @@ return $default(_that.isLoading,_that.data,_that.error);case _:
 /// @nodoc
 
 
-class _ReportsState implements ReportsState {
-  const _ReportsState({required this.isLoading, required this.data, this.error});
+class _ETrackState implements ETrackState {
+  const _ETrackState({required this.isLoading, required this.data, this.error});
   
 
 @override final  bool isLoading;
 @override final  String data;
 @override final  String? error;
 
-/// Create a copy of ReportsState
+/// Create a copy of ETrackState
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$ReportsStateCopyWith<_ReportsState> get copyWith => __$ReportsStateCopyWithImpl<_ReportsState>(this, _$identity);
+_$ETrackStateCopyWith<_ETrackState> get copyWith => __$ETrackStateCopyWithImpl<_ETrackState>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ReportsState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ETrackState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.error, error) || other.error == error));
 }
 
 
@@ -234,15 +234,15 @@ int get hashCode => Object.hash(runtimeType,isLoading,data,error);
 
 @override
 String toString() {
-  return 'ReportsState(isLoading: $isLoading, data: $data, error: $error)';
+  return 'ETrackState(isLoading: $isLoading, data: $data, error: $error)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$ReportsStateCopyWith<$Res> implements $ReportsStateCopyWith<$Res> {
-  factory _$ReportsStateCopyWith(_ReportsState value, $Res Function(_ReportsState) _then) = __$ReportsStateCopyWithImpl;
+abstract mixin class _$ETrackStateCopyWith<$Res> implements $ETrackStateCopyWith<$Res> {
+  factory _$ETrackStateCopyWith(_ETrackState value, $Res Function(_ETrackState) _then) = __$ETrackStateCopyWithImpl;
 @override @useResult
 $Res call({
  bool isLoading, String data, String? error
@@ -253,17 +253,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$ReportsStateCopyWithImpl<$Res>
-    implements _$ReportsStateCopyWith<$Res> {
-  __$ReportsStateCopyWithImpl(this._self, this._then);
+class __$ETrackStateCopyWithImpl<$Res>
+    implements _$ETrackStateCopyWith<$Res> {
+  __$ETrackStateCopyWithImpl(this._self, this._then);
 
-  final _ReportsState _self;
-  final $Res Function(_ReportsState) _then;
+  final _ETrackState _self;
+  final $Res Function(_ETrackState) _then;
 
-/// Create a copy of ReportsState
+/// Create a copy of ETrackState
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? data = null,Object? error = freezed,}) {
-  return _then(_ReportsState(
+  return _then(_ETrackState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
 as String,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
