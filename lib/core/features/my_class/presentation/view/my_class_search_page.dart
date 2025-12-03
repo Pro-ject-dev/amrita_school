@@ -23,8 +23,7 @@ class _MyClassSearchPageState extends ConsumerState<MyClassSearchPage> {
 
   @override
   void initState() {
-   
-     searchFocus.requestFocus();
+    searchFocus.requestFocus();
   }
 
   @override
@@ -59,79 +58,65 @@ class _MyClassSearchPageState extends ConsumerState<MyClassSearchPage> {
         0;
 
     return Scaffold(
+      backgroundColor: Color(0xFFF5F7FA),
+      appBar: AppBar(
+        backgroundColor: Color(0xFFF5F7FA),
+        elevation: 0,
+        leadingWidth: 70,
+        centerTitle: true,
+        title: Text('Search'),
+        leading: Padding(
+          padding: EdgeInsets.only(left: 16.w),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(6),
+            onTap: () {
+              context.pop();
+            },
+            child: Icon(LucideIcons.chevronLeft, size: 22),
+          ),
+        ),
+      ),
       // backgroundColor: Colors.white,
       body: Column(
         children: [
           // Header Section with Blue Background
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF0B3160), Color(0xFF0B3160)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(24),
-                bottomRight: Radius.circular(24),
-              ),
-            ),
-            child: SafeArea(
-              bottom: false,
-              child:  Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 20.h),
-                  child: Row(
-                    crossAxisAlignment: .center,
-                    children: [
-                      InkWell(
-                        onTap: (){
-                             context.go("/myClassPage");
-                        },
-                        child: Container(
-                          height: 45.h,
-                          width: 45.w,
-                          decoration: BoxDecoration(shape: BoxShape.rectangle,   color:Colors.white,borderRadius: BorderRadius.circular(12.sp)),
-                                            
-                          child:Icon( LucideIcons.circleArrowLeft300,color: AppColors.primary)),
-                      ),
-                        SizedBox(width: 10.w,),
-                      Flexible(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.r),
-                            border: Border.all(color: Colors.grey.shade300),
-                            color: Colors.grey.shade100,
-                          ),
-                          child: TextField(
-                            controller: searchController,
-                           onChanged: ((val)=>  _onSearchChanged(val)),
-                           focusNode: searchFocus,
-                           
-                            decoration: InputDecoration(
-                              hintText: "Search student",
-                              hintStyle: TextStyle(
-                                color: Color.fromARGB(255, 202, 202, 202),
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              border: InputBorder.none,
-                              icon:Icon( LucideIcons.search300)
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-            ),
-          ),
 
           // Student List Section
           Expanded(
             child: Column(
               children: [
-               
+                SizedBox(height: 10.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: Flexible(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.r),
+                        border: Border.all(color: Colors.grey.shade300),
+                        color: Colors.grey.shade100,
+                      ),
+                      child: TextField(
+                        controller: searchController,
+                        onChanged: ((val) => _onSearchChanged(val)),
+                        focusNode: searchFocus,
+
+                        decoration: InputDecoration(
+                          hintText: "Search student",
+                          hintStyle: TextStyle(
+                            color: Color.fromARGB(255, 202, 202, 202),
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          border: InputBorder.none,
+                          icon: Icon(LucideIcons.search300),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 SizedBox(height: 20.h),
+
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Row(
@@ -170,8 +155,6 @@ class _MyClassSearchPageState extends ConsumerState<MyClassSearchPage> {
                 SizedBox(height: 16.h),
 
                 // Search Bar
-               
-
                 SizedBox(height: 16.h),
 
                 // Student List
@@ -256,4 +239,27 @@ class _MyClassSearchPageState extends ConsumerState<MyClassSearchPage> {
       ),
     );
   }
+}
+
+Widget buildBackButton(BuildContext context) {
+  return InkWell(
+    borderRadius: BorderRadius.circular(10),
+    onTap: () => context.pop(),
+    child: Container(
+      height: 40,
+      width: 40,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 6,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Center(child: Icon(LucideIcons.chevronLeft, size: 22)),
+    ),
+  );
 }

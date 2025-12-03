@@ -281,7 +281,7 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
                     ),
                     child: MaterialButton(
                       onPressed: () {
-                        context.go("/attendance");
+                        context.push("/attendance");
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
