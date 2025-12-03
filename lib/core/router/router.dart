@@ -1,6 +1,7 @@
 import 'package:amrita_vidhyalayam_teacher/core/features/auth/presentation/view/auth_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/attendance/presentation/view/attendance_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/main_scaffold/presentation/view/mainscaffold_page.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/my_class/presentation/view/my_class_search_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/profile/presentation/view/profile_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/reports/presentation/view/reports_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/splash_screen/presentation/view/splash_screen_page.dart';
@@ -60,9 +61,48 @@ final routerProvider = Provider<GoRouter>((ref) {
         name: 'attendance',
         builder: (_, __) =>  AttendancePage(),
       ),
-      
+GoRoute(
+  path: '/class_search',
+  name: 'class_search',
+  pageBuilder: (context, state) {
+    return CustomTransitionPage(
+      key: state.pageKey,
+      child: const MyClassSearchPage(),
+      transitionDuration: const Duration(milliseconds: 800),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        final enterFade = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+            parent: animation,
+            curve: const Interval(0.4, 1.0, curve: Curves.easeIn),
+          ),
+        );
+        
+        final enterScale = Tween<double>(begin: 0.96, end: 1.0).animate(
+          CurvedAnimation(
+            parent: animation,
+            curve: const Interval(0.4, 1.0, curve: Curves.easeOutCubic),
+          ),
+        );
+        
+        final exitFade = Tween<double>(begin: 1.0, end: 0.0).animate(
+          CurvedAnimation(
+            parent: secondaryAnimation,
+            curve: const Interval(0.0, 0.6, curve: Curves.easeOut),
+          ),
+        );
+        
+        return FadeTransition(
+          opacity: exitFade,
+          child: ScaleTransition(
+            scale: enterScale,
+            child: FadeTransition(opacity: enterFade, child: child),
+          ),
+        );
+      },
+    );
+  },
+),
 
-      
     ],
 
     observers: [

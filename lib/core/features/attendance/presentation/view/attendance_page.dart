@@ -7,13 +7,8 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-
-import '../../../../providers/common_providers.dart';
 import '../../../../theme/colors/app_colors.dart';
 import '../../../../theme/icons/app_icons.dart';
-import '../../../../theme/images/app_images.dart';
-import '../../../../theme/strings/app_strings.dart';
-import '../viewmodel/attendance_state.dart';
 import '../viewmodel/attendance_viewmodel.dart';
 import '../widgets/confirmationDialog.dart';
 import '../widgets/student_card.dart';

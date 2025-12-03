@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import '../../../home/presentation/viewmodel/home_viewmodel.dart';
 import '../viewmodel/my_class_viewmodel.dart';
 
 class MyClassPage extends ConsumerStatefulWidget {
@@ -18,6 +19,7 @@ class MyClassPage extends ConsumerStatefulWidget {
 
 class _MyClassPageState extends ConsumerState<MyClassPage> {
   final searchController = TextEditingController();
+  final searchFocus = FocusNode();
   Timer? searchDebounce;
 
   @override
@@ -279,7 +281,7 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
                     ),
                     child: MaterialButton(
                       onPressed: () {
-                        context.push("/attendance");
+                        context.go("/attendance");
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -335,34 +337,34 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
                 SizedBox(height: 16.h),
 
                 // Search Bar
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: TextField(
-                      controller: searchController,
-                      onChanged: _onSearchChanged,
-                      decoration: InputDecoration(
-                        hintText: 'Search student',
-                        hintStyle: TextStyle(
-                          color: Colors.grey.shade400,
-                          fontSize: 14.sp,
-                        ),
-                        prefixIcon: Icon(
-                          LucideIcons.search,
-                          color: AppColors.primary,
-                          size: 20,
-                        ),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ),
-
+                 Padding(
+                   padding:  EdgeInsets.symmetric(horizontal: 16.w),
+                   child: Container(
+                     padding: EdgeInsets.symmetric(horizontal: 16.w),
+                     decoration: BoxDecoration(
+                       borderRadius: BorderRadius.circular(10.r),
+                       border: Border.all(color: Colors.grey.shade300),
+                       color: Colors.grey.shade100,
+                     ),
+                     child: TextField(
+                       controller: searchController,
+                      readOnly: true,
+                      onTap: (){
+                        context.push("/class_search");
+                      },
+                       decoration: InputDecoration(
+                         hintText: "Search student",
+                         hintStyle: TextStyle(
+                           color: Color.fromARGB(255, 202, 202, 202),
+                           fontSize: 13.sp,
+                           fontWeight: FontWeight.bold,
+                         ),
+                         border: InputBorder.none,
+                         icon:Icon( LucideIcons.search300)
+                       ),
+                     ),
+                   ),
+                 ),
                 SizedBox(height: 16.h),
 
                 // Student List
