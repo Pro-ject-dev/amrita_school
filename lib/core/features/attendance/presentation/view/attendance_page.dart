@@ -249,43 +249,18 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: .spaceBetween,
-                      children: [
-                        Text(
-                          "Student List ",
-                          style: theme.textTheme.headlineMedium?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20.sp,
-                          ),
-                          
-                        ),
-                         Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Color(0xffE0E7FF),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                            "Students ${homeState.attendanceList?.length ?? 0}",
-                          style: TextStyle(
-                            color: Color(0xff1E3A8A),
-                            fontSize: 11.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      ],
-                    ),
-                    SizedBox(height: 0.h),
+                    SizedBox(height: 10.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        
+                        Text(
+                          "Student List (${homeState.attendanceList?.length ?? 0})",
+                          style: theme.textTheme.headlineMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20.sp,
+                          ),
+                        ),
 
                         Visibility(
                           visible: homeState.isInvidualChecked,
