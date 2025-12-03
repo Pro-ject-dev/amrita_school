@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'reports_model.dart';
+part of 'e_track_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_ReportsModel _$ReportsModelFromJson(Map<String, dynamic> json) =>
-    _ReportsModel(value: json['value'] as String);
+_ETrackModel _$ETrackModelFromJson(Map<String, dynamic> json) =>
+    _ETrackModel(value: json['value'] as String);
 
-Map<String, dynamic> _$ReportsModelToJson(_ReportsModel instance) =>
+Map<String, dynamic> _$ETrackModelToJson(_ETrackModel instance) =>
     <String, dynamic>{'value': instance.value};

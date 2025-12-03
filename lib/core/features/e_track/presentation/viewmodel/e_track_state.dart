@@ -1,17 +1,16 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'reports_state.freezed.dart';
+part 'e_track_state.freezed.dart';
 
 @freezed
-abstract  class ReportsState with _$ReportsState {
-  
-  const factory ReportsState({
+abstract class ETrackState with _$ETrackState {
+  const factory ETrackState({
     required bool isLoading,
     required String data,
     String? error,
-  }) = _ReportsState;
+  }) = _ETrackState;
 
-  factory ReportsState.initial() => const ReportsState(
+  factory ETrackState.initial() => const ETrackState(
         isLoading: false,
         data: "",
       );
