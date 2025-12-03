@@ -84,7 +84,7 @@ class _MyClassSearchPageState extends ConsumerState<MyClassSearchPage> {
                     children: [
                       InkWell(
                         onTap: (){
-                             context.go("/myClassPage");
+                             context.pop();
                         },
                         child: Container(
                           height: 45.h,

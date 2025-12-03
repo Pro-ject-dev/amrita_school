@@ -16,7 +16,7 @@ class MyClassViewodel extends StateNotifier<MyClassState> {
     final today = DateFormat("yyyy-MM-dd").format(DateTime.now());
     print(today);
     final studentsList = await _repository.getClassAttendance(sclass: "TS 25 CLASS 2 A", attendanceOn:today , searchQuery: searchTxt);
-    state = state.copyWith(studentList:studentsList.attendanceList,isLoading: false);
+    state = state.copyWith(studentList:studentsList.attendanceList,isLoading: false,orginalStudentList:studentsList.attendanceList);
 
   }
 

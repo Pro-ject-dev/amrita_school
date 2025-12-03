@@ -281,7 +281,7 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
                     ),
                     child: MaterialButton(
                       onPressed: () {
-                        context.go("/attendance");
+                        context.push("/attendance");
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -350,7 +350,7 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
                        controller: searchController,
                       readOnly: true,
                       onTap: (){
-                        context.push("/class_search");
+                        context.push("/class_search").then((v)=>ref.read(studentProvider.notifier).fetchStudent(""));
                       },
                        decoration: InputDecoration(
                          hintText: "Search student",
