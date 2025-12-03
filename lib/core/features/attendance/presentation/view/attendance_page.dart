@@ -119,9 +119,7 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
         color: AppColors.primary,
         child: Column(
           children: [
-            // ---------------------- YOUR ORIGINAL UI ----------------------
-            // NOTHING CHANGED HERE
-            // --------------------------------------------------------------
+   
             SafeArea(
               child: Container(
                 width: double.infinity,
