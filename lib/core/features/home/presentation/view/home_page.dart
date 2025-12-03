@@ -315,11 +315,11 @@ class CheckInCardState extends ConsumerState<CheckInCard> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 2.w),
+                  SizedBox(width: 1.w),
                   Text(
                     'AM',
                     style: TextStyle(
-                      fontSize: 12.sp,
+                      fontSize: 10.sp,
                       fontWeight: FontWeight.w600,
                       color: Colors.black87,
                     ),
@@ -357,8 +357,8 @@ class CheckInCardState extends ConsumerState<CheckInCard> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
             child: Text(
-              'Checked in success',
-              style: TextStyle(color: Color(0xff7C8489), fontSize: 13.sp),
+              'Checked in ',
+              style: TextStyle(color: Color(0xff7C8489), fontSize: 11.sp),
             ),
           ),
         ],
@@ -501,7 +501,7 @@ class CheckOutCardState extends ConsumerState<CheckOutCard> {
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
             child: Text(
               "It's not time yet",
-              style: TextStyle(color: Color(0xff7C8489), fontSize: 13.sp),
+              style: TextStyle(color: Color(0xff7C8489), fontSize: 11.sp),
             ),
           ),
         ],

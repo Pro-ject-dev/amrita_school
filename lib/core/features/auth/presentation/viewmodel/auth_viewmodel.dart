@@ -39,7 +39,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
         if (validStatus.message.isInstructor) {
           await ref.read(storageServiceProvider).write(
                 "isLoggedIn",
-                true
+                'true'
               );
 
           state = state.copyWith(

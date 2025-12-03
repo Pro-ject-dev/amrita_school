@@ -1,4 +1,4 @@
-import 'package:amrita_vidhyalayam_teacher/core/features/student/presentation/widgets/test.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/my_class/presentation/widgets/test.dart';
 import 'package:amrita_vidhyalayam_teacher/core/providers/common_providers.dart';
 import 'package:amrita_vidhyalayam_teacher/core/router/router.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/strings/app_strings.dart';

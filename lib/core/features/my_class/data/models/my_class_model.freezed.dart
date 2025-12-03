@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'student_model.dart';
+part of 'my_class_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,22 +13,22 @@ part of 'student_model.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$StudentModel {
+mixin _$MyClassModel {
 
  String get value;
-/// Create a copy of StudentModel
+/// Create a copy of MyClassModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$StudentModelCopyWith<StudentModel> get copyWith => _$StudentModelCopyWithImpl<StudentModel>(this as StudentModel, _$identity);
+$MyClassModelCopyWith<MyClassModel> get copyWith => _$MyClassModelCopyWithImpl<MyClassModel>(this as MyClassModel, _$identity);
 
-  /// Serializes this StudentModel to a JSON map.
+  /// Serializes this MyClassModel to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StudentModel&&(identical(other.value, value) || other.value == value));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MyClassModel&&(identical(other.value, value) || other.value == value));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,15 +37,15 @@ int get hashCode => Object.hash(runtimeType,value);
 
 @override
 String toString() {
-  return 'StudentModel(value: $value)';
+  return 'MyClassModel(value: $value)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $StudentModelCopyWith<$Res>  {
-  factory $StudentModelCopyWith(StudentModel value, $Res Function(StudentModel) _then) = _$StudentModelCopyWithImpl;
+abstract mixin class $MyClassModelCopyWith<$Res>  {
+  factory $MyClassModelCopyWith(MyClassModel value, $Res Function(MyClassModel) _then) = _$MyClassModelCopyWithImpl;
 @useResult
 $Res call({
  String value
@@ -56,14 +56,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$StudentModelCopyWithImpl<$Res>
-    implements $StudentModelCopyWith<$Res> {
-  _$StudentModelCopyWithImpl(this._self, this._then);
+class _$MyClassModelCopyWithImpl<$Res>
+    implements $MyClassModelCopyWith<$Res> {
+  _$MyClassModelCopyWithImpl(this._self, this._then);
 
-  final StudentModel _self;
-  final $Res Function(StudentModel) _then;
+  final MyClassModel _self;
+  final $Res Function(MyClassModel) _then;
 
-/// Create a copy of StudentModel
+/// Create a copy of MyClassModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? value = null,}) {
   return _then(_self.copyWith(
@@ -75,8 +75,8 @@ as String,
 }
 
 
-/// Adds pattern-matching-related methods to [StudentModel].
-extension StudentModelPatterns on StudentModel {
+/// Adds pattern-matching-related methods to [MyClassModel].
+extension MyClassModelPatterns on MyClassModel {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -89,10 +89,10 @@ extension StudentModelPatterns on StudentModel {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _StudentModel value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _MyClassModel value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _StudentModel() when $default != null:
+case _MyClassModel() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -111,10 +111,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _StudentModel value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _MyClassModel value)  $default,){
 final _that = this;
 switch (_that) {
-case _StudentModel():
+case _MyClassModel():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -132,10 +132,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _StudentModel value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _MyClassModel value)?  $default,){
 final _that = this;
 switch (_that) {
-case _StudentModel() when $default != null:
+case _MyClassModel() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -155,7 +155,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String value)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _StudentModel() when $default != null:
+case _MyClassModel() when $default != null:
 return $default(_that.value);case _:
   return orElse();
 
@@ -176,7 +176,7 @@ return $default(_that.value);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String value)  $default,) {final _that = this;
 switch (_that) {
-case _StudentModel():
+case _MyClassModel():
 return $default(_that.value);case _:
   throw StateError('Unexpected subclass');
 
@@ -196,7 +196,7 @@ return $default(_that.value);case _:
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String value)?  $default,) {final _that = this;
 switch (_that) {
-case _StudentModel() when $default != null:
+case _MyClassModel() when $default != null:
 return $default(_that.value);case _:
   return null;
 
@@ -208,26 +208,26 @@ return $default(_that.value);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _StudentModel extends StudentModel {
-  const _StudentModel({required this.value}): super._();
-  factory _StudentModel.fromJson(Map<String, dynamic> json) => _$StudentModelFromJson(json);
+class _MyClassModel extends MyClassModel {
+  const _MyClassModel({required this.value}): super._();
+  factory _MyClassModel.fromJson(Map<String, dynamic> json) => _$MyClassModelFromJson(json);
 
 @override final  String value;
 
-/// Create a copy of StudentModel
+/// Create a copy of MyClassModel
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$StudentModelCopyWith<_StudentModel> get copyWith => __$StudentModelCopyWithImpl<_StudentModel>(this, _$identity);
+_$MyClassModelCopyWith<_MyClassModel> get copyWith => __$MyClassModelCopyWithImpl<_MyClassModel>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$StudentModelToJson(this, );
+  return _$MyClassModelToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StudentModel&&(identical(other.value, value) || other.value == value));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MyClassModel&&(identical(other.value, value) || other.value == value));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -236,15 +236,15 @@ int get hashCode => Object.hash(runtimeType,value);
 
 @override
 String toString() {
-  return 'StudentModel(value: $value)';
+  return 'MyClassModel(value: $value)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$StudentModelCopyWith<$Res> implements $StudentModelCopyWith<$Res> {
-  factory _$StudentModelCopyWith(_StudentModel value, $Res Function(_StudentModel) _then) = __$StudentModelCopyWithImpl;
+abstract mixin class _$MyClassModelCopyWith<$Res> implements $MyClassModelCopyWith<$Res> {
+  factory _$MyClassModelCopyWith(_MyClassModel value, $Res Function(_MyClassModel) _then) = __$MyClassModelCopyWithImpl;
 @override @useResult
 $Res call({
  String value
@@ -255,17 +255,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$StudentModelCopyWithImpl<$Res>
-    implements _$StudentModelCopyWith<$Res> {
-  __$StudentModelCopyWithImpl(this._self, this._then);
+class __$MyClassModelCopyWithImpl<$Res>
+    implements _$MyClassModelCopyWith<$Res> {
+  __$MyClassModelCopyWithImpl(this._self, this._then);
 
-  final _StudentModel _self;
-  final $Res Function(_StudentModel) _then;
+  final _MyClassModel _self;
+  final $Res Function(_MyClassModel) _then;
 
-/// Create a copy of StudentModel
+/// Create a copy of MyClassModel
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? value = null,}) {
-  return _then(_StudentModel(
+  return _then(_MyClassModel(
 value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
 as String,
   ));

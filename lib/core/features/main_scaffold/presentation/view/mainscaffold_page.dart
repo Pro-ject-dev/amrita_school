@@ -3,7 +3,7 @@ import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/view/
 import 'package:amrita_vidhyalayam_teacher/core/features/main_scaffold/presentation/viewmodel/mainscaffold_viewmodel.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/profile/presentation/view/profile_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/reports/presentation/view/reports_page.dart';
-import 'package:amrita_vidhyalayam_teacher/core/features/student/presentation/view/student_page.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/my_class/presentation/view/my_class_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/strings/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,7 +18,7 @@ class MainScaffold extends ConsumerWidget {
     final theme = Theme.of(context);
     final state = ref.watch(mainscaffoldProvider);
 
-    final pages = [HomePage(), StudentPage(), ReportsPage(), ProfilePage()];
+    final pages = [HomePage(), MyClassPage(), ReportsPage(), ProfilePage()];
 
     return Scaffold(
       body: IndexedStack(index: state.currentIndex, children: pages),
