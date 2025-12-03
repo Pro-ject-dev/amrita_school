@@ -1,7 +1,7 @@
-class StudentEntity {
+class MyClassEntity {
   final String value;
 
-  const StudentEntity({
+  const MyClassEntity({
     required this.value,
   });
 }

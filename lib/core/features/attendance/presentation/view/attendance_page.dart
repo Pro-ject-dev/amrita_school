@@ -56,7 +56,7 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
       //     previous?.message == next.message) {
       //   return;
       // }
- 
+
       if (next.isSuccess == true) {
         showModalBottomSheet(
           context: context,
@@ -92,9 +92,30 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(backgroundColor: AppColors.primary,),
+      appBar: AppBar(
+        title: Text('Attendance', style: TextStyle(color: Colors.white)),
+        backgroundColor: AppColors.primary,
+        // leading: Container(),
+        automaticallyImplyLeading: false,
+        actions: [
+          InkWell(
+            onTap: () {
+              context.pop();
+            },
+            child: Container(
+              margin: EdgeInsets.only(right: 16.sp),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                color: Colors.white.withOpacity(0.1),
+              ),
+              child: Text('Back to class', style: TextStyle(color: Colors.white)),
+            ),
+          ),
+        ],
+      ),
       body: Container(
-        
+        padding: EdgeInsets.only(top: 10),
         color: AppColors.primary,
         child: Column(
           children: [
@@ -108,8 +129,6 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                   
-                  
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -119,7 +138,9 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
                             children: [
                               IconButton(
                                 onPressed: () {
-                                  ref.read(homeProvider.notifier).previousDate();
+                                  ref
+                                      .read(homeProvider.notifier)
+                                      .previousDate();
                                 },
                                 icon: Icon(
                                   LucideIcons.chevronLeft,
@@ -163,9 +184,7 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
                               context: context,
                               initialDate: homeState.date.startsWith("Today,")
                                   ? DateTime.now()
-                                  : DateFormat(
-                                      'yyyy',
-                                    ).parse(homeState.date),
+                                  : DateFormat('yyyy').parse(homeState.date),
                               firstDate: DateTime(2020),
                               lastDate: DateTime.now(),
                               builder: (context, child) {
@@ -194,7 +213,10 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
                               ).format(notifier.parseCurrentDate());
                               if (formattedDate != currentFormatted) {
                                 await notifier.getDate(formattedDate);
-                                await notifier.fetchAttendance("", formattedDate);
+                                await notifier.fetchAttendance(
+                                  "",
+                                  formattedDate,
+                                );
                               }
                             }
                           },

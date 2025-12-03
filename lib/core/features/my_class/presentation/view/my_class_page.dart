@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:amrita_vidhyalayam_teacher/core/features/student/presentation/widgets/student_card.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/my_class/presentation/widgets/student_card.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,16 +7,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import '../viewmodel/student_viewmodel.dart';
+import '../viewmodel/my_class_viewmodel.dart';
 
-class StudentPage extends ConsumerStatefulWidget {
-  const StudentPage({super.key});
+class MyClassPage extends ConsumerStatefulWidget {
+  const MyClassPage({super.key});
 
   @override
-  ConsumerState<StudentPage> createState() => _StudentPageState();
+  ConsumerState<MyClassPage> createState() => _MyClassPageState();
 }
 
-class _StudentPageState extends ConsumerState<StudentPage> {
+class _MyClassPageState extends ConsumerState<MyClassPage> {
   final searchController = TextEditingController();
   Timer? searchDebounce;
 
@@ -48,11 +48,13 @@ class _StudentPageState extends ConsumerState<StudentPage> {
     final theme = Theme.of(context);
 
     // Calculate attendance counts
-    final presentCount = state.studentList
+    final presentCount =
+        state.studentList
             ?.where((s) => s.attendanceStatus == "Present")
             .length ??
         0;
-    final absentCount = state.studentList
+    final absentCount =
+        state.studentList
             ?.where((s) => s.attendanceStatus != "Present")
             .length ??
         0;
@@ -65,7 +67,7 @@ class _StudentPageState extends ConsumerState<StudentPage> {
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color(0xFF0B3160),Color(0xFF0B3160)],
+                colors: [Color(0xFF0B3160), Color(0xFF0B3160)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -80,23 +82,38 @@ class _StudentPageState extends ConsumerState<StudentPage> {
                 children: [
                   // AppBar
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-                    child: Row(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 12.h,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: .start,
                       children: [
-                        Icon(LucideIcons.school300,color: Colors.white,),
-                        SizedBox(width: 8.w),
+                        Row(
+                          children: [
+                            Icon(LucideIcons.school300, color: Colors.white),
+                            SizedBox(width: 8.w),
+                            Text(
+                              "My Class",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
                         Text(
-                          "My Class",
+                          "Quickly record who is present or absent.",
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w600,
+                            color: const Color.fromARGB(255, 135, 153, 175),
+                            fontSize: 12.sp,
                           ),
                         ),
                       ],
                     ),
                   ),
-SizedBox(height: 10.h),
+                  SizedBox(height: 10.h),
                   // Attendance Cards
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -140,24 +157,25 @@ SizedBox(height: 10.h),
                                         Text(
                                           "Present",
                                           style: TextStyle(
-                                            color: Colors.white.withOpacity(0.9),
+                                            color: Colors.white.withOpacity(
+                                              0.9,
+                                            ),
                                             fontSize: 11.sp,
                                           ),
                                         ),
-                                         Text(
-                                  "$presentCount",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                                        Text(
+                                          "$presentCount",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ],
                                 ),
                                 SizedBox(height: 8.h),
-                               
                               ],
                             ),
                           ),
@@ -167,9 +185,13 @@ SizedBox(height: 10.h),
                           child: Container(
                             padding: EdgeInsets.all(15),
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 222, 222, 222).withOpacity(0.1),
+                              color: const Color.fromARGB(
+                                255,
+                                222,
+                                222,
+                                222,
+                              ).withOpacity(0.1),
                               borderRadius: BorderRadius.circular(16),
-                             
                             ),
                             child: Column(
                               mainAxisAlignment: .center,
@@ -196,24 +218,25 @@ SizedBox(height: 10.h),
                                         Text(
                                           "Absent",
                                           style: TextStyle(
-                                            color: Colors.white.withOpacity(0.9),
+                                            color: Colors.white.withOpacity(
+                                              0.9,
+                                            ),
                                             fontSize: 11.sp,
                                           ),
                                         ),
                                         Text(
-                                  "$absentCount",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                                          "$absentCount",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ],
                                 ),
                                 SizedBox(height: 8.h),
-                                
                               ],
                             ),
                           ),
@@ -222,58 +245,11 @@ SizedBox(height: 10.h),
                     ),
                   ),
 
-                  SizedBox(height: 16.h),
-
                   // Subtitle text
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: Text(
-                      "Quickly record who is present or absent.",
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.9),
-                        fontSize: 14.sp,
-                      ),
-                    ),
-                  ),
 
-                  SizedBox(height: 16.h),
+                  // SizedBox(height: 16.h),
 
                   // Take Attendance Button
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: Container(
-                      width: double.infinity,
-                      height: 50.h,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 10,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: MaterialButton(
-                        onPressed: () {
-                          context.push("/attendance");
-                        },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          "Take Attendance",
-                          style: TextStyle(
-                            color: Color(0xff1E3A8A),
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-
                   SizedBox(height: 24.h),
                 ],
               ),
@@ -285,8 +261,42 @@ SizedBox(height: 10.h),
             child: Column(
               children: [
                 SizedBox(height: 20.h),
-
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 32.w),
+                  child: Container(
+                    width: double.infinity,
+                    // height: 50.h,
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 10,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: MaterialButton(
+                      onPressed: () {
+                        context.push("/attendance");
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        "Take Attendance",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 // Student List Header
+                SizedBox(height: 20.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: Row(
@@ -301,7 +311,10 @@ SizedBox(height: 10.h),
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
                         decoration: BoxDecoration(
                           color: Color(0xffE0E7FF),
                           borderRadius: BorderRadius.circular(20),
@@ -417,8 +430,8 @@ SizedBox(height: 10.h),
                                 subtitle: student.student,
                                 isActiveColor:
                                     student.attendanceStatus == "Present"
-                                        ? Colors.green
-                                        : Colors.red,
+                                    ? Colors.green
+                                    : Colors.red,
                               );
                             },
                           ),

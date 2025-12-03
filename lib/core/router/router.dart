@@ -4,7 +4,7 @@ import 'package:amrita_vidhyalayam_teacher/core/features/main_scaffold/presentat
 import 'package:amrita_vidhyalayam_teacher/core/features/profile/presentation/view/profile_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/reports/presentation/view/reports_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/splash_screen/presentation/view/splash_screen_page.dart';
-import 'package:amrita_vidhyalayam_teacher/core/features/student/presentation/view/student_page.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/my_class/presentation/view/my_class_page.dart';
 import 'package:amrita_vidhyalayam_teacher/main.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -36,9 +36,9 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, __) => const AttendancePage(),
       ),
       GoRoute(
-        path: '/student',
-        name: 'student',
-        builder: (_, __) =>  StudentPage(),
+        path: '/myClassPage',
+        name: 'myClassPage',
+        builder: (_, __) =>  MyClassPage(),
       ),
       GoRoute(
         path: '/mainScaffold',

@@ -2,13 +2,13 @@
 import 'package:intl/intl.dart';
 import 'package:riverpod/legacy.dart';
 import '../../../attendance/data/repository/attendance_repository.dart';
-import 'student_state.dart';
+import 'my_class_state.dart';
 
 
-class StudentViewModel extends StateNotifier<StudentState> {
+class MyClassViewodel extends StateNotifier<MyClassState> {
   final AttendanceRepository _repository;
 
-  StudentViewModel(this._repository) : super(StudentState.initial());
+  MyClassViewodel(this._repository) : super(MyClassState.initial());
 
 
   Future<void> fetchStudent(String searchTxt) async{
@@ -24,8 +24,8 @@ class StudentViewModel extends StateNotifier<StudentState> {
 }
 
   final studentProvider =
-    StateNotifierProvider<StudentViewModel, StudentState>(
-  (ref) => StudentViewModel(ref.watch(attendanceRepositoryProvider)));
+    StateNotifierProvider<MyClassViewodel, MyClassState>(
+  (ref) => MyClassViewodel(ref.watch(attendanceRepositoryProvider)));
 
 
 
