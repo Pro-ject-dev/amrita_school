@@ -1,8 +1,8 @@
 import 'package:amrita_vidhyalayam_teacher/core/features/attendance/presentation/view/attendance_page.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/e_track/presentation/view/e_track_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/view/home_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/main_scaffold/presentation/viewmodel/mainscaffold_viewmodel.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/profile/presentation/view/profile_page.dart';
-import 'package:amrita_vidhyalayam_teacher/core/features/reports/presentation/view/reports_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/my_class/presentation/view/my_class_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/strings/app_strings.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class MainScaffold extends ConsumerWidget {
     final theme = Theme.of(context);
     final state = ref.watch(mainscaffoldProvider);
 
-    final pages = [HomePage(), MyClassPage(), ReportsPage(), ProfilePage()];
+    final pages = [HomePage(), MyClassPage(), ETrackPage(), ProfilePage()];
 
     return Scaffold(
       body: IndexedStack(index: state.currentIndex, children: pages),

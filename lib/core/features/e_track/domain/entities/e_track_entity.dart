@@ -1,7 +1,7 @@
-class ReportsEntity {
+class ETrackEntity {
   final String value;
 
-  const ReportsEntity({
+  const ETrackEntity({
     required this.value,
   });
 }

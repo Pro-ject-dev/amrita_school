@@ -1,9 +1,9 @@
 import 'package:amrita_vidhyalayam_teacher/core/features/auth/presentation/view/auth_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/attendance/presentation/view/attendance_page.dart';
+import 'package:amrita_vidhyalayam_teacher/core/features/e_track/presentation/view/e_track_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/main_scaffold/presentation/view/mainscaffold_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/my_class/presentation/view/my_class_search_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/profile/presentation/view/profile_page.dart';
-import 'package:amrita_vidhyalayam_teacher/core/features/reports/presentation/view/reports_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/splash_screen/presentation/view/splash_screen_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/my_class/presentation/view/my_class_page.dart';
 import 'package:amrita_vidhyalayam_teacher/main.dart';
@@ -47,9 +47,9 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, __) =>  MainScaffold(),
       ),
       GoRoute(
-        path: '/reports',
-        name: 'reports',
-        builder: (_, __) =>  ReportsPage(),
+        path: '/e_track',
+        name: 'e_track',
+        builder: (_, __) =>  ETrackPage(),
       ),
       GoRoute(
         path: '/profile',
