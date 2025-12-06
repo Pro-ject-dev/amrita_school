@@ -1,5 +1,5 @@
+import 'dart:developer';
 import 'package:amrita_vidhyalayam_teacher/core/providers/common_providers.dart';
-import 'package:amrita_vidhyalayam_teacher/core/services/storage_serice.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:riverpod/riverpod.dart';
 import '../../data/repository/auth_repository.dart';
@@ -7,54 +7,51 @@ import 'auth_state.dart';
 
 class AuthViewModel extends StateNotifier<AuthState> {
   final AuthRepository _repository;
-  final Ref ref; // add ref
+  final Ref ref;
 
-  AuthViewModel(this._repository, this.ref) : super(AuthState.initial()) {
-    _checkAuthStatus();
-  }
-
-  Future<void> _checkAuthStatus() async {
-    try {
-      final isAuth = await _repository.checkAuthStatus();
-      if (isAuth) {
-        await _loadUserData();
-      }
-    } catch (_) {}
-  }
-
-  Future<void> _loadUserData() async {
-    try {
-      await _repository.getCurrentUser();
-    } catch (_) {}
-  }
+  AuthViewModel(this._repository, this.ref) : super(AuthState.initial());
 
   Future<void> login() async {
     state = state.copyWith(isLoading: true);
-
     try {
       final isLoggedIn = await _repository.login();
 
-      if (isLoggedIn) {
-        final validStatus = await _repository.isValidUser();
+      if (isLoggedIn["success"]) {
+        final validStatus = await _repository.isValidUser(mail: isLoggedIn["mail"]);
         if (validStatus.message.isInstructor) {
+          await ref.read(storageServiceProvider).write("isLoggedIn", 'true');
           await ref.read(storageServiceProvider).write(
-                "isLoggedIn",
-                'true'
+            "class", 
+            '${validStatus.message.classIncharge}'
+          );
+            await ref.read(storageServiceProvider).write(
+              "mail", 
+              isLoggedIn["mail"].toString()
+            );
+              state = state.copyWith(
+                isValid: true,
+                isLoading: false,
+                error: null,
               );
-
-          state = state.copyWith(
-            isValid: true,
-            isLoading: false,
-          );
-        } else {
-          state = state.copyWith(
-            isValid: false,
-            isLoading: false,
-            error: "Not a valid teacher account",
-          );
-        }
+           
+          } else {
+            log("ERROR: Email is null or empty from login response");
+            state = state.copyWith(
+              isValid: false,
+              isLoading: false,
+              error: "Email not found in login response",
+            );
+          }
+       
+      } else {
+        state = state.copyWith(
+          isValid: false,
+          isLoading: false,
+          error: "Login failed",
+        );
       }
     } catch (e) {
+      log("Login exception: $e");
       state = state.copyWith(
         isLoading: false,
         error: e.toString(),
@@ -66,6 +63,9 @@ class AuthViewModel extends StateNotifier<AuthState> {
     try {
       await _repository.logout();
       await ref.read(storageServiceProvider).clear();
-    } catch (_) {}
+      state = AuthState.initial();
+    } catch (e) {
+      log("Logout error: $e");
+    }
   }
 }

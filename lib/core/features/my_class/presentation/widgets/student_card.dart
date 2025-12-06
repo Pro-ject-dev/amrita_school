@@ -4,10 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class StudentCard extends StatelessWidget {
-  const StudentCard({super.key, required this.title, required this.subtitle, required this.isActiveColor});
+  const StudentCard({super.key, required this.title, required this.subtitle, required this.isActiveColor, required this.attendanceStatus});
   final String title;
   final String subtitle;
   final Color isActiveColor;
+  final String attendanceStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +35,20 @@ class StudentCard extends StatelessWidget {
                 child: CircleAvatar(
                   radius: 22.r,
                   child: Text(
-                    'AJ',
+                    title[0],
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                   ),
                   // child: Image.asset("assets/images/student.gif"),
                 ),
               ),
-              Positioned(
-                right: 2,
-                bottom: 1,
-                child: CircleAvatar(radius: 7, backgroundColor: isActiveColor),
+              Visibility(
+                visible: attendanceStatus!="",
+                child: Positioned(
+                  
+                  right: 2,
+                  bottom: 1,
+                  child: CircleAvatar(radius: 7, backgroundColor: isActiveColor),
+                ),
               ),
             ],
           ),

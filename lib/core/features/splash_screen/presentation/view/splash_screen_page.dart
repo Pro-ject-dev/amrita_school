@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/viewmodel/home_viewmodel.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/splash_screen/presentation/viewmodel/splash_screen_state.dart';
 import 'package:amrita_vidhyalayam_teacher/core/providers/common_providers.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/images/app_images.dart';
@@ -108,8 +109,8 @@ class _SplashScreenPageState extends ConsumerState<SplashScreenPage>
     ref.listen<SplashScreenState>(splashScreenProvider, (previous, next) async{
       if (next.isFinished) {
       final isAuth = await  ref.read(authServiceProvider).isAuthenticated();
-      log(isAuth.toString());
-      if(isAuth==true){
+      
+      if( isAuth){
         context.go("/mainScaffold");
 
       }

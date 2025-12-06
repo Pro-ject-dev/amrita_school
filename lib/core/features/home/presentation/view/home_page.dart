@@ -4,10 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../providers/common_providers.dart';
 import '../../../attendance/presentation/widgets/confirmationDialog.dart';
+import '../viewmodel/home_viewmodel.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,6 +19,14 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class HomePageState extends ConsumerState<HomePage> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(homeProvider.notifier).getPunchDetails();
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -89,7 +99,7 @@ class HeaderSection extends ConsumerStatefulWidget {
 class HeaderSectionState extends ConsumerState<HeaderSection> {
   @override
   Widget build(BuildContext context) {
-    final theme =   Theme.of(context);
+    final theme = Theme.of(context);
     return Padding(
       padding: EdgeInsets.all(20.0.w),
       child: Column(
@@ -104,33 +114,33 @@ class HeaderSectionState extends ConsumerState<HeaderSection> {
                 width: 100.w,
               ),
               InkWell(
-                onTap: (){
-                   confirmationDialog(
-                            theme,
-                            context,
-                            "Log Out",
-                            "Are you sure you want to log out of your account ?",
-                            () {
-                              ref.read(authViewModelProvider.notifier).logout();
-                              context.go("/auth");
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    "Logged Out",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  behavior: SnackBarBehavior.floating,
-                                  backgroundColor: const Color.fromARGB(
-                                    255,
-                                    112,
-                                    112,
-                                    112,
-                                  ),
-                                  duration: Duration(seconds: 3),
-                                ),
-                              );
-                            },
-                          );
+                onTap: () {
+                  confirmationDialog(
+                    theme,
+                    context,
+                    "Log Out",
+                    "Are you sure you want to log out of your account ?",
+                    () {
+                      ref.read(authViewModelProvider.notifier).logout();
+                      context.go("/auth");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            "Logged Out",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: const Color.fromARGB(
+                            255,
+                            112,
+                            112,
+                            112,
+                          ),
+                          duration: Duration(seconds: 3),
+                        ),
+                      );
+                    },
+                  );
                 },
                 child: Container(
                   padding: EdgeInsets.all(8.w),
@@ -198,10 +208,14 @@ class OverviewHeaderState extends ConsumerState<OverviewHeader> {
             ),
             child: Row(
               children: [
-                Icon(LucideIcons.calendarDays, size: 14.sp, color: AppColors.primary),
+                Icon(
+                  LucideIcons.calendarDays,
+                  size: 14.sp,
+                  color: AppColors.primary,
+                ),
                 SizedBox(width: 6.w),
                 Text(
-                  'Wed, Jul 22 2024',
+                  DateFormat("EE, MMM dd yyyy").format(DateTime.now()),
                   style: TextStyle(
                     color: Colors.black87,
                     fontSize: 12.sp,
@@ -227,141 +241,166 @@ class CheckInCard extends ConsumerStatefulWidget {
 class CheckInCardState extends ConsumerState<CheckInCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 120.h,
-      padding: EdgeInsets.all(8.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            spreadRadius: 0,
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 14.r,
-                      backgroundColor: Color(0xffF4F6F8),
-                      child: CircleAvatar(
-                        radius: 10.r,
-                        backgroundColor: Color(0xffB2B5E7),
-                        child: Icon(
-                          LucideIcons.arrowDownLeft300,
-                          color: AppColors.primary,
-                          size: 14.sp,
+    final homeState = ref.watch(homeProvider);
+
+    return Skeletonizer(
+      enabled: homeState.isLoading,
+      child: Container(
+        height: 120.h,
+        padding: EdgeInsets.all(8.w),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 14.r,
+                        backgroundColor: Color(0xffF4F6F8),
+                        child: CircleAvatar(
+                          radius: 10.r,
+                          backgroundColor: Color(0xffB2B5E7),
+                          child: Icon(
+                            LucideIcons.arrowDownLeft300,
+                            color: AppColors.primary,
+                            size: 14.sp,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 8.w),
-                    Text(
-                      'Check in',
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w600,
+                      SizedBox(width: 8.w),
+                      Text(
+                        "Check in",
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: const Color(0xffF6F6F6)),
+                    ],
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.all(3.0.w),
-                    child: Icon(
-                      LucideIcons.ellipsisVertical300,
-                      size: 15.sp,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 12.h),
-          Container(
-            decoration: BoxDecoration(
-              color: Color(0xffFAFAFA),
-              borderRadius: BorderRadius.circular(20.r),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(4.0.w),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 6.w),
-                    child: Text(
-                      '9:10',
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 1.w),
-                  Text(
-                    'AM',
-                    style: TextStyle(
-                      fontSize: 10.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  SizedBox(width: 8.w),
                   Container(
-                    height: 16.h,
-                    width: 1.w,
-                    color: const Color(0xffC4C4C4),
-                  ),
-                  SizedBox(width: 8.w),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 6.w,
-                      vertical: 3.h,
-                    ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF4CAF50),
-                      borderRadius: BorderRadius.circular(12.r),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Color(0xffF6F6F6)),
                     ),
-                    child: Text(
-                      'On time',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.w600,
+                    child: Padding(
+                      padding: EdgeInsets.all(3.w),
+                      child: Icon(
+                        LucideIcons.ellipsisVertical300,
+                        size: 15.sp,
+                        color: Colors.grey,
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-          ),
-          SizedBox(height: 12.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
-            child: Text(
-              'Checked in ',
-              style: TextStyle(color: Color(0xff7C8489), fontSize: 11.sp),
+      
+            SizedBox(height: 12.h),
+      
+            /// Time section
+            Container(
+              decoration: BoxDecoration(
+                color: Color(0xffFAFAFA),
+                borderRadius: BorderRadius.circular(20.r),
+              ),
+              padding: EdgeInsets.all(4.w),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 6.w),
+                    child: RichText(
+                      text: TextSpan(
+                        text: homeState.todayData?.checkInTime == "-- : --"?"-- : --": homeState.todayData?.checkInTime?.split(" ")[0] ?? "",
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: homeState.todayData?.checkInTime == "-- : --"
+                                ? ''
+                                : " ${homeState.todayData?.checkInTime?.split(" ")[1]}",
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black87,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+      
+                  SizedBox(width: 8.w),
+                  Container(height: 16.h, width: 1.w, color: Color(0xffC4C4C4)),
+                  SizedBox(width: 8.w),
+      
+                  homeState.todayData?.checkInTimeStatus == 'n/a'
+                      ? Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.r),
+                            border: Border.all(color: Color(0xffC4C4C4)),
+                          ),
+                          child: Text(
+                            "n/a",
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        )
+                      : Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 6.w, vertical: 3.h),
+                          decoration: BoxDecoration(
+                            color: getStatusColor(
+                              homeState.todayData?.checkInTimeStatus,
+                            ),
+                            borderRadius: BorderRadius.circular(12.r),
+                          ),
+                          child: Text(
+                            homeState.todayData?.checkInTimeStatus ?? "",
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                ],
+              ),
             ),
-          ),
-        ],
+      
+            SizedBox(height: 12.h),
+      
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4.w),
+              child: Text(
+                homeState.todayData?.checkInStatus ?? "",
+                style: TextStyle(fontSize: 11.sp, color: Color(0xff7C8489)),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -377,199 +416,233 @@ class CheckOutCard extends ConsumerStatefulWidget {
 class CheckOutCardState extends ConsumerState<CheckOutCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 120.h,
-      padding: EdgeInsets.all(8.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            spreadRadius: 0,
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 14.r,
-                      backgroundColor: Color(0xffF4F6F8),
-                      child: CircleAvatar(
-                        radius: 10.r,
-                        backgroundColor: Color(0xffB2B5E7),
-                        child: Icon(
-                          LucideIcons.arrowUpRight300,
-                          color: AppColors.primary,
-                          size: 14.sp,
+    final homeState = ref.watch(homeProvider);
+
+
+
+    return Skeletonizer(
+      enabled: homeState.isLoading,
+      child: Container(
+        height: 120.h,
+        padding: EdgeInsets.all(8.w),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // existing UI unchanged...
+      
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 14.r,
+                        backgroundColor: Color(0xffF4F6F8),
+                        child: CircleAvatar(
+                          radius: 10.r,
+                          backgroundColor: Color(0xffB2B5E7),
+                          child: Icon(
+                            LucideIcons.arrowUpRight300,
+                            color: AppColors.primary,
+                            size: 14.sp,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 8.w),
-                    Text(
-                      'Check out',
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w600,
+                      SizedBox(width: 8.w),
+                      Text(
+                        "Check out",
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: const Color(0xffF6F6F6)),
+                    ],
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.all(3.0.w),
-                    child: Icon(
-                      LucideIcons.ellipsisVertical300,
-                      size: 15.sp,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 12.h),
-          Container(
-            decoration: BoxDecoration(
-              color: Color(0xffFAFAFA),
-              borderRadius: BorderRadius.circular(20.r),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(4.0.w),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 6.w),
-                    child: Text(
-                      '-- : --',
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 8.w),
-                  Container(
-                    height: 16.h,
-                    width: 1.w,
-                    color: const Color(0xffC4C4C4),
-                  ),
-                  SizedBox(width: 8.w),
                   Container(
                     decoration: BoxDecoration(
-                      border: Border.all(color: Color(0xffC4C4C4)),
-                      borderRadius: BorderRadius.circular(20.r),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Color(0xffF6F6F6)),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 6.w,
-                        vertical: 2.h,
-                      ),
-                      child: Text(
-                        'n/a',
-                        style: TextStyle(
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                        ),
+                      padding: EdgeInsets.all(3.w),
+                      child: Icon(
+                        LucideIcons.ellipsisVertical300,
+                        size: 15.sp,
+                        color: Colors.grey,
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-          ),
-          SizedBox(height: 12.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
-            child: Text(
-              "It's not time yet",
-              style: TextStyle(color: Color(0xff7C8489), fontSize: 11.sp),
+      
+            SizedBox(height: 12.h),
+      
+            Container(
+              decoration: BoxDecoration(
+                color: Color(0xffFAFAFA),
+                borderRadius: BorderRadius.circular(20.r),
+              ),
+              padding: EdgeInsets.all(4.w),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 6.w),
+                    child: RichText(
+                      text: TextSpan(
+                        text:homeState.todayData?.checkOutTime == "-- : --"?"-- : --": homeState.todayData?.checkOutTime?.split(" ")[0] ?? "",
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: homeState.todayData?.checkOutTime == "-- : --"
+                                ? ""
+                                : " ${homeState.todayData?.checkOutTime?.split(" ")[1]}",
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+      
+                  SizedBox(width: 8.w),
+                  Container(height: 16.h, width: 1.w, color: Color(0xffC4C4C4)),
+                  SizedBox(width: 8.w),
+      
+                  homeState.todayData?.checkOutTimeStatus == 'n/a'
+                      ? Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.r),
+                            border: Border.all(color: Color(0xffC4C4C4)),
+                          ),
+                          child: Text("n/a",
+                              style: TextStyle(
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.w600)),
+                        )
+                      : Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 6.w, vertical: 3.h),
+                          decoration: BoxDecoration(
+                            color: getStatusColor(
+                              homeState.todayData?.checkOutTimeStatus,
+                            ),
+                            borderRadius: BorderRadius.circular(12.r),
+                          ),
+                          child: Text(
+                            homeState.todayData?.checkOutTimeStatus ?? "",
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                ],
+              ),
             ),
-          ),
-        ],
+      
+            SizedBox(height: 12.h),
+      
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4.w),
+              child: Text(
+                homeState.todayData?.checkOutStatus ?? "",
+                style: TextStyle(fontSize: 11.sp, color: Color(0xff7C8489)),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class RecentActivitiesSection extends ConsumerStatefulWidget {
+class RecentActivitiesSection extends ConsumerWidget {
   const RecentActivitiesSection({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<RecentActivitiesSection> createState() =>
-      RecentActivitiesSectionState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final homeState = ref.watch(homeProvider);
 
-class RecentActivitiesSectionState
-    extends ConsumerState<RecentActivitiesSection> {
-  @override
-  Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(20.0.w),
+      padding: EdgeInsets.all(20.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 80.h),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Recent Activities',
+                "Recent Activities",
                 style: TextStyle(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
                 ),
               ),
-              GestureDetector(
-                onTap: () {},
-                child: Text(
-                  'View all day',
-                  style: TextStyle(
-                    color: AppColors.primary,
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
+              Text(
+                "View all day",
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],
           ),
+
           SizedBox(height: 20.h),
 
           Expanded(
-            child: ListView.separated(itemCount: 5, 
-            separatorBuilder: (context, index) {
-              return SizedBox(height: 20.h);
-            },
-            shrinkWrap: true,
-            itemBuilder: (BuildContext context,int index){
-              
-              return ActivityItem(
-              date: '22 Nov 2025',
-              shift: 'Shift : Morning',
-              status: 'Absent',
-            );
-            }),
-          )
-          
+            child: homeState.isLoading
+                ? ListView.separated(
+                    itemCount: 5,
+                    separatorBuilder: (_, i) => SizedBox(height: 20.h),
+                    itemBuilder: (_, i) => ActivityItem(
+                        date:  "",
+                        shift: "",
+                        status: "",
+                      )
+                  )
+                : ListView.separated(
+                    itemCount: (homeState.punchData?.attendanceList?.length ?? 0).clamp(0, 5),
+                    separatorBuilder: (_, i) => SizedBox(height: 20.h),
+                    itemBuilder: (context, index) {
+                      final item = homeState.punchData!.attendanceList![index];
+
+                      return ActivityItem(
+                        date: item.attendanceDate ?? "",
+                        shift: "Shift : ${item.shift}",
+                        status: item.status ?? "",
+                      );
+                    },
+                  ),
+          ),
         ],
       ),
     );
@@ -595,7 +668,7 @@ class ActivityItem extends ConsumerStatefulWidget {
 class ActivityItemState extends ConsumerState<ActivityItem> {
   @override
   Widget build(BuildContext context) {
-    final bool isAbsent = widget.status == 'Absent';
+bool isAbsent = widget.status=="Absent";
 
     return Container(
       decoration: BoxDecoration(
@@ -657,14 +730,18 @@ class ActivityItemState extends ConsumerState<ActivityItem> {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 3.h),
               decoration: BoxDecoration(
-                gradient: !isAbsent
+                gradient: widget.status == 'Present'
                     ? LinearGradient(
                         colors: [Color(0xff4CAF50), Color(0xff204921)],
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                       )
-                    : LinearGradient(
+                    : widget.status == 'Absent'? LinearGradient(
                         colors: [Color(0xffE53935), Color(0xff7F201D)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ):LinearGradient(
+                        colors: [Color.fromARGB(255, 120, 120, 120), Color.fromARGB(255, 166, 166, 166)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
@@ -674,7 +751,7 @@ class ActivityItemState extends ConsumerState<ActivityItem> {
                 ),
               ),
               child: Text(
-                isAbsent ? "Absent" : "Present",
+                widget.status=="Absent" ? "Absent" :widget.status=="Present"? "Present":"     ",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 12.sp,
@@ -687,4 +764,11 @@ class ActivityItemState extends ConsumerState<ActivityItem> {
       ),
     );
   }
+
+  
+
+
 }
+
+
+

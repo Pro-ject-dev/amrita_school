@@ -1,6 +1,6 @@
 
 import 'package:amrita_vidhyalayam_teacher/core/services/auth_service.dart';
-import 'package:amrita_vidhyalayam_teacher/core/services/storage_serice.dart';
+import 'package:amrita_vidhyalayam_teacher/core/services/storage_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -55,8 +55,26 @@ final authViewModelProvider = StateNotifierProvider<AuthViewModel, AuthState>((r
 
 
 
+// final storageServiceProvider = Provider<SecureStorageService>((ref) {
+//   return SecureStorageService(
+//     storage: const FlutterSecureStorage(),
+//   );
+// });
+
+
+
+
+final FlutterSecureStorage secureStorage = const FlutterSecureStorage(
+  aOptions: AndroidOptions(
+    encryptedSharedPreferences: true,
+  ),
+);
 final storageServiceProvider = Provider<SecureStorageService>((ref) {
-  return SecureStorageService(
-    storage: const FlutterSecureStorage(),
-  );
+  return SecureStorageService(storage: secureStorage);
+});
+
+
+final mailProvider = FutureProvider<String?>((ref) async {
+  final storage = ref.read(storageServiceProvider);
+  return await storage.read("mail");
 });

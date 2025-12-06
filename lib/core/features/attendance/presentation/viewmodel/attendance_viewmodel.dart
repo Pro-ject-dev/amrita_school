@@ -262,6 +262,7 @@ class AttendanceViewModel extends StateNotifier<AttendanceState> {
   Future<void> updatedAttendanceList(bool isMarkPresent) async {
     try {
       final actualDate = _getActualDate();
+      state = state.copyWith(isChecked: false,isLoading: true,isCheckedSelectAll: false);
 
       print("Posting attendance for date: $actualDate");
 
@@ -334,7 +335,7 @@ class AttendanceViewModel extends StateNotifier<AttendanceState> {
   }
 
   Future<void> individualUpdatedAttendanceList() async {
-    state = state.copyWith(isLoading: true);
+         state = state.copyWith(isChecked: false,isLoading: true);
     try {
       final actualDate = _getActualDate();
 
@@ -414,6 +415,6 @@ class AttendanceViewModel extends StateNotifier<AttendanceState> {
   }
 }
 
-final homeProvider = StateNotifierProvider<AttendanceViewModel, AttendanceState>(
+final attendanceProvider = StateNotifierProvider<AttendanceViewModel, AttendanceState>(
   (ref) => AttendanceViewModel(ref.watch(attendanceRepositoryProvider)),
 );

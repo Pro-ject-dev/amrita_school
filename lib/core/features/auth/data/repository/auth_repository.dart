@@ -12,12 +12,12 @@ class AuthRepository {
   AuthRepository(this.authService, this.dio);
 
 
-  Future<bool> login() async {
+  Future<Map<String,dynamic>> login() async {
     try {
       final result = await authService.login();
       final accessToken = await result['accessToken'] as String;
       final mail = await authService.getEmail();
-      return true;
+      return {"success":true,"mail":mail};
     } on Exception catch (e) {
       throw Exception('Repository login failed: ${e.toString()}');
     } catch (e) {
@@ -43,26 +43,26 @@ class AuthRepository {
     }
   }
 
-  Future<bool> getCurrentUser() async {
-    try {
-      final accessToken = await authService.getAccessToken();
-      if (accessToken == null || accessToken.isEmpty) {
-        throw Exception('No access token available');
-      }
-      final userProfile = await authService.getEmail();
-      return true;
-    } on Exception catch (e) {
-      throw Exception('Failed to get current user: ${e.toString()}');
-    } catch (e) {
-      throw Exception('Unexpected error getting user: ${e.toString()}');
-    }
-  }
+  // Future<bool> getCurrentUser() async {
+  //   try {
+  //     final accessToken = await authService.getAccessToken();
+  //     if (accessToken == null || accessToken.isEmpty) {
+  //       throw Exception('No access token available');
+  //     }
+  //     final userProfile = await authService.getEmail();
+  //     return true;
+  //   } on Exception catch (e) {
+  //     throw Exception('Failed to get current user: ${e.toString()}');
+  //   } catch (e) {
+  //     throw Exception('Unexpected error getting user: ${e.toString()}');
+  //   }
+  // }
 
-  Future<ValidationModel> isValidUser() async {
+  Future<ValidationModel> isValidUser({mail}) async {
     try {
       final response = await dio.post(
         '/validate_user',
-        data: {"user": "teacher1@amritavidyalayam.edu"},
+        data: {"user": mail},
       );
       await Future.delayed(const Duration(seconds: 1));
       return ValidationModel.fromJson(response.data);

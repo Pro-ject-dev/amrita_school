@@ -4,30 +4,36 @@ import 'package:flutter/foundation.dart';
 class LoggerInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    debugPrint('--> ${options.method.toUpperCase()} ${options.uri}');
+    debugPrint('➡️ REQUEST: ${options.method} ${options.uri}');
     debugPrint('Headers: ${options.headers}');
-    debugPrint('QueryParameters: ${options.queryParameters}');
+    debugPrint('Query: ${options.queryParameters}');
     if (options.data != null) {
       debugPrint('Body: ${options.data}');
     }
-    debugPrint('--> END ${options.method.toUpperCase()}');
-    super.onRequest(options, handler);
+    debugPrint('--------------------------------------------');
+    return handler.next(options);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    debugPrint('<-- ${response.statusCode} ${response.requestOptions.uri}');
+    debugPrint('⬅️ RESPONSE [${response.statusCode}] ${response.requestOptions.uri}');
     debugPrint('Headers: ${response.headers}');
-    debugPrint('Response: ${response.data}');
-    debugPrint('<-- END HTTP');
-    super.onResponse(response, handler);
+
+    // 🔥 This prints the real RAW response body
+    debugPrint('Body: ${response.toString()}');
+
+    debugPrint('--------------------------------------------');
+    return handler.next(response);
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    debugPrint('<-- ${err.message} ${err.requestOptions.uri}');
-    debugPrint('${err.response != null ? err.response?.data : 'Unknown Error'}');
-    debugPrint('<-- End error');
-    super.onError(err, handler);
+    debugPrint('⛔ ERROR: ${err.requestOptions.uri}');
+    debugPrint('Message: ${err.message}');
+    if (err.response != null) {
+      debugPrint('Error Body: ${err.response.toString()}');
+    }
+    debugPrint('--------------------------------------------');
+    return handler.next(err);
   }
 }

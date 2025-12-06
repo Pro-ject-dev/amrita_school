@@ -57,7 +57,7 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
         0;
     final absentCount =
         state.studentList
-            ?.where((s) => s.attendanceStatus != "Present")
+            ?.where((s) => s.attendanceStatus == "Absent")
             .length ??
         0;
 
@@ -281,7 +281,7 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
                     ),
                     child: MaterialButton(
                       onPressed: () {
-                        context.push("/attendance");
+                        context.push("/attendance").then((v)=>ref.read(studentProvider.notifier).fetchStudent(""));
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -419,6 +419,7 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
                             itemBuilder: (context, index) {
                               if (state.isLoading) {
                                 return const StudentCard(
+                                  attendanceStatus: "Present",
                                   title: "Student Name",
                                   subtitle: "ID",
                                   isActiveColor: Colors.green,
@@ -428,12 +429,13 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
                               final student = state.studentList![index];
 
                               return StudentCard(
+                                attendanceStatus: student.attendanceStatus,
                                 title: student.studentName,
                                 subtitle: student.student,
                                 isActiveColor:
                                     student.attendanceStatus == "Present"
                                     ? Colors.green
-                                    : Colors.red,
+                                    :student.attendanceStatus == "Absent" ?Colors.red:const Color.fromARGB(255, 201, 201, 201),
                               );
                             },
                           ),

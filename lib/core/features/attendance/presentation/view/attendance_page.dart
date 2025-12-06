@@ -29,21 +29,21 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref
-          .read(homeProvider.notifier)
+          .read(attendanceProvider.notifier)
           .fetchAttendance("", DateFormat('yyyy-MM-dd').format(DateTime.now()));
-      ref.read(homeProvider.notifier).greeting();
+      ref.read(attendanceProvider.notifier).greeting();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final homeState = ref.watch(homeProvider);
+    final homeState = ref.watch(attendanceProvider);
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
     );
 
-    ref.listen(homeProvider.select((state) => state.updateResponse), (
+    ref.listen(attendanceProvider.select((state) => state.updateResponse), (
       previous,
       next,
     ) {
@@ -93,7 +93,7 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
         // leading: Container(),
         automaticallyImplyLeading: false,
         actions: [
-          InkWell(
+          GestureDetector(
             onTap: () {
               context.pop();
             },
@@ -131,8 +131,9 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
                             children: [
                               IconButton(
                                 onPressed: () {
+                                  homeState.isLoading?null:
                                   ref
-                                      .read(homeProvider.notifier)
+                                      .read(attendanceProvider.notifier)
                                       .previousDate();
                                 },
                                 icon: Icon(
@@ -151,7 +152,7 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
                               IconButton(
                                 onPressed: () {
                                   if (!homeState.date.startsWith("Today,")) {
-                                    ref.read(homeProvider.notifier).nextDate();
+                                   homeState.isLoading?null:  ref.read(attendanceProvider.notifier).nextDate();
                                   }
                                 },
                                 icon: Icon(
@@ -200,7 +201,7 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
                               final formattedDate = DateFormat(
                                 'yyyy-MM-dd',
                               ).format(date);
-                              final notifier = ref.read(homeProvider.notifier);
+                              final notifier = ref.read(attendanceProvider.notifier);
                               final currentFormatted = DateFormat(
                                 'yyyy-MM-dd',
                               ).format(notifier.parseCurrentDate());
@@ -270,7 +271,7 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
                                 "Mark selected students?",
                                 () {
                                   ref
-                                      .read(homeProvider.notifier)
+                                      .read(attendanceProvider.notifier)
                                       .individualUpdatedAttendanceList();
                                   context.pop();
                                 },
@@ -306,7 +307,7 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
                                     "Mark selected students as present?",
                                     () {
                                       ref
-                                          .read(homeProvider.notifier)
+                                          .read(attendanceProvider.notifier)
                                           .updatedAttendanceList(true);
                                       context.pop();
                                     },
@@ -336,7 +337,7 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
                                     "Mark selected students as absent?",
                                     () {
                                       ref
-                                          .read(homeProvider.notifier)
+                                          .read(attendanceProvider.notifier)
                                           .updatedAttendanceList(false);
                                       context.pop();
                                     },
@@ -382,7 +383,7 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
                               child: TextField(
                                 controller: searchController,
                                 onChanged: (value) => ref
-                                    .read(homeProvider.notifier)
+                                    .read(attendanceProvider.notifier)
                                     .fetchAttendance(value, homeState.date),
                                 decoration: InputDecoration(
                                   hintText: "Search student",
@@ -405,7 +406,7 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
                           Visibility(
                             visible:
                                 !homeState.isIndividual &&
-                                ref.read(homeProvider.notifier).isSelectAll(),
+                                ref.read(attendanceProvider.notifier).isSelectAll(),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -414,7 +415,7 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
                                   value: homeState.isCheckedSelectAll,
                                   onChanged: (v) {
                                     ref
-                                        .read(homeProvider.notifier)
+                                        .read(attendanceProvider.notifier)
                                         .toggleSelectAll(v!);
                                   },
                                   fillColor: MaterialStateProperty.resolveWith(
@@ -461,7 +462,7 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
                       children: [
                         InkWell(
                           onTap: () =>
-                              ref.read(homeProvider.notifier).changePage(0),
+                              ref.read(attendanceProvider.notifier).changePage(0),
                           child: Card(
                             elevation: !homeState.isIndividual ? 4 : 2,
                             shape: RoundedRectangleBorder(
@@ -491,7 +492,7 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
                         SizedBox(width: 5.w),
                         InkWell(
                           onTap: () =>
-                              ref.read(homeProvider.notifier).changePage(1),
+                              ref.read(attendanceProvider.notifier).changePage(1),
                           child: Card(
                             elevation: homeState.isIndividual ? 4 : 2,
                             shape: RoundedRectangleBorder(
@@ -527,10 +528,10 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
                     Expanded(
                       child: PageView(
                         controller: ref
-                            .read(homeProvider.notifier)
+                            .read(attendanceProvider.notifier)
                             .pageController,
                         onPageChanged: (index) =>
-                            ref.read(homeProvider.notifier).changePage(index),
+                            ref.read(attendanceProvider.notifier).changePage(index),
                         children: [
                           buildStudentList(
                             homeState,
@@ -587,11 +588,11 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
               id: "Temp",
               imageUrl: "https://i.pravatar.cc/150?img=${i + 1}",
               onPresent: () =>
-                  ref.read(homeProvider.notifier).toggleAttendance(i, true),
+                  ref.read(attendanceProvider.notifier).toggleAttendance(i, true),
               onAbsent: () =>
-                  ref.read(homeProvider.notifier).toggleAttendance(i, false),
+                  ref.read(attendanceProvider.notifier).toggleAttendance(i, false),
               onCheckboxChanged: (bool? value) =>
-                  ref.read(homeProvider.notifier).toggleSelection(""),
+                  ref.read(attendanceProvider.notifier).toggleSelection(""),
               isPresent: true,
               isAbsent: true,
               isChecked: false,
@@ -617,11 +618,11 @@ class _AttendanceState extends ConsumerState<AttendancePage> {
           id: student.student,
           imageUrl: "https://i.pravatar.cc/150?img=${i + 1}",
           onPresent: () =>
-              ref.read(homeProvider.notifier).toggleAttendance(i, true),
+              ref.read(attendanceProvider.notifier).toggleAttendance(i, true),
           onAbsent: () =>
-              ref.read(homeProvider.notifier).toggleAttendance(i, false),
+              ref.read(attendanceProvider.notifier).toggleAttendance(i, false),
           onCheckboxChanged: (bool? value) =>
-              ref.read(homeProvider.notifier).toggleSelection(student.student),
+              ref.read(attendanceProvider.notifier).toggleSelection(student.student),
           isPresent: isPresent,
           isAbsent: isAbsent,
           isChecked: isChecked,

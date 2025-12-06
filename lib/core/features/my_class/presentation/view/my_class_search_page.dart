@@ -211,7 +211,7 @@ class _MyClassSearchPageState extends ConsumerState<MyClassSearchPage> {
                                 return const StudentCard(
                                   title: "Student Name",
                                   subtitle: "ID",
-                                  isActiveColor: Colors.green,
+                                  isActiveColor: Colors.green, attendanceStatus:"Present",
                                 );
                               }
 
@@ -224,6 +224,7 @@ class _MyClassSearchPageState extends ConsumerState<MyClassSearchPage> {
                                     student.attendanceStatus == "Present"
                                     ? Colors.green
                                     : Colors.red,
+                                attendanceStatus: student.attendanceStatus,
                               );
                             },
                           ),

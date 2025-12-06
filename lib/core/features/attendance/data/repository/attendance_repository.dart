@@ -31,7 +31,7 @@ AttendanceRepository attendanceRepository(Ref ref) {
           "student":searchQuery
         },
       );
-     await Future.delayed(const Duration(seconds: 1));
+     await Future.delayed(const Duration(milliseconds: 150));
       return AttendanceModel.fromJson(response.data);
     } catch (e) {
       rethrow;
@@ -56,7 +56,7 @@ AttendanceRepository attendanceRepository(Ref ref) {
           "absent_students": absent_list,
         },
       );
-     await Future.delayed(const Duration(seconds: 1));
+     await Future.delayed(const Duration(milliseconds: 150));
       return AttendanceUpdateResponse.fromJson(response.data);
     } catch (e) {
       rethrow;

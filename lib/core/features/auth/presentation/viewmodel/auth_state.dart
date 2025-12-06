@@ -8,10 +8,12 @@ abstract class AuthState with _$AuthState {
     required bool isLoading,
     required bool isValid,
     String? error,
+    String? email,
   }) = _AuthState;
 
   factory AuthState.initial() => const AuthState(
         isLoading: false,
         isValid: false,
+        email: null,
       );
 }
