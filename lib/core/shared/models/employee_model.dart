@@ -1,19 +1,19 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'home_model.freezed.dart';
-part 'home_model.g.dart';
+part 'employee_model.freezed.dart';
+part 'employee_model.g.dart';
 
 @freezed
-abstract class HomeModel with _$HomeModel {
-  const factory HomeModel({
+abstract class EmployeeModel with _$EmployeeModel {
+  const factory EmployeeModel({
     @JsonKey(name: "emp_data") EmpDataModel? empData,
     @JsonKey(name: "attendance_list") List<AttendanceModel>? attendanceList,
     @JsonKey(name: "punch_list") List<PunchModel>? punchList,
     String? message,
-  }) = _HomeModel;
+  }) = _EmployeeModel;
 
-  factory HomeModel.fromJson(Map<String, dynamic> json) {
-    return HomeModel(
+  factory EmployeeModel.fromJson(Map<String, dynamic> json) {
+    return EmployeeModel(
       empData: (json["emp_data"] is Map && (json["emp_data"] as Map).isNotEmpty)
           ? EmpDataModel.fromJson(json["emp_data"])
           : null,

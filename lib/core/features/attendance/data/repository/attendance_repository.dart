@@ -1,8 +1,8 @@
+import 'package:amrita_vidhyalayam_teacher/core/shared/models/student_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../network/dio_client.dart';
-import '../models/attendance_model.dart';
 import '../models/post_attendance_model.dart';
 
 part 'attendance_repository.g.dart';
@@ -16,27 +16,6 @@ AttendanceRepository attendanceRepository(Ref ref) {
   final Dio _dio;
 
   AttendanceRepository(this._dio);
-
-  Future<AttendanceModel> getClassAttendance({
-    required String sclass,
-    required String attendanceOn,
-    required String? searchQuery,
-  }) async {
-    try {
-      final response = await _dio.post(
-        '/get_classattendance',
-        data: {
-          "sclass": sclass,
-          "attendance_on": attendanceOn,
-          "student":searchQuery
-        },
-      );
-     await Future.delayed(const Duration(milliseconds: 150));
-      return AttendanceModel.fromJson(response.data);
-    } catch (e) {
-      rethrow;
-    }
-  }
 
 
   Future<AttendanceUpdateResponse> postClassAttendance({

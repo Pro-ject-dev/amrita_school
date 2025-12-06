@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'home_model.dart';
+part of 'employee_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,20 +12,20 @@ part of 'home_model.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$HomeModel {
+mixin _$EmployeeModel {
 
 @JsonKey(name: "emp_data") EmpDataModel? get empData;@JsonKey(name: "attendance_list") List<AttendanceModel>? get attendanceList;@JsonKey(name: "punch_list") List<PunchModel>? get punchList; String? get message;
-/// Create a copy of HomeModel
+/// Create a copy of EmployeeModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$HomeModelCopyWith<HomeModel> get copyWith => _$HomeModelCopyWithImpl<HomeModel>(this as HomeModel, _$identity);
+$EmployeeModelCopyWith<EmployeeModel> get copyWith => _$EmployeeModelCopyWithImpl<EmployeeModel>(this as EmployeeModel, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is HomeModel&&(identical(other.empData, empData) || other.empData == empData)&&const DeepCollectionEquality().equals(other.attendanceList, attendanceList)&&const DeepCollectionEquality().equals(other.punchList, punchList)&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EmployeeModel&&(identical(other.empData, empData) || other.empData == empData)&&const DeepCollectionEquality().equals(other.attendanceList, attendanceList)&&const DeepCollectionEquality().equals(other.punchList, punchList)&&(identical(other.message, message) || other.message == message));
 }
 
 
@@ -34,15 +34,15 @@ int get hashCode => Object.hash(runtimeType,empData,const DeepCollectionEquality
 
 @override
 String toString() {
-  return 'HomeModel(empData: $empData, attendanceList: $attendanceList, punchList: $punchList, message: $message)';
+  return 'EmployeeModel(empData: $empData, attendanceList: $attendanceList, punchList: $punchList, message: $message)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $HomeModelCopyWith<$Res>  {
-  factory $HomeModelCopyWith(HomeModel value, $Res Function(HomeModel) _then) = _$HomeModelCopyWithImpl;
+abstract mixin class $EmployeeModelCopyWith<$Res>  {
+  factory $EmployeeModelCopyWith(EmployeeModel value, $Res Function(EmployeeModel) _then) = _$EmployeeModelCopyWithImpl;
 @useResult
 $Res call({
 @JsonKey(name: "emp_data") EmpDataModel? empData,@JsonKey(name: "attendance_list") List<AttendanceModel>? attendanceList,@JsonKey(name: "punch_list") List<PunchModel>? punchList, String? message
@@ -53,14 +53,14 @@ $EmpDataModelCopyWith<$Res>? get empData;
 
 }
 /// @nodoc
-class _$HomeModelCopyWithImpl<$Res>
-    implements $HomeModelCopyWith<$Res> {
-  _$HomeModelCopyWithImpl(this._self, this._then);
+class _$EmployeeModelCopyWithImpl<$Res>
+    implements $EmployeeModelCopyWith<$Res> {
+  _$EmployeeModelCopyWithImpl(this._self, this._then);
 
-  final HomeModel _self;
-  final $Res Function(HomeModel) _then;
+  final EmployeeModel _self;
+  final $Res Function(EmployeeModel) _then;
 
-/// Create a copy of HomeModel
+/// Create a copy of EmployeeModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? empData = freezed,Object? attendanceList = freezed,Object? punchList = freezed,Object? message = freezed,}) {
   return _then(_self.copyWith(
@@ -71,7 +71,7 @@ as List<PunchModel>?,message: freezed == message ? _self.message : message // ig
 as String?,
   ));
 }
-/// Create a copy of HomeModel
+/// Create a copy of EmployeeModel
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -87,8 +87,8 @@ $EmpDataModelCopyWith<$Res>? get empData {
 }
 
 
-/// Adds pattern-matching-related methods to [HomeModel].
-extension HomeModelPatterns on HomeModel {
+/// Adds pattern-matching-related methods to [EmployeeModel].
+extension EmployeeModelPatterns on EmployeeModel {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -101,10 +101,10 @@ extension HomeModelPatterns on HomeModel {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _HomeModel value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _EmployeeModel value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _HomeModel() when $default != null:
+case _EmployeeModel() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -123,10 +123,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _HomeModel value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _EmployeeModel value)  $default,){
 final _that = this;
 switch (_that) {
-case _HomeModel():
+case _EmployeeModel():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -144,10 +144,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _HomeModel value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _EmployeeModel value)?  $default,){
 final _that = this;
 switch (_that) {
-case _HomeModel() when $default != null:
+case _EmployeeModel() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -167,7 +167,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: "emp_data")  EmpDataModel? empData, @JsonKey(name: "attendance_list")  List<AttendanceModel>? attendanceList, @JsonKey(name: "punch_list")  List<PunchModel>? punchList,  String? message)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _HomeModel() when $default != null:
+case _EmployeeModel() when $default != null:
 return $default(_that.empData,_that.attendanceList,_that.punchList,_that.message);case _:
   return orElse();
 
@@ -188,7 +188,7 @@ return $default(_that.empData,_that.attendanceList,_that.punchList,_that.message
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: "emp_data")  EmpDataModel? empData, @JsonKey(name: "attendance_list")  List<AttendanceModel>? attendanceList, @JsonKey(name: "punch_list")  List<PunchModel>? punchList,  String? message)  $default,) {final _that = this;
 switch (_that) {
-case _HomeModel():
+case _EmployeeModel():
 return $default(_that.empData,_that.attendanceList,_that.punchList,_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -208,7 +208,7 @@ return $default(_that.empData,_that.attendanceList,_that.punchList,_that.message
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: "emp_data")  EmpDataModel? empData, @JsonKey(name: "attendance_list")  List<AttendanceModel>? attendanceList, @JsonKey(name: "punch_list")  List<PunchModel>? punchList,  String? message)?  $default,) {final _that = this;
 switch (_that) {
-case _HomeModel() when $default != null:
+case _EmployeeModel() when $default != null:
 return $default(_that.empData,_that.attendanceList,_that.punchList,_that.message);case _:
   return null;
 
@@ -220,8 +220,8 @@ return $default(_that.empData,_that.attendanceList,_that.punchList,_that.message
 /// @nodoc
 
 
-class _HomeModel implements HomeModel {
-  const _HomeModel({@JsonKey(name: "emp_data") this.empData, @JsonKey(name: "attendance_list") final  List<AttendanceModel>? attendanceList, @JsonKey(name: "punch_list") final  List<PunchModel>? punchList, this.message}): _attendanceList = attendanceList,_punchList = punchList;
+class _EmployeeModel implements EmployeeModel {
+  const _EmployeeModel({@JsonKey(name: "emp_data") this.empData, @JsonKey(name: "attendance_list") final  List<AttendanceModel>? attendanceList, @JsonKey(name: "punch_list") final  List<PunchModel>? punchList, this.message}): _attendanceList = attendanceList,_punchList = punchList;
   
 
 @override@JsonKey(name: "emp_data") final  EmpDataModel? empData;
@@ -245,17 +245,17 @@ class _HomeModel implements HomeModel {
 
 @override final  String? message;
 
-/// Create a copy of HomeModel
+/// Create a copy of EmployeeModel
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$HomeModelCopyWith<_HomeModel> get copyWith => __$HomeModelCopyWithImpl<_HomeModel>(this, _$identity);
+_$EmployeeModelCopyWith<_EmployeeModel> get copyWith => __$EmployeeModelCopyWithImpl<_EmployeeModel>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _HomeModel&&(identical(other.empData, empData) || other.empData == empData)&&const DeepCollectionEquality().equals(other._attendanceList, _attendanceList)&&const DeepCollectionEquality().equals(other._punchList, _punchList)&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EmployeeModel&&(identical(other.empData, empData) || other.empData == empData)&&const DeepCollectionEquality().equals(other._attendanceList, _attendanceList)&&const DeepCollectionEquality().equals(other._punchList, _punchList)&&(identical(other.message, message) || other.message == message));
 }
 
 
@@ -264,15 +264,15 @@ int get hashCode => Object.hash(runtimeType,empData,const DeepCollectionEquality
 
 @override
 String toString() {
-  return 'HomeModel(empData: $empData, attendanceList: $attendanceList, punchList: $punchList, message: $message)';
+  return 'EmployeeModel(empData: $empData, attendanceList: $attendanceList, punchList: $punchList, message: $message)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$HomeModelCopyWith<$Res> implements $HomeModelCopyWith<$Res> {
-  factory _$HomeModelCopyWith(_HomeModel value, $Res Function(_HomeModel) _then) = __$HomeModelCopyWithImpl;
+abstract mixin class _$EmployeeModelCopyWith<$Res> implements $EmployeeModelCopyWith<$Res> {
+  factory _$EmployeeModelCopyWith(_EmployeeModel value, $Res Function(_EmployeeModel) _then) = __$EmployeeModelCopyWithImpl;
 @override @useResult
 $Res call({
 @JsonKey(name: "emp_data") EmpDataModel? empData,@JsonKey(name: "attendance_list") List<AttendanceModel>? attendanceList,@JsonKey(name: "punch_list") List<PunchModel>? punchList, String? message
@@ -283,17 +283,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$HomeModelCopyWithImpl<$Res>
-    implements _$HomeModelCopyWith<$Res> {
-  __$HomeModelCopyWithImpl(this._self, this._then);
+class __$EmployeeModelCopyWithImpl<$Res>
+    implements _$EmployeeModelCopyWith<$Res> {
+  __$EmployeeModelCopyWithImpl(this._self, this._then);
 
-  final _HomeModel _self;
-  final $Res Function(_HomeModel) _then;
+  final _EmployeeModel _self;
+  final $Res Function(_EmployeeModel) _then;
 
-/// Create a copy of HomeModel
+/// Create a copy of EmployeeModel
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? empData = freezed,Object? attendanceList = freezed,Object? punchList = freezed,Object? message = freezed,}) {
-  return _then(_HomeModel(
+  return _then(_EmployeeModel(
 empData: freezed == empData ? _self.empData : empData // ignore: cast_nullable_to_non_nullable
 as EmpDataModel?,attendanceList: freezed == attendanceList ? _self._attendanceList : attendanceList // ignore: cast_nullable_to_non_nullable
 as List<AttendanceModel>?,punchList: freezed == punchList ? _self._punchList : punchList // ignore: cast_nullable_to_non_nullable
@@ -302,7 +302,7 @@ as String?,
   ));
 }
 
-/// Create a copy of HomeModel
+/// Create a copy of EmployeeModel
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')

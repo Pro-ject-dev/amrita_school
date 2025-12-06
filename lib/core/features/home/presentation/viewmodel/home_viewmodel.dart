@@ -1,17 +1,18 @@
 import 'dart:developer';
 import 'dart:ui';
-import 'package:amrita_vidhyalayam_teacher/core/features/home/data/models/home_model.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/home/data/models/today_puch_model.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/home/data/repository/home_repository.dart';
 import 'package:amrita_vidhyalayam_teacher/core/providers/common_providers.dart';
+import 'package:amrita_vidhyalayam_teacher/core/shared/repository/employee_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod/riverpod.dart';
+import '../../../../shared/models/employee_model.dart' show PunchModel;
 import 'home_state.dart';
 
 class HomeViewModel extends StateNotifier<HomeState> {
-  final HomeRepository repository;
+  final EmployeeRepository repository;
   final Ref ref;
 
   HomeViewModel(this.repository, this.ref) : super(HomeState.initial());
@@ -31,7 +32,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
     }
 
     try {
-      final data = await repository.getPunchDetails(mail: mail.toString());
+      final data = await repository.getEmployeeDetails(mail: mail.toString());
       state = state.copyWith(punchData: data);
 
       final todayPunchData = await getTodayPunchDetail();
@@ -113,12 +114,12 @@ Color getStatusColor(String? status) {
     case "on time":
       return const Color(0xFF4CAF50); 
     default:
-      return Colors.grey; 
+      return const Color.fromARGB(255, 204, 204, 204); 
   }
 }
 
 final homeProvider =
     StateNotifierProvider<HomeViewModel, HomeState>((ref) {
-  final repository = ref.watch(homeRepositoryProvider);
+  final repository = ref.watch(employeeRepositoryProvider);
   return HomeViewModel(repository, ref);
 });

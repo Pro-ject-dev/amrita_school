@@ -1,9 +1,7 @@
 import 'package:amrita_vidhyalayam_teacher/core/features/attendance/data/models/ui_response_model.dart';
+import 'package:amrita_vidhyalayam_teacher/core/shared/models/student_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
-import '../../data/models/attendance_model.dart';
-
-
 part 'attendance_state.freezed.dart';
 
 @freezed

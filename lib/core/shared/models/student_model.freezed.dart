@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'attendance_model.dart';
+part of 'student_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,23 +13,23 @@ part of 'attendance_model.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$AttendanceModel {
+mixin _$StudentModel {
 
 // ignore: invalid_annotation_target
 @JsonKey(name: 'attendance_list') List<StudentAttendance> get attendanceList; String get message;
-/// Create a copy of AttendanceModel
+/// Create a copy of StudentModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$AttendanceModelCopyWith<AttendanceModel> get copyWith => _$AttendanceModelCopyWithImpl<AttendanceModel>(this as AttendanceModel, _$identity);
+$StudentModelCopyWith<StudentModel> get copyWith => _$StudentModelCopyWithImpl<StudentModel>(this as StudentModel, _$identity);
 
-  /// Serializes this AttendanceModel to a JSON map.
+  /// Serializes this StudentModel to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AttendanceModel&&const DeepCollectionEquality().equals(other.attendanceList, attendanceList)&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is StudentModel&&const DeepCollectionEquality().equals(other.attendanceList, attendanceList)&&(identical(other.message, message) || other.message == message));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -38,15 +38,15 @@ int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(
 
 @override
 String toString() {
-  return 'AttendanceModel(attendanceList: $attendanceList, message: $message)';
+  return 'StudentModel(attendanceList: $attendanceList, message: $message)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $AttendanceModelCopyWith<$Res>  {
-  factory $AttendanceModelCopyWith(AttendanceModel value, $Res Function(AttendanceModel) _then) = _$AttendanceModelCopyWithImpl;
+abstract mixin class $StudentModelCopyWith<$Res>  {
+  factory $StudentModelCopyWith(StudentModel value, $Res Function(StudentModel) _then) = _$StudentModelCopyWithImpl;
 @useResult
 $Res call({
 @JsonKey(name: 'attendance_list') List<StudentAttendance> attendanceList, String message
@@ -57,14 +57,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$AttendanceModelCopyWithImpl<$Res>
-    implements $AttendanceModelCopyWith<$Res> {
-  _$AttendanceModelCopyWithImpl(this._self, this._then);
+class _$StudentModelCopyWithImpl<$Res>
+    implements $StudentModelCopyWith<$Res> {
+  _$StudentModelCopyWithImpl(this._self, this._then);
 
-  final AttendanceModel _self;
-  final $Res Function(AttendanceModel) _then;
+  final StudentModel _self;
+  final $Res Function(StudentModel) _then;
 
-/// Create a copy of AttendanceModel
+/// Create a copy of StudentModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? attendanceList = null,Object? message = null,}) {
   return _then(_self.copyWith(
@@ -77,8 +77,8 @@ as String,
 }
 
 
-/// Adds pattern-matching-related methods to [AttendanceModel].
-extension AttendanceModelPatterns on AttendanceModel {
+/// Adds pattern-matching-related methods to [StudentModel].
+extension StudentModelPatterns on StudentModel {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -91,10 +91,10 @@ extension AttendanceModelPatterns on AttendanceModel {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _AttendanceModel value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _StudentModel value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _AttendanceModel() when $default != null:
+case _StudentModel() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -113,10 +113,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _AttendanceModel value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _StudentModel value)  $default,){
 final _that = this;
 switch (_that) {
-case _AttendanceModel():
+case _StudentModel():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -134,10 +134,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _AttendanceModel value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _StudentModel value)?  $default,){
 final _that = this;
 switch (_that) {
-case _AttendanceModel() when $default != null:
+case _StudentModel() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -157,7 +157,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'attendance_list')  List<StudentAttendance> attendanceList,  String message)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _AttendanceModel() when $default != null:
+case _StudentModel() when $default != null:
 return $default(_that.attendanceList,_that.message);case _:
   return orElse();
 
@@ -178,7 +178,7 @@ return $default(_that.attendanceList,_that.message);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'attendance_list')  List<StudentAttendance> attendanceList,  String message)  $default,) {final _that = this;
 switch (_that) {
-case _AttendanceModel():
+case _StudentModel():
 return $default(_that.attendanceList,_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -198,7 +198,7 @@ return $default(_that.attendanceList,_that.message);case _:
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'attendance_list')  List<StudentAttendance> attendanceList,  String message)?  $default,) {final _that = this;
 switch (_that) {
-case _AttendanceModel() when $default != null:
+case _StudentModel() when $default != null:
 return $default(_that.attendanceList,_that.message);case _:
   return null;
 
@@ -210,9 +210,9 @@ return $default(_that.attendanceList,_that.message);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _AttendanceModel implements AttendanceModel {
-  const _AttendanceModel({@JsonKey(name: 'attendance_list') required final  List<StudentAttendance> attendanceList, required this.message}): _attendanceList = attendanceList;
-  factory _AttendanceModel.fromJson(Map<String, dynamic> json) => _$AttendanceModelFromJson(json);
+class _StudentModel implements StudentModel {
+  const _StudentModel({@JsonKey(name: 'attendance_list') required final  List<StudentAttendance> attendanceList, required this.message}): _attendanceList = attendanceList;
+  factory _StudentModel.fromJson(Map<String, dynamic> json) => _$StudentModelFromJson(json);
 
 // ignore: invalid_annotation_target
  final  List<StudentAttendance> _attendanceList;
@@ -225,20 +225,20 @@ class _AttendanceModel implements AttendanceModel {
 
 @override final  String message;
 
-/// Create a copy of AttendanceModel
+/// Create a copy of StudentModel
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$AttendanceModelCopyWith<_AttendanceModel> get copyWith => __$AttendanceModelCopyWithImpl<_AttendanceModel>(this, _$identity);
+_$StudentModelCopyWith<_StudentModel> get copyWith => __$StudentModelCopyWithImpl<_StudentModel>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$AttendanceModelToJson(this, );
+  return _$StudentModelToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AttendanceModel&&const DeepCollectionEquality().equals(other._attendanceList, _attendanceList)&&(identical(other.message, message) || other.message == message));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StudentModel&&const DeepCollectionEquality().equals(other._attendanceList, _attendanceList)&&(identical(other.message, message) || other.message == message));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -247,15 +247,15 @@ int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(
 
 @override
 String toString() {
-  return 'AttendanceModel(attendanceList: $attendanceList, message: $message)';
+  return 'StudentModel(attendanceList: $attendanceList, message: $message)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$AttendanceModelCopyWith<$Res> implements $AttendanceModelCopyWith<$Res> {
-  factory _$AttendanceModelCopyWith(_AttendanceModel value, $Res Function(_AttendanceModel) _then) = __$AttendanceModelCopyWithImpl;
+abstract mixin class _$StudentModelCopyWith<$Res> implements $StudentModelCopyWith<$Res> {
+  factory _$StudentModelCopyWith(_StudentModel value, $Res Function(_StudentModel) _then) = __$StudentModelCopyWithImpl;
 @override @useResult
 $Res call({
 @JsonKey(name: 'attendance_list') List<StudentAttendance> attendanceList, String message
@@ -266,17 +266,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$AttendanceModelCopyWithImpl<$Res>
-    implements _$AttendanceModelCopyWith<$Res> {
-  __$AttendanceModelCopyWithImpl(this._self, this._then);
+class __$StudentModelCopyWithImpl<$Res>
+    implements _$StudentModelCopyWith<$Res> {
+  __$StudentModelCopyWithImpl(this._self, this._then);
 
-  final _AttendanceModel _self;
-  final $Res Function(_AttendanceModel) _then;
+  final _StudentModel _self;
+  final $Res Function(_StudentModel) _then;
 
-/// Create a copy of AttendanceModel
+/// Create a copy of StudentModel
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? attendanceList = null,Object? message = null,}) {
-  return _then(_AttendanceModel(
+  return _then(_StudentModel(
 attendanceList: null == attendanceList ? _self._attendanceList : attendanceList // ignore: cast_nullable_to_non_nullable
 as List<StudentAttendance>,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,

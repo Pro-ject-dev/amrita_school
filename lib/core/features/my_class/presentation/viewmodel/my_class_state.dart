@@ -1,6 +1,7 @@
-import 'package:amrita_vidhyalayam_teacher/core/features/attendance/data/models/attendance_model.dart';
 import 'package:flutter/rendering.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../../../../shared/models/student_model.dart';
 
 part 'my_class_state.freezed.dart';
 

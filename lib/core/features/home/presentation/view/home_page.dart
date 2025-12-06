@@ -33,8 +33,10 @@ class HomePageState extends ConsumerState<HomePage> {
       const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
     );
     return Scaffold(
+      
       body: Container(
         decoration: BoxDecoration(
+          color:AppColors.primary ,
           image: DecorationImage(
             image: AssetImage('assets/images/bg-test2.jpg'),
             fit: BoxFit.cover,
@@ -326,7 +328,9 @@ class CheckInCardState extends ConsumerState<CheckInCard> {
                     padding: EdgeInsets.only(left: 6.w),
                     child: RichText(
                       text: TextSpan(
-                        text: homeState.todayData?.checkInTime == "-- : --"?"-- : --": homeState.todayData?.checkInTime?.split(" ")[0] ?? "",
+                        text: homeState.todayData?.checkInTime == "-- : --"
+                            ? "-- : --"
+                            : homeState.todayData?.checkInTime?.split(" ")[0] ?? "-- : --",
                         style: TextStyle(
                           fontSize: 20.sp,
                           color: Colors.black,
@@ -336,7 +340,7 @@ class CheckInCardState extends ConsumerState<CheckInCard> {
                           TextSpan(
                             text: homeState.todayData?.checkInTime == "-- : --"
                                 ? ''
-                                : " ${homeState.todayData?.checkInTime?.split(" ")[1]}",
+                                : " ${homeState.todayData?.checkInTime?.split(" ")[1] ?? ''}",
                             style: TextStyle(
                               fontSize: 10.sp,
                               fontWeight: FontWeight.w600,
@@ -373,12 +377,12 @@ class CheckInCardState extends ConsumerState<CheckInCard> {
                               horizontal: 6.w, vertical: 3.h),
                           decoration: BoxDecoration(
                             color: getStatusColor(
-                              homeState.todayData?.checkInTimeStatus,
+                              homeState.todayData?.checkInTimeStatus ?? "",
                             ),
                             borderRadius: BorderRadius.circular(12.r),
                           ),
                           child: Text(
-                            homeState.todayData?.checkInTimeStatus ?? "",
+                            homeState.todayData?.checkInTimeStatus ?? "n/an/a",
                             style: TextStyle(
                               fontSize: 10.sp,
                               color: Colors.white,
@@ -395,7 +399,7 @@ class CheckInCardState extends ConsumerState<CheckInCard> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 4.w),
               child: Text(
-                homeState.todayData?.checkInStatus ?? "",
+                homeState.todayData?.checkInStatus ?? "Loading...",
                 style: TextStyle(fontSize: 11.sp, color: Color(0xff7C8489)),
               ),
             ),
@@ -405,7 +409,6 @@ class CheckInCardState extends ConsumerState<CheckInCard> {
     );
   }
 }
-
 class CheckOutCard extends ConsumerStatefulWidget {
   const CheckOutCard({Key? key}) : super(key: key);
 
@@ -417,8 +420,6 @@ class CheckOutCardState extends ConsumerState<CheckOutCard> {
   @override
   Widget build(BuildContext context) {
     final homeState = ref.watch(homeProvider);
-
-
 
     return Skeletonizer(
       enabled: homeState.isLoading,
@@ -439,8 +440,6 @@ class CheckOutCardState extends ConsumerState<CheckOutCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // existing UI unchanged...
-      
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
               child: Row(
@@ -504,7 +503,9 @@ class CheckOutCardState extends ConsumerState<CheckOutCard> {
                     padding: EdgeInsets.only(left: 6.w),
                     child: RichText(
                       text: TextSpan(
-                        text:homeState.todayData?.checkOutTime == "-- : --"?"-- : --": homeState.todayData?.checkOutTime?.split(" ")[0] ?? "",
+                        text: homeState.todayData?.checkOutTime == "-- : --"
+                            ? "-- : --"
+                            : homeState.todayData?.checkOutTime?.split(" ")[0] ?? "-- : --",
                         style: TextStyle(
                           fontSize: 20.sp,
                           color: Colors.black,
@@ -514,7 +515,7 @@ class CheckOutCardState extends ConsumerState<CheckOutCard> {
                           TextSpan(
                             text: homeState.todayData?.checkOutTime == "-- : --"
                                 ? ""
-                                : " ${homeState.todayData?.checkOutTime?.split(" ")[1]}",
+                                : " ${homeState.todayData?.checkOutTime?.split(" ")[1] ?? ''}",
                             style: TextStyle(
                               fontSize: 10.sp,
                               color: Colors.black87,
@@ -538,22 +539,25 @@ class CheckOutCardState extends ConsumerState<CheckOutCard> {
                             borderRadius: BorderRadius.circular(20.r),
                             border: Border.all(color: Color(0xffC4C4C4)),
                           ),
-                          child: Text("n/a",
-                              style: TextStyle(
-                                  fontSize: 10.sp,
-                                  fontWeight: FontWeight.w600)),
+                          child: Text(
+                            "n/a",
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         )
                       : Container(
                           padding: EdgeInsets.symmetric(
                               horizontal: 6.w, vertical: 3.h),
                           decoration: BoxDecoration(
                             color: getStatusColor(
-                              homeState.todayData?.checkOutTimeStatus,
+                              homeState.todayData?.checkOutTimeStatus ?? "",
                             ),
                             borderRadius: BorderRadius.circular(12.r),
                           ),
                           child: Text(
-                            homeState.todayData?.checkOutTimeStatus ?? "",
+                            homeState.todayData?.checkOutTimeStatus ?? "n/an/a",
                             style: TextStyle(
                               fontSize: 10.sp,
                               color: Colors.white,
@@ -570,7 +574,7 @@ class CheckOutCardState extends ConsumerState<CheckOutCard> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 4.w),
               child: Text(
-                homeState.todayData?.checkOutStatus ?? "",
+                homeState.todayData?.checkOutStatus ?? "Loading...",
                 style: TextStyle(fontSize: 11.sp, color: Color(0xff7C8489)),
               ),
             ),
@@ -580,7 +584,6 @@ class CheckOutCardState extends ConsumerState<CheckOutCard> {
     );
   }
 }
-
 class RecentActivitiesSection extends ConsumerWidget {
   const RecentActivitiesSection({Key? key}) : super(key: key);
 
@@ -620,15 +623,18 @@ class RecentActivitiesSection extends ConsumerWidget {
 
           Expanded(
             child: homeState.isLoading
-                ? ListView.separated(
-                    itemCount: 5,
-                    separatorBuilder: (_, i) => SizedBox(height: 20.h),
-                    itemBuilder: (_, i) => ActivityItem(
-                        date:  "",
-                        shift: "",
-                        status: "",
-                      )
-                  )
+                ? Skeletonizer(
+                  enabled: true,
+                  child: ListView.separated(
+                      itemCount: 5,
+                      separatorBuilder: (_, i) => SizedBox(height: 20.h),
+                      itemBuilder: (_, i) => ActivityItem(
+                          date:  "2025-12-06",
+                          shift: "Test Schools",
+                          status: "",
+                        )
+                    ),
+                )
                 : ListView.separated(
                     itemCount: (homeState.punchData?.attendanceList?.length ?? 0).clamp(0, 5),
                     separatorBuilder: (_, i) => SizedBox(height: 20.h),
@@ -741,7 +747,7 @@ bool isAbsent = widget.status=="Absent";
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ):LinearGradient(
-                        colors: [Color.fromARGB(255, 120, 120, 120), Color.fromARGB(255, 166, 166, 166)],
+                        colors:[const Color.fromARGB(255, 190, 190, 190), const Color.fromARGB(255, 202, 202, 202)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
@@ -751,7 +757,7 @@ bool isAbsent = widget.status=="Absent";
                 ),
               ),
               child: Text(
-                widget.status=="Absent" ? "Absent" :widget.status=="Present"? "Present":"     ",
+                widget.status=="Absent" ? "Absent" :widget.status=="Present"? "Present":"Testing...",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 12.sp,

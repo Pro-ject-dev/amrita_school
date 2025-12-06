@@ -1,17 +1,19 @@
 import 'dart:async';
 import 'package:amrita_vidhyalayam_teacher/core/features/attendance/data/models/post_attendance_model.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/attendance/data/models/ui_response_model.dart';
+import 'package:amrita_vidhyalayam_teacher/core/shared/repository/student_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod/legacy.dart';
-import '../../data/models/attendance_model.dart';
+import '../../../../shared/models/student_model.dart';
 import '../../data/repository/attendance_repository.dart';
 import 'attendance_state.dart';
 
 class AttendanceViewModel extends StateNotifier<AttendanceState> {
-  final AttendanceRepository _repository;
+  final StudentRepository studentRepository;
+  final AttendanceRepository attendanceRepository;
 
-  AttendanceViewModel(this._repository) : super(AttendanceState.initial());
+  AttendanceViewModel(this.studentRepository,this.attendanceRepository) : super(AttendanceState.initial());
 
   static const String standardFormat = 'yyyy-MM-dd';
   static const String displayFormat = 'MMM dd';
@@ -57,7 +59,7 @@ class AttendanceViewModel extends StateNotifier<AttendanceState> {
     }
 
     try {
-      final result = await _repository.getClassAttendance(
+      final result = await studentRepository.getStudentDetails(
         sclass: "TS 25 CLASS 2 A",
         attendanceOn: formattedDate,
         searchQuery: searchTxt,
@@ -266,7 +268,7 @@ class AttendanceViewModel extends StateNotifier<AttendanceState> {
 
       print("Posting attendance for date: $actualDate");
 
-      final AttendanceUpdateResponse result = await _repository
+      final AttendanceUpdateResponse result = await attendanceRepository
           .postClassAttendance(
             sclass: "TS 25 CLASS 2 A",
             date: actualDate,
@@ -341,7 +343,7 @@ class AttendanceViewModel extends StateNotifier<AttendanceState> {
 
       print("Posting individual attendance for date: $actualDate");
 
-      final AttendanceUpdateResponse result = await _repository
+      final AttendanceUpdateResponse result = await attendanceRepository
           .postClassAttendance(
             sclass: "TS 25 CLASS 2 A",
             date: actualDate,
@@ -416,5 +418,9 @@ class AttendanceViewModel extends StateNotifier<AttendanceState> {
 }
 
 final attendanceProvider = StateNotifierProvider<AttendanceViewModel, AttendanceState>(
-  (ref) => AttendanceViewModel(ref.watch(attendanceRepositoryProvider)),
+  (ref) {
+    final student = ref.watch(studentRepositoryProvider);
+    final attendace = ref.watch(attendanceRepositoryProvider);
+    return AttendanceViewModel(student,attendace);
+  } 
 );

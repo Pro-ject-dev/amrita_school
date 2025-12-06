@@ -1,162 +1,337 @@
+import 'package:amrita_vidhyalayam_teacher/core/features/profile/presentation/viewmodel/profile_viewmodel.dart';
+import 'package:amrita_vidhyalayam_teacher/core/theme/colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-// TODO: Replace with your actual provider
-final profileProvider = Provider((ref) => null);
+import '../../../../providers/common_providers.dart';
+import '../../../attendance/presentation/widgets/confirmationDialog.dart';
 
-class ProfilePage extends ConsumerWidget {
-  const ProfilePage({super.key});
+
+class ProfilePage extends ConsumerStatefulWidget {
+const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    // final state = ref.watch(profileProvider); // use when you connect API
+  ConsumerState<ProfilePage> createState() => ProfilePageState();
+}
 
+class ProfilePageState extends ConsumerState<ProfilePage> {
+
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(profileProvider.notifier).getProfile();
+    });
+    super.initState();
+  }
+
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+     final state = ref.watch(profileProvider);
     return Scaffold(
-      backgroundColor: const Color(0xffF5F7FA),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: const Color(0xffF5F7FA),
-        title: Text(
-          "Profile",
-          style: theme.textTheme.bodyMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-            fontSize: 20.sp,
-            color: Colors.black,
+      backgroundColor: Colors.grey.shade100,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            shape: ContinuousRectangleBorder(
+      borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30))),
+            expandedHeight: 260.h,
+            pinned: true,
+            backgroundColor: AppColors.primary,
+            automaticallyImplyLeading: false,
+            elevation: 0,
+            actions: [
+              IconButton(
+                icon: const Icon(LucideIcons.logOut, color: Colors.white),
+                onPressed: () {
+                   confirmationDialog(
+                    theme,
+                    context,
+                    "Log Out",
+                    "Are you sure you want to log out of your account ?",
+                    () {
+                      ref.read(authViewModelProvider.notifier).logout();
+                      context.go("/auth");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            "Logged Out",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: const Color.fromARGB(
+                            255,
+                            112,
+                            112,
+                            112,
+                          ),
+                          duration: Duration(seconds: 3),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+            flexibleSpace: LayoutBuilder(
+              builder: (context, constraints) {
+                final top = constraints.biggest.height;
+                final double collapsedHeight = kToolbarHeight + MediaQuery.of(context).padding.top;
+                final double expandedHeight = 280.h;
+                final scrollPercentage = ((top - collapsedHeight) /
+                        (expandedHeight - collapsedHeight))
+                    .clamp(0.0, 1.0);
+                return FlexibleSpaceBar(
+                  centerTitle: true,
+                  expandedTitleScale: 1.0,
+                  titlePadding: const EdgeInsets.only(bottom: 16),
+                  title: Opacity(
+                    opacity: scrollPercentage < 0.2 ? 1.0 - (scrollPercentage * 5) : 0.0,
+                    child: Text(
+                      "Profile",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+
+                  background: ClipRRect(
+                     borderRadius: BorderRadius.only(bottomLeft: Radius.circular(30.r),bottomRight: Radius.circular(80.r)),
+                    child: Container(
+                      decoration: BoxDecoration(
+                           color: AppColors.primary,
+                    
+
+                      ),
+                                 
+                      child: SafeArea(
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                    
+                            /// EXPANDED HEADER CONTENT (show only when expanded)
+                            if (scrollPercentage > 0.15)
+                              Opacity(
+                                opacity: scrollPercentage,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(height: 20.h),
+                                    CircleAvatar(
+                                      radius: 45.r,
+                                      backgroundColor: Colors.white,
+                                      child: Text(
+                                       state.data?.empData?.employeeName?[0]??"N/A",
+                                        style: TextStyle(
+                                          fontSize: 32.sp,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.primary,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 12.h),
+                                    Text(
+                                      state.data?.empData?.employeeName ??"Not Found",
+                                      style: TextStyle(
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    SizedBox(height: 4.h),
+                                    Text(
+                                     state.data?.empData?.designation ??"Not Found",
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                        color: Colors.white70,
+                                      ),
+                                    ),
+                                    SizedBox(height: 10.h),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 16.w, vertical: 6.h),
+                                      decoration: BoxDecoration(
+                                        color:state.data?.empData?.status=="Active"? Colors.green:Colors.red,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(Icons.circle,
+                                              size: 8.sp, color: Colors.white),
+                                          SizedBox(width: 6.w),
+                                          Text(
+                                            state.data?.empData?.status ??"Not Found",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 12.sp,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(LucideIcons.logOut, color: Colors.black),
-            onPressed: () {
-              // TODO: Add logout logic
-            },
+
+          /// CONTENT
+          SliverPadding(
+            padding: EdgeInsets.only(top: 36.h, bottom: 30.h),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                MaterialCard(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SectionHeader(
+                        title: "Profile Information",
+                        icon: LucideIcons.user,
+                      ),
+                      SizedBox(height: 16.h),
+                      InfoRow(
+                        icon: LucideIcons.badgeCheck,
+                        label: "Employee ID",
+                        value:state.data?.empData?.empId??"Not Found" ,
+                      ),
+                      _Divider(),
+                      SizedBox(height: 16.h),
+                      InfoRow(
+                        icon: LucideIcons.mail,
+                        label: "Employee mail",
+                        value: state.mail.toString() 
+                      ),
+                      _Divider(),
+                      InfoRow(
+                        icon: LucideIcons.circleUser,
+                        label: "Gender",
+                        value: state.data?.empData?.empId??"Not Found" ,
+                      ),
+                      _Divider(),
+                      InfoRow(
+                        icon: LucideIcons.cake,
+                        label: "Date of Birth",
+                        value: state.data?.empData?.dateOfBirth??"Not Found" ,
+                      ),
+                      _Divider(),
+                      InfoRow(
+                        icon: LucideIcons.calendar,
+                        label: "Date of Joining",
+                        value: state.data?.empData?.dateOfJoining??"Not Found" ,
+                      ),
+                      _Divider(),
+                      InfoRow(
+                        icon: LucideIcons.school,
+                        label: "School",
+                        value: state.data?.empData?.school??"Not Found" ,
+                      ),
+                      _Divider(),
+                      InfoRow(
+                        icon: LucideIcons.briefcase,
+                        label: "Employment Type",
+                        value: state.data?.empData?.employmentType??"Not Found" ,
+                      ),
+                    ],
+                  ),
+                ),
+              ]),
+            ),
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 12.h),
+    );
+  }
+}
 
-            /// Header
-            const ProfileHeader(
-              name: "Abhijith",
-              role: "CO-Founder",
-              initials: "AJ",
-              status: "Active",
-            ),
+// ---------------- CARD ----------------
 
-            SizedBox(height: 20.h),
+class MaterialCard extends StatelessWidget {
+  final Widget child;
+  const MaterialCard({required this.child});
 
-            /// Profile Information
-            InfoSectionCard(
-              title: "Profile Information",
-              items: const [
-                InfoTile(
-                  icon: LucideIcons.badgeCheck,
-                  label: "Employee ID",
-                  value: "HR-EMP-00001",
-                ),
-                InfoTile(
-                  icon: LucideIcons.circleUser,
-                  label: "Gender",
-                  value: "Male",
-                ),
-                InfoTile(
-                  icon: LucideIcons.cake,
-                  label: "Date of Birth",
-                  value: "25-11-2005",
-                ),
-                InfoTile(
-                  icon: LucideIcons.calendar,
-                  label: "Date of Joining",
-                  value: "25-11-2025",
-                ),
-                InfoTile(
-                  icon: LucideIcons.school,
-                  label: "School",
-                  value: "Test School",
-                ),
-                InfoTile(
-                  icon: LucideIcons.briefcase,
-                  label: "Employment Type",
-                  value: "Full Time",
-                ),
-              ],
-            ),
-
-            SizedBox(height: 20.h),
-
-            /// Attendance Section
-            AttendanceSectionCard(
-              title: "Recent Attendance",
-              items: const [
-                AttendanceTile(
-                  date: "2025-11-23",
-                  status: "Absent",
-                  shift: "Test School",
-                  lateEntry: "0 mins",
-                  earlyExit: "0 mins",
-                  isAbsent: true,
-                ),
-                AttendanceTile(
-                  date: "2025-11-22",
-                  status: "Present",
-                  shift: "Test School",
-                  lateEntry: "2 mins",
-                  earlyExit: "0 mins",
-                  isAbsent: false,
-                ),
-              ],
-            ),
-
-            SizedBox(height: 24.h),
-          ],
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16.w),
+      child: Material(
+        elevation: 2,
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: EdgeInsets.all(16.sp),
+          child: child,
         ),
       ),
     );
   }
 }
 
-// ---------------- PROFILE HEADER ----------------
+// ---------------- SECTION HEADER ----------------
 
-class ProfileHeader extends StatelessWidget {
-  final String name;
-  final String role;
-  final String initials;
-  final String status;
-
-  const ProfileHeader({
-    super.key,
-    required this.name,
-    required this.role,
-    required this.initials,
-    required this.status,
-  });
+class SectionHeader extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  const SectionHeader({required this.title, required this.icon});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    return Row(
+      children: [
+        Container(
+          padding: EdgeInsets.all(8.sp),
+          decoration: BoxDecoration(
+            color: AppColors.primary.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(icon, size: 20.sp, color: AppColors.primary),
+        ),
+        SizedBox(width: 12.w),
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
+}
 
-    return Container(
-      padding: EdgeInsets.all(20.sp),
-      width: double.infinity,
-      color: const Color(0xffF5F7FA),
+// ---------------- INFO ROW ----------------
+
+class InfoRow extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+  const InfoRow({required this.icon, required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 12.h),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 26.r,
-            backgroundColor: Colors.blue.shade100,
-            child: Text(
-              initials,
-              style: theme.textTheme.bodyLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.blue.shade800,
-              ),
+          Container(
+            padding: EdgeInsets.all(8.sp),
+            decoration: BoxDecoration(
+              color: AppColors.primary.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
             ),
+            child: Icon(icon, size: 18.sp, color: AppColors.primary),
           ),
           SizedBox(width: 16.w),
           Expanded(
@@ -164,324 +339,22 @@ class ProfileHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  name,
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18.sp,
-                    color: Colors.black,
-                  ),
-                ),
-                SizedBox(height: 4.h),
-                Text(
-                  role,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    fontSize: 13.sp,
-                    color: Colors.grey.shade600,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-            decoration: BoxDecoration(
-              color: Colors.green.shade100,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Text(
-              status,
-              style: TextStyle(
-                color: Colors.green.shade700,
-                fontWeight: FontWeight.w600,
-                fontSize: 12.sp,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ---------------- INFO SECTION CARD ----------------
-
-class InfoSectionCard extends StatelessWidget {
-  final String title;
-  final List<InfoTile> items;
-
-  const InfoSectionCard({
-    super.key,
-    required this.title,
-    required this.items,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16.w),
-      padding: EdgeInsets.symmetric(vertical: 14.h),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          /// Title
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Text(
-              title,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w700,
-                fontSize: 17.sp,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          SizedBox(height: 10.h),
-
-          /// Items
-          ...items,
-        ],
-      ),
-    );
-  }
-}
-
-class InfoTile extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-
-  const InfoTile({
-    super.key,
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-      child: Row(
-        children: [
-          Container(
-            padding: EdgeInsets.all(10.sp),
-            decoration: BoxDecoration(
-              color: Colors.blue.shade50,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(icon, size: 20.sp, color: Colors.blue.shade700),
-          ),
-          SizedBox(width: 14.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
                   label,
-                  style: theme.textTheme.bodySmall?.copyWith(
+                  style: TextStyle(
+                    fontSize: 12.sp,
                     color: Colors.grey.shade600,
                   ),
                 ),
                 SizedBox(height: 2.h),
                 Text(
                   value,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15.sp,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ---------------- ATTENDANCE SECTION CARD ----------------
-
-class AttendanceSectionCard extends StatelessWidget {
-  final String title;
-  final List<AttendanceTile> items;
-
-  const AttendanceSectionCard({
-    super.key,
-    required this.title,
-    required this.items,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16.w),
-      padding: EdgeInsets.symmetric(vertical: 14.h),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          /// Header
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  title,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 17.sp,
-                    color: Colors.black,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    // TODO: navigate to full attendance page
-                  },
-                  child: Text(
-                    "View All",
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.blue,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          SizedBox(height: 6.h),
-
-          /// Items
-          ...items,
-        ],
-      ),
-    );
-  }
-}
-
-class AttendanceTile extends StatelessWidget {
-  final String date;
-  final String status;
-  final String shift;
-  final String lateEntry;
-  final String earlyExit;
-  final bool isAbsent;
-
-  const AttendanceTile({
-    super.key,
-    required this.date,
-    required this.status,
-    required this.shift,
-    required this.lateEntry,
-    required this.earlyExit,
-    required this.isAbsent,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isRed = isAbsent;
-
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
-      padding: EdgeInsets.all(16.sp),
-      decoration: BoxDecoration(
-        color: isRed ? Colors.red.shade50 : Colors.green.shade50,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: isRed ? Colors.red.shade200 : Colors.green.shade200,
-        ),
-      ),
-      child: Column(
-        children: [
-          /// Date + Status
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(
-                    LucideIcons.calendar,
-                    size: 18.sp,
-                    color: Colors.grey.shade800,
-                  ),
-                  SizedBox(width: 6.w),
-                  Text(
-                    date,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15.sp,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
-                decoration: BoxDecoration(
-                  color: isRed ? Colors.red.shade100 : Colors.green.shade100,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  status,
                   style: TextStyle(
-                    color: isRed ? Colors.red.shade700 : Colors.green.shade700,
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-              )
-            ],
-          ),
-
-          SizedBox(height: 14.h),
-
-          /// Details
-          _AttendanceDetailRow(
-            icon: LucideIcons.building2,
-            label: "Shift",
-            value: shift,
-          ),
-          SizedBox(height: 6.h),
-          _AttendanceDetailRow(
-            icon: LucideIcons.clockAlert,
-            label: "Late Entry",
-            value: lateEntry,
-          ),
-          SizedBox(height: 6.h),
-          _AttendanceDetailRow(
-            icon: LucideIcons.clockArrowUp,
-            label: "Early Exit",
-            value: earlyExit,
+              ],
+            ),
           ),
         ],
       ),
@@ -489,41 +362,11 @@ class AttendanceTile extends StatelessWidget {
   }
 }
 
-class _AttendanceDetailRow extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
+// ---------------- DIVIDER ----------------
 
-  const _AttendanceDetailRow({
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
-
+class _Divider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, size: 15.sp, color: Colors.grey.shade600),
-        SizedBox(width: 6.w),
-        Text(
-          "$label: ",
-          style: TextStyle(
-            fontSize: 12.sp,
-            color: Colors.grey.shade600,
-          ),
-        ),
-        Expanded(
-          child: Text(
-            value,
-            style: TextStyle(
-              fontSize: 13.sp,
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
-            ),
-          ),
-        ),
-      ],
-    );
+    return Divider(height: 1, color: Colors.grey.shade200);
   }
 }

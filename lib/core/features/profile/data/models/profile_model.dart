@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../domain/entities/profile_entity.dart';
+
 
 part 'profile_model.freezed.dart';
 part 'profile_model.g.dart';
@@ -15,5 +15,5 @@ abstract class ProfileModel with _$ProfileModel {
   factory ProfileModel.fromJson(Map<String, dynamic> json) =>
       _$ProfileModelFromJson(json);
 
-  ProfileEntity toEntity() => ProfileEntity(value: value);
+
 }

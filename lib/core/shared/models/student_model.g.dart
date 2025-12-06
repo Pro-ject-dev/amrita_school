@@ -1,20 +1,20 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'attendance_model.dart';
+part of 'student_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_AttendanceModel _$AttendanceModelFromJson(Map<String, dynamic> json) =>
-    _AttendanceModel(
+_StudentModel _$StudentModelFromJson(Map<String, dynamic> json) =>
+    _StudentModel(
       attendanceList: (json['attendance_list'] as List<dynamic>)
           .map((e) => StudentAttendance.fromJson(e as Map<String, dynamic>))
           .toList(),
       message: json['message'] as String,
     );
 
-Map<String, dynamic> _$AttendanceModelToJson(_AttendanceModel instance) =>
+Map<String, dynamic> _$StudentModelToJson(_StudentModel instance) =>
     <String, dynamic>{
       'attendance_list': instance.attendanceList,
       'message': instance.message,

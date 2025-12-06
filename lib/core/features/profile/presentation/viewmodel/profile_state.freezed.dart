@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProfileState {
 
- bool get isLoading; String get data; String? get error;
+ bool get isLoading; EmployeeModel? get data; String? get mail; String? get error;
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ProfileStateCopyWith<ProfileState> get copyWith => _$ProfileStateCopyWithImpl<P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.mail, mail) || other.mail == mail)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,data,error);
+int get hashCode => Object.hash(runtimeType,isLoading,data,mail,error);
 
 @override
 String toString() {
-  return 'ProfileState(isLoading: $isLoading, data: $data, error: $error)';
+  return 'ProfileState(isLoading: $isLoading, data: $data, mail: $mail, error: $error)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $ProfileStateCopyWith<$Res>  {
   factory $ProfileStateCopyWith(ProfileState value, $Res Function(ProfileState) _then) = _$ProfileStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, String data, String? error
+ bool isLoading, EmployeeModel? data, String? mail, String? error
 });
 
 
-
+$EmployeeModelCopyWith<$Res>? get data;
 
 }
 /// @nodoc
@@ -62,15 +62,28 @@ class _$ProfileStateCopyWithImpl<$Res>
 
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? data = null,Object? error = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? data = freezed,Object? mail = freezed,Object? error = freezed,}) {
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as String,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as bool,data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as EmployeeModel?,mail: freezed == mail ? _self.mail : mail // ignore: cast_nullable_to_non_nullable
+as String?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
+/// Create a copy of ProfileState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$EmployeeModelCopyWith<$Res>? get data {
+    if (_self.data == null) {
+    return null;
+  }
 
+  return $EmployeeModelCopyWith<$Res>(_self.data!, (value) {
+    return _then(_self.copyWith(data: value));
+  });
+}
 }
 
 
@@ -152,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  String data,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  EmployeeModel? data,  String? mail,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProfileState() when $default != null:
-return $default(_that.isLoading,_that.data,_that.error);case _:
+return $default(_that.isLoading,_that.data,_that.mail,_that.error);case _:
   return orElse();
 
 }
@@ -173,10 +186,10 @@ return $default(_that.isLoading,_that.data,_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  String data,  String? error)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  EmployeeModel? data,  String? mail,  String? error)  $default,) {final _that = this;
 switch (_that) {
 case _ProfileState():
-return $default(_that.isLoading,_that.data,_that.error);case _:
+return $default(_that.isLoading,_that.data,_that.mail,_that.error);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +206,10 @@ return $default(_that.isLoading,_that.data,_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  String data,  String? error)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  EmployeeModel? data,  String? mail,  String? error)?  $default,) {final _that = this;
 switch (_that) {
 case _ProfileState() when $default != null:
-return $default(_that.isLoading,_that.data,_that.error);case _:
+return $default(_that.isLoading,_that.data,_that.mail,_that.error);case _:
   return null;
 
 }
@@ -208,11 +221,12 @@ return $default(_that.isLoading,_that.data,_that.error);case _:
 
 
 class _ProfileState implements ProfileState {
-  const _ProfileState({required this.isLoading, required this.data, this.error});
+  const _ProfileState({required this.isLoading, required this.data, required this.mail, this.error});
   
 
 @override final  bool isLoading;
-@override final  String data;
+@override final  EmployeeModel? data;
+@override final  String? mail;
 @override final  String? error;
 
 /// Create a copy of ProfileState
@@ -225,16 +239,16 @@ _$ProfileStateCopyWith<_ProfileState> get copyWith => __$ProfileStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.mail, mail) || other.mail == mail)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,data,error);
+int get hashCode => Object.hash(runtimeType,isLoading,data,mail,error);
 
 @override
 String toString() {
-  return 'ProfileState(isLoading: $isLoading, data: $data, error: $error)';
+  return 'ProfileState(isLoading: $isLoading, data: $data, mail: $mail, error: $error)';
 }
 
 
@@ -245,11 +259,11 @@ abstract mixin class _$ProfileStateCopyWith<$Res> implements $ProfileStateCopyWi
   factory _$ProfileStateCopyWith(_ProfileState value, $Res Function(_ProfileState) _then) = __$ProfileStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, String data, String? error
+ bool isLoading, EmployeeModel? data, String? mail, String? error
 });
 
 
-
+@override $EmployeeModelCopyWith<$Res>? get data;
 
 }
 /// @nodoc
@@ -262,16 +276,29 @@ class __$ProfileStateCopyWithImpl<$Res>
 
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? data = null,Object? error = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? data = freezed,Object? mail = freezed,Object? error = freezed,}) {
   return _then(_ProfileState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as String,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as bool,data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as EmployeeModel?,mail: freezed == mail ? _self.mail : mail // ignore: cast_nullable_to_non_nullable
+as String?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
 
+/// Create a copy of ProfileState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$EmployeeModelCopyWith<$Res>? get data {
+    if (_self.data == null) {
+    return null;
+  }
 
+  return $EmployeeModelCopyWith<$Res>(_self.data!, (value) {
+    return _then(_self.copyWith(data: value));
+  });
+}
 }
 
 // dart format on

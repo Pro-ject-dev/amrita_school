@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HomeState {
 
- bool get isLoading; HomeModel? get punchData; TodayPuchModel? get todayData; String? get error;
+ bool get isLoading; EmployeeModel? get punchData; TodayPuchModel? get todayData; String? get error;
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,11 +45,11 @@ abstract mixin class $HomeStateCopyWith<$Res>  {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) _then) = _$HomeStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, HomeModel? punchData, TodayPuchModel? todayData, String? error
+ bool isLoading, EmployeeModel? punchData, TodayPuchModel? todayData, String? error
 });
 
 
-$HomeModelCopyWith<$Res>? get punchData;
+$EmployeeModelCopyWith<$Res>? get punchData;
 
 }
 /// @nodoc
@@ -66,7 +66,7 @@ class _$HomeStateCopyWithImpl<$Res>
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,punchData: freezed == punchData ? _self.punchData : punchData // ignore: cast_nullable_to_non_nullable
-as HomeModel?,todayData: freezed == todayData ? _self.todayData : todayData // ignore: cast_nullable_to_non_nullable
+as EmployeeModel?,todayData: freezed == todayData ? _self.todayData : todayData // ignore: cast_nullable_to_non_nullable
 as TodayPuchModel?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -75,12 +75,12 @@ as String?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$HomeModelCopyWith<$Res>? get punchData {
+$EmployeeModelCopyWith<$Res>? get punchData {
     if (_self.punchData == null) {
     return null;
   }
 
-  return $HomeModelCopyWith<$Res>(_self.punchData!, (value) {
+  return $EmployeeModelCopyWith<$Res>(_self.punchData!, (value) {
     return _then(_self.copyWith(punchData: value));
   });
 }
@@ -165,7 +165,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  HomeModel? punchData,  TodayPuchModel? todayData,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  EmployeeModel? punchData,  TodayPuchModel? todayData,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _HomeState() when $default != null:
 return $default(_that.isLoading,_that.punchData,_that.todayData,_that.error);case _:
@@ -186,7 +186,7 @@ return $default(_that.isLoading,_that.punchData,_that.todayData,_that.error);cas
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  HomeModel? punchData,  TodayPuchModel? todayData,  String? error)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  EmployeeModel? punchData,  TodayPuchModel? todayData,  String? error)  $default,) {final _that = this;
 switch (_that) {
 case _HomeState():
 return $default(_that.isLoading,_that.punchData,_that.todayData,_that.error);case _:
@@ -206,7 +206,7 @@ return $default(_that.isLoading,_that.punchData,_that.todayData,_that.error);cas
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  HomeModel? punchData,  TodayPuchModel? todayData,  String? error)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  EmployeeModel? punchData,  TodayPuchModel? todayData,  String? error)?  $default,) {final _that = this;
 switch (_that) {
 case _HomeState() when $default != null:
 return $default(_that.isLoading,_that.punchData,_that.todayData,_that.error);case _:
@@ -225,7 +225,7 @@ class _HomeState implements HomeState {
   
 
 @override final  bool isLoading;
-@override final  HomeModel? punchData;
+@override final  EmployeeModel? punchData;
 @override final  TodayPuchModel? todayData;
 @override final  String? error;
 
@@ -259,11 +259,11 @@ abstract mixin class _$HomeStateCopyWith<$Res> implements $HomeStateCopyWith<$Re
   factory _$HomeStateCopyWith(_HomeState value, $Res Function(_HomeState) _then) = __$HomeStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, HomeModel? punchData, TodayPuchModel? todayData, String? error
+ bool isLoading, EmployeeModel? punchData, TodayPuchModel? todayData, String? error
 });
 
 
-@override $HomeModelCopyWith<$Res>? get punchData;
+@override $EmployeeModelCopyWith<$Res>? get punchData;
 
 }
 /// @nodoc
@@ -280,7 +280,7 @@ class __$HomeStateCopyWithImpl<$Res>
   return _then(_HomeState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,punchData: freezed == punchData ? _self.punchData : punchData // ignore: cast_nullable_to_non_nullable
-as HomeModel?,todayData: freezed == todayData ? _self.todayData : todayData // ignore: cast_nullable_to_non_nullable
+as EmployeeModel?,todayData: freezed == todayData ? _self.todayData : todayData // ignore: cast_nullable_to_non_nullable
 as TodayPuchModel?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
@@ -290,12 +290,12 @@ as String?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$HomeModelCopyWith<$Res>? get punchData {
+$EmployeeModelCopyWith<$Res>? get punchData {
     if (_self.punchData == null) {
     return null;
   }
 
-  return $HomeModelCopyWith<$Res>(_self.punchData!, (value) {
+  return $EmployeeModelCopyWith<$Res>(_self.punchData!, (value) {
     return _then(_self.copyWith(punchData: value));
   });
 }

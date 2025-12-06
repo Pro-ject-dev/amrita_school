@@ -1,18 +1,18 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'attendance_model.freezed.dart';
-part 'attendance_model.g.dart';
+part 'student_model.freezed.dart';
+part 'student_model.g.dart';
 
 @freezed
-abstract class AttendanceModel with _$AttendanceModel {
-  const factory AttendanceModel({
+abstract class StudentModel with _$StudentModel {
+  const factory StudentModel({
     // ignore: invalid_annotation_target
     @JsonKey(name: 'attendance_list') required List<StudentAttendance> attendanceList,
     required String message,
-  }) = _AttendanceModel;
+  }) = _StudentModel;
 
-  factory AttendanceModel.fromJson(Map<String, dynamic> json) =>
-      _$AttendanceModelFromJson(json);
+  factory StudentModel.fromJson(Map<String, dynamic> json) =>
+      _$StudentModelFromJson(json);
 }
 
 @freezed
