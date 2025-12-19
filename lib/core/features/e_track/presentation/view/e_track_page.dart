@@ -33,81 +33,177 @@ class ETrackPage extends ConsumerWidget {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            // height: 200,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(32)),
-              color: AppColors.primary,
-            ),
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: 16.w,
-                top: 30,
-                right: 16,
-                bottom: 16,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: EtrackStatusCard(
-                          title: "Present",
-                          count: "20",
-                          isPresent: true,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: EtrackStatusCard(
-                          title: "Absent",
-                          count: "4",
-                          isPresent: false,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: 20.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Container(
-              padding: EdgeInsets.all(8.w),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              // height: 200,
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(32),
+                ),
+                color: AppColors.primary,
               ),
-              child: Theme(
-                data: Theme.of(context).copyWith(
-                  colorScheme: ColorScheme.light(
-                    primary: AppColors.primary,
-                    onPrimary: Colors.white,
-                  ),
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: 16.w,
+                  top: 30,
+                  right: 16,
+                  bottom: 16,
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildCalendar(),
-                    const SizedBox(height: 16),
-                    _buildLegend(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: EtrackStatusCard(
+                            title: "Present",
+                            count: "20",
+                            isPresent: true,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: EtrackStatusCard(
+                            title: "Absent",
+                            count: "4",
+                            isPresent: false,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
             ),
+            SizedBox(height: 20.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Container(
+                padding: EdgeInsets.all(8.w),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                    colorScheme: ColorScheme.light(
+                      primary: AppColors.primary,
+                      onPrimary: Colors.white,
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      _buildCalendar(),
+                      const SizedBox(height: 16),
+                      Divider(color: Colors.grey.withOpacity(0.3), height: 0.4),
+                      const SizedBox(height: 16),
+                      _buildLegend(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 20.h),
+
+            _buildHolidayList(),
+            SizedBox(height: 20.h),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHolidayList() {
+    // Dummy data for holidays
+    final now = DateTime.now();
+    final List<Map<String, dynamic>> holidays = [
+      {
+        "date": DateTime.utc(now.year, now.month, 17),
+        "name": "Ganesh Chaturthi",
+      },
+      // {
+      //   "date": DateTime.utc(now.year, now.month, 25),
+      //   "name": "Another Holiday",
+      // },
+    ];
+
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 12),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: holidays.length,
+            itemBuilder: (context, index) {
+              final holiday = holidays[index];
+              final date = holiday["date"] as DateTime;
+              return Container(
+                margin: const EdgeInsets.only(bottom: 12),
+                padding: EdgeInsets.all(12.w),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 40.w,
+                      height: 40.w,
+                      decoration: BoxDecoration(
+                        color: const Color(
+                          0xFFFFEB3B,
+                        ).withOpacity(0.2), // Light yellow
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: Text(
+                          "${date.day}",
+                          style: TextStyle(
+                            color: const Color(
+                              0xFFF57F17,
+                            ), // Darker yellow/orange
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 16.w),
+                    Expanded(
+                      child: Text(
+                        holiday["name"],
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF344054),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -129,9 +225,14 @@ class ETrackPage extends ConsumerWidget {
       firstDay: DateTime.utc(2024, 1, 1),
       lastDay: DateTime.utc(2030, 12, 31),
       focusedDay: DateTime.now(),
+      rowHeight: 42, // Reduced height for better spacing
+      daysOfWeekHeight: 30,
       headerStyle: const HeaderStyle(
         formatButtonVisible: false,
         titleCentered: true,
+        headerMargin: EdgeInsets.only(
+          bottom: 10,
+        ), // Adjust gap between header and calendar
         titleTextStyle: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
