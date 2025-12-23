@@ -1,4 +1,4 @@
-import 'package:amrita_vidhyalayam_teacher/core/features/attendance/presentation/view/attendance_page.dart';
+import 'dart:developer';
 import 'package:amrita_vidhyalayam_teacher/core/features/e_track/presentation/view/e_track_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/view/home_page.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/main_scaffold/presentation/viewmodel/mainscaffold_viewmodel.dart';
@@ -7,21 +7,42 @@ import 'package:amrita_vidhyalayam_teacher/core/features/my_class/presentation/v
 import 'package:amrita_vidhyalayam_teacher/core/theme/strings/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-class MainScaffold extends ConsumerWidget {
+class MainScaffold extends ConsumerStatefulWidget {
   const MainScaffold({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MainScaffold> createState() => _MainScaffoldState();
+}
+
+class _MainScaffoldState extends ConsumerState<MainScaffold> {
+  @override
+  void initState() {
+    ref.read(mainscaffoldProvider.notifier).checkClassTeacherStatus();
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final state = ref.watch(mainscaffoldProvider);
 
-    final pages = [HomePage(), MyClassPage(), ETrackPage(), ProfilePage()];
+    log(state.isClassTeacher.toString());
+
+    final pages = [
+      const HomePage(),
+      if (state.isClassTeacher) const MyClassPage(),
+      const ETrackPage(),
+      const ProfilePage(),
+    ];
+
+    final effectiveIndex = state.currentIndex >= pages.length ? 0 : state.currentIndex;
 
     return Scaffold(
-      body: IndexedStack(index: state.currentIndex, children: pages),
+      body: IndexedStack(
+        index: effectiveIndex,
+        children: pages,
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: theme.primaryColor,
@@ -44,49 +65,44 @@ class MainScaffold extends ConsumerWidget {
           ),
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
-            currentIndex: state.currentIndex,
-            showSelectedLabels: true,
-            showUnselectedLabels: true,
+            currentIndex: effectiveIndex,
             backgroundColor: Colors.transparent,
             elevation: 0,
             selectedItemColor: Colors.white,
             unselectedItemColor: Colors.white70,
+            showSelectedLabels: true,
+            showUnselectedLabels: true,
             onTap: (index) {
-              ref.read(mainscaffoldProvider.notifier).changeIndex(index);
+              ref
+                  .read(mainscaffoldProvider.notifier)
+                  .changeIndex(index);
             },
             items: [
               BottomNavigationBarItem(
-                icon: Padding(
-                  padding: const EdgeInsets.only(top: 8),
+                icon: const Padding(
+                  padding: EdgeInsets.only(top: 8),
                   child: Icon(LucideIcons.house),
                 ),
                 label: AppStrings.b_nav_1,
               ),
-              BottomNavigationBarItem(
-                icon: Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  // child: SvgPicture.asset(
-                  //   'assets/images/myClass.svg',
-                  //   width: state.currentIndex == 1 ? 22 : 20,
-                  //   height: state.currentIndex == 1 ? 22 : 20,
-                  //   color: state.currentIndex == 1
-                  //       ? Colors.white
-                  //       : Colors.white70,
-                  // ),
-                  child: Icon(LucideIcons.school),
+              if (state.isClassTeacher)
+                BottomNavigationBarItem(
+                  icon: const Padding(
+                    padding: EdgeInsets.only(top: 8),
+                    child: Icon(LucideIcons.school),
+                  ),
+                  label: AppStrings.b_nav_2,
                 ),
-                label: AppStrings.b_nav_2,
-              ),
               BottomNavigationBarItem(
-                icon: Padding(
-                  padding: const EdgeInsets.only(top: 8),
+                icon: const Padding(
+                  padding: EdgeInsets.only(top: 8),
                   child: Icon(LucideIcons.calendarClock),
                 ),
                 label: AppStrings.b_nav_3,
               ),
               BottomNavigationBarItem(
-                icon: Padding(
-                  padding: const EdgeInsets.only(top: 8),
+                icon: const Padding(
+                  padding: EdgeInsets.only(top: 8),
                   child: Icon(LucideIcons.user),
                 ),
                 label: AppStrings.b_nav_4,

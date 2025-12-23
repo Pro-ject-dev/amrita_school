@@ -8,12 +8,14 @@ abstract class MainscaffoldState with _$MainscaffoldState {
     required bool isLoading,
     required String data,
     required int currentIndex,
+    @Default(false) bool isClassTeacher,
     String? error,
   }) = _MainscaffoldState;
 
   factory MainscaffoldState.initial() => const MainscaffoldState(
         isLoading: false,
         data: "",
-        currentIndex: 0
+        currentIndex: 0,
+        isClassTeacher: false,
       );
 }

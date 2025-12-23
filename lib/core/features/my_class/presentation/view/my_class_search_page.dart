@@ -88,8 +88,7 @@ class _MyClassSearchPageState extends ConsumerState<MyClassSearchPage> {
                 SizedBox(height: 10.h),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: Flexible(
-                    child: Container(
+                  child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.r),
@@ -113,7 +112,6 @@ class _MyClassSearchPageState extends ConsumerState<MyClassSearchPage> {
                         ),
                       ),
                     ),
-                  ),
                 ),
                 SizedBox(height: 20.h),
 

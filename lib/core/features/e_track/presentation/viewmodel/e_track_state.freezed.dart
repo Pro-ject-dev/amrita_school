@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ETrackState {
 
- bool get isLoading; String get data; String? get error;
+ bool get isLoading; ETrackEntity? get data; String? get error;
 /// Create a copy of ETrackState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $ETrackStateCopyWith<$Res>  {
   factory $ETrackStateCopyWith(ETrackState value, $Res Function(ETrackState) _then) = _$ETrackStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, String data, String? error
+ bool isLoading, ETrackEntity? data, String? error
 });
 
 
@@ -62,11 +62,11 @@ class _$ETrackStateCopyWithImpl<$Res>
 
 /// Create a copy of ETrackState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? data = null,Object? error = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? data = freezed,Object? error = freezed,}) {
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as String,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as bool,data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as ETrackEntity?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -152,7 +152,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  String data,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  ETrackEntity? data,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ETrackState() when $default != null:
 return $default(_that.isLoading,_that.data,_that.error);case _:
@@ -173,7 +173,7 @@ return $default(_that.isLoading,_that.data,_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  String data,  String? error)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  ETrackEntity? data,  String? error)  $default,) {final _that = this;
 switch (_that) {
 case _ETrackState():
 return $default(_that.isLoading,_that.data,_that.error);case _:
@@ -193,7 +193,7 @@ return $default(_that.isLoading,_that.data,_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  String data,  String? error)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  ETrackEntity? data,  String? error)?  $default,) {final _that = this;
 switch (_that) {
 case _ETrackState() when $default != null:
 return $default(_that.isLoading,_that.data,_that.error);case _:
@@ -208,11 +208,11 @@ return $default(_that.isLoading,_that.data,_that.error);case _:
 
 
 class _ETrackState implements ETrackState {
-  const _ETrackState({required this.isLoading, required this.data, this.error});
+  const _ETrackState({required this.isLoading, this.data, this.error});
   
 
 @override final  bool isLoading;
-@override final  String data;
+@override final  ETrackEntity? data;
 @override final  String? error;
 
 /// Create a copy of ETrackState
@@ -245,7 +245,7 @@ abstract mixin class _$ETrackStateCopyWith<$Res> implements $ETrackStateCopyWith
   factory _$ETrackStateCopyWith(_ETrackState value, $Res Function(_ETrackState) _then) = __$ETrackStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, String data, String? error
+ bool isLoading, ETrackEntity? data, String? error
 });
 
 
@@ -262,11 +262,11 @@ class __$ETrackStateCopyWithImpl<$Res>
 
 /// Create a copy of ETrackState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? data = null,Object? error = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? data = freezed,Object? error = freezed,}) {
   return _then(_ETrackState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as String,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as bool,data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as ETrackEntity?,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

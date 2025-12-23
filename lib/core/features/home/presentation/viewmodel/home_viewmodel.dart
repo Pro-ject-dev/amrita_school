@@ -50,8 +50,11 @@ class HomeViewModel extends StateNotifier<HomeState> {
   }
 
   Future<TodayPuchModel> getTodayPunchDetail() async {
-    final todayDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
-    log("Today: $todayDate");
+    final todayDate = DateFormat("yyyy-MM-dd")
+    .format(DateTime(2025, 12, 1));
+
+    // final todayDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
+    // log("Today: $todayDate");
 
     // final todayPunch = state.punchData?.punchList?.firstWhere(
     //   (e) => e.dateOfPunch =="2025-12-02",
@@ -99,11 +102,30 @@ class HomeViewModel extends StateNotifier<HomeState> {
           : "Not Checked Out",
     );
   }
+
+  greeting() {
+    final currentTime = DateTime.now();
+    final hour = currentTime.hour;
+    String greeting = '';
+
+    if (hour < 12) {
+      greeting = 'Good Morning 👋!';
+    } else if (hour < 17) {
+      greeting = 'Good Afternoon 👋!';
+    } else {
+      greeting = 'Good Evening 👋!';
+    }
+
+    state = state.copyWith(greetingText: greeting);
+  }
 }
 
 String convertTo12HourFromDate(DateTime time) {
   return DateFormat("hh:mm a").format(time);
 }
+
+  
+
 
 Color getStatusColor(String? status) {
   switch (status?.toLowerCase()) {

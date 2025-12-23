@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:amrita_vidhyalayam_teacher/core/features/main_scaffold/presentation/viewmodel/mainscaffold_viewmodel.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/my_class/presentation/widgets/student_card.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/colors/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,12 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(studentProvider.notifier).fetchStudent("");
+      if (ref.read(mainscaffoldProvider).currentIndex == 1) {
+        final studentState = ref.read(studentProvider);
+        if (studentState.studentList == null || studentState.studentList!.isEmpty) {
+          ref.read(studentProvider.notifier).fetchStudent("");
+        }
+      }
     });
   }
 
@@ -46,6 +52,16 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Listen for tab changes
+    ref.listen(mainscaffoldProvider, (previous, next) {
+      if (previous?.currentIndex != next.currentIndex && next.currentIndex == 1) {
+         final studentState = ref.read(studentProvider);
+         if (studentState.studentList == null || studentState.studentList!.isEmpty) {
+            ref.read(studentProvider.notifier).fetchStudent("");
+         }
+      }
+    });
+
     final state = ref.watch(studentProvider);
     final theme = Theme.of(context);
 
@@ -74,8 +90,8 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
                 end: Alignment.bottomRight,
               ),
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(24),
-                bottomRight: Radius.circular(24),
+                bottomLeft: Radius.circular(24.r),
+                bottomRight: Radius.circular(24.r),
               ),
             ),
             child: SafeArea(
@@ -86,32 +102,73 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: 16.w,
-                      vertical: 12.h,
+                      vertical: 9.h,
                     ),
                     child: Column(
                       crossAxisAlignment: .start,
                       children: [
                         Row(
                           children: [
-                            Icon(LucideIcons.school300, color: Colors.white),
-                            SizedBox(width: 8.w),
-                            Text(
-                              "My Class",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.w600,
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(10.sp),
                               ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(
+                                  LucideIcons.school300,
+                                  color: Colors.white,
+                                  size: 20.sp,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 8.w),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "My Class",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                //  SizedBox(height: 6.h),
+                                Text(
+                                  "Quickly record who is present or absent.",
+                                  style: TextStyle(
+                                    color: Colors.white.withOpacity(0.8),
+                                    fontSize: 12.sp,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        Text(
-                          "Quickly record who is present or absent.",
-                          style: TextStyle(
-                            color: const Color.fromARGB(255, 135, 153, 175),
-                            fontSize: 12.sp,
-                          ),
-                        ),
+                        // Row(
+                        //   children: [
+                        //     Icon(LucideIcons.school300, color: Colors.white),
+                        //     SizedBox(width: 8.w),
+                        //     Text(
+                        //       "My Class",
+                        //       style: TextStyle(
+                        //         color: Colors.white,
+                        //         fontSize: 20.sp,
+                        //         fontWeight: FontWeight.w600,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // Text(
+                        //   "Quickly record who is present or absent.",
+                        //   style: TextStyle(
+                        //     color: const Color.fromARGB(255, 135, 153, 175),
+                        //     fontSize: 12.sp,
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
@@ -124,7 +181,7 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
                       children: [
                         Expanded(
                           child: Container(
-                            padding: EdgeInsets.all(15),
+                            padding: EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(16),
@@ -185,7 +242,7 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
                         SizedBox(width: 12.w),
                         Expanded(
                           child: Container(
-                            padding: EdgeInsets.all(15),
+                            padding: EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: const Color.fromARGB(
                                 255,
@@ -281,7 +338,13 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
                     ),
                     child: MaterialButton(
                       onPressed: () {
-                        context.push("/attendance").then((v)=>ref.read(studentProvider.notifier).fetchStudent(""));
+                        context
+                            .push("/attendance")
+                            .then(
+                              (v) => ref
+                                  .read(studentProvider.notifier)
+                                  .fetchStudent(""),
+                            );
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -337,34 +400,40 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
                 SizedBox(height: 16.h),
 
                 // Search Bar
-                 Padding(
-                   padding:  EdgeInsets.symmetric(horizontal: 16.w),
-                   child: Container(
-                     padding: EdgeInsets.symmetric(horizontal: 16.w),
-                     decoration: BoxDecoration(
-                       borderRadius: BorderRadius.circular(10.r),
-                       border: Border.all(color: Colors.grey.shade300),
-                       color: Colors.grey.shade100,
-                     ),
-                     child: TextField(
-                       controller: searchController,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.r),
+                      border: Border.all(color: Colors.grey.shade300),
+                      color: Colors.grey.shade100,
+                    ),
+                    child: TextField(
+                      controller: searchController,
                       readOnly: true,
-                      onTap: (){
-                        context.push("/class_search").then((v)=>ref.read(studentProvider.notifier).fetchStudent(""));
+                      onTap: () {
+                        context
+                            .push("/class_search")
+                            .then(
+                              (v) => ref
+                                  .read(studentProvider.notifier)
+                                  .fetchStudent(""),
+                            );
                       },
-                       decoration: InputDecoration(
-                         hintText: "Search student",
-                         hintStyle: TextStyle(
-                           color: Color.fromARGB(255, 202, 202, 202),
-                           fontSize: 13.sp,
-                           fontWeight: FontWeight.bold,
-                         ),
-                         border: InputBorder.none,
-                         icon:Icon( LucideIcons.search300)
-                       ),
-                     ),
-                   ),
-                 ),
+                      decoration: InputDecoration(
+                        hintText: "Search student",
+                        hintStyle: TextStyle(
+                          color: Color.fromARGB(255, 202, 202, 202),
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        border: InputBorder.none,
+                        icon: Icon(LucideIcons.search300),
+                      ),
+                    ),
+                  ),
+                ),
                 SizedBox(height: 16.h),
 
                 // Student List
@@ -435,7 +504,9 @@ class _MyClassPageState extends ConsumerState<MyClassPage> {
                                 isActiveColor:
                                     student.attendanceStatus == "Present"
                                     ? Colors.green
-                                    :student.attendanceStatus == "Absent" ?Colors.red:const Color.fromARGB(255, 201, 201, 201),
+                                    : student.attendanceStatus == "Absent"
+                                    ? Colors.red
+                                    : const Color.fromARGB(255, 201, 201, 201),
                               );
                             },
                           ),

@@ -1,6 +1,5 @@
-import 'dart:developer';
-
-import 'package:amrita_vidhyalayam_teacher/core/features/home/presentation/viewmodel/home_viewmodel.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:amrita_vidhyalayam_teacher/core/providers/connectivity_provider.dart';
 import 'package:amrita_vidhyalayam_teacher/core/features/splash_screen/presentation/viewmodel/splash_screen_state.dart';
 import 'package:amrita_vidhyalayam_teacher/core/providers/common_providers.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/images/app_images.dart';
@@ -22,7 +21,6 @@ class _SplashScreenPageState extends ConsumerState<SplashScreenPage>
   late AnimationController _primaryController;
   late AnimationController _shimmerController;
   late AnimationController _particlesController;
-  
   late Animation<double> _logoOpacity;
   late Animation<double> _logoScale;
   late Animation<double> _textOpacity;
@@ -32,26 +30,18 @@ class _SplashScreenPageState extends ConsumerState<SplashScreenPage>
   @override
   void initState() {
     super.initState();
-    
-    // Primary animation controller
     _primaryController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-
-    // Shimmer effect controller
     _shimmerController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 2000),
     )..repeat();
-
-    // Particles animation
     _particlesController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 3000),
     )..repeat();
-
-    // Logo animations with staggered timing
     _logoOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _primaryController,
@@ -65,8 +55,6 @@ class _SplashScreenPageState extends ConsumerState<SplashScreenPage>
         curve: const Interval(0.0, 0.5, curve: Curves.easeOutBack),
       ),
     );
-
-    // Text animations
     _textOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _primaryController,
@@ -83,16 +71,12 @@ class _SplashScreenPageState extends ConsumerState<SplashScreenPage>
         curve: const Interval(0.4, 0.8, curve: Curves.easeOutCubic),
       ),
     );
-
-    // Shimmer animation
     _shimmerAnimation = Tween<double>(begin: -1.0, end: 2.0).animate(
       CurvedAnimation(
         parent: _shimmerController,
         curve: Curves.linear,
       ),
     );
-
-    // Start primary animation
     _primaryController.forward();
   }
 
@@ -104,33 +88,54 @@ class _SplashScreenPageState extends ConsumerState<SplashScreenPage>
     super.dispose();
   }
 
+  bool _isNavigating = false;
+
+  Future<void> _checkConnectivityAndNavigate() async {
+    if (_isNavigating) return;
+    final connectivityResult = await Connectivity().checkConnectivity();
+    final hasConnection = connectivityResult.any((element) => element != ConnectivityResult.none);
+    if (hasConnection) {
+      _isNavigating = true;
+      try {
+        final isAuth = await ref.read(authServiceProvider).isAuthenticated();
+        if (mounted) {
+          if (isAuth) {
+            context.go("/mainScaffold");
+          } else {
+            context.go("/auth");
+          }
+        }
+      } catch (e) {
+        _isNavigating = false;
+      }
+    }
+    
+  }
+
   @override
   Widget build(BuildContext context) {
-    ref.listen<SplashScreenState>(splashScreenProvider, (previous, next) async{
+    ref.listen<SplashScreenState>(splashScreenProvider, (previous, next) {
       if (next.isFinished) {
-      final isAuth = await  ref.read(authServiceProvider).isAuthenticated();
-      
-      if( isAuth){
-        context.go("/mainScaffold");
-
+        _checkConnectivityAndNavigate();
       }
-      else{
-        context.go("/auth");
-      }
-       
-      }
+    });
+    ref.listen(connectivityStatusProvider, (previous, next) {
+      next.whenData((results) {
+         final hasConnection = results.any((element) => element != ConnectivityResult.none);
+         if (hasConnection && ref.read(splashScreenProvider).isFinished) {
+           _checkConnectivityAndNavigate();
+         }
+      });
     });
 
     return Scaffold(
       body: Stack(
         children: [
-          // Main content
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Animated Logo with shimmer effect
                 AnimatedBuilder(
                   animation: _primaryController,
                   builder: (context, child) {
@@ -141,7 +146,6 @@ class _SplashScreenPageState extends ConsumerState<SplashScreenPage>
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                            // Logo with shimmer
                             ShaderMask(
                               blendMode: BlendMode.srcATop,
                               shaderCallback: (bounds) {

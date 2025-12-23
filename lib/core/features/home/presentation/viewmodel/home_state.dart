@@ -10,12 +10,13 @@ abstract class HomeState with _$HomeState {
     required bool isLoading,
     required EmployeeModel? punchData,
     required TodayPuchModel? todayData,
+    required String? greetingText,
     String? error,
   }) = _HomeState;
 
   factory HomeState.initial() => const HomeState(
         isLoading: false,
         punchData: null,
-        todayData: null
+        todayData: null, greetingText: ''
       );
 }

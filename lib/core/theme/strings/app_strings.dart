@@ -1,5 +1,5 @@
 class AppStrings {
-  static const appTitle = 'Amrita Vidhyalayam Teacher App';
+  static const appTitle = 'Amrita Vidyalayam Teacher';
   static const welcomeMessage = 'Welcome to Amrita Vidhyalayam!';
   static const loginButton = 'Login';
   static const logoutButton = 'Logout';
@@ -13,6 +13,6 @@ class AppStrings {
 
 
   static const welcome_title = 'Good Morning 👋!';
-  static const class_txt = 'TS 25 CLASS 2 A';
+  // static const class_txt = 'TS 25 CLASS 2 A';
 
 }

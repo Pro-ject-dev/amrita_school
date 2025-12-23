@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MainscaffoldState {
 
- bool get isLoading; String get data; int get currentIndex; String? get error;
+ bool get isLoading; String get data; int get currentIndex; bool get isClassTeacher; String? get error;
 /// Create a copy of MainscaffoldState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $MainscaffoldStateCopyWith<MainscaffoldState> get copyWith => _$MainscaffoldStat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MainscaffoldState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.currentIndex, currentIndex) || other.currentIndex == currentIndex)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MainscaffoldState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.currentIndex, currentIndex) || other.currentIndex == currentIndex)&&(identical(other.isClassTeacher, isClassTeacher) || other.isClassTeacher == isClassTeacher)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,data,currentIndex,error);
+int get hashCode => Object.hash(runtimeType,isLoading,data,currentIndex,isClassTeacher,error);
 
 @override
 String toString() {
-  return 'MainscaffoldState(isLoading: $isLoading, data: $data, currentIndex: $currentIndex, error: $error)';
+  return 'MainscaffoldState(isLoading: $isLoading, data: $data, currentIndex: $currentIndex, isClassTeacher: $isClassTeacher, error: $error)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $MainscaffoldStateCopyWith<$Res>  {
   factory $MainscaffoldStateCopyWith(MainscaffoldState value, $Res Function(MainscaffoldState) _then) = _$MainscaffoldStateCopyWithImpl;
 @useResult
 $Res call({
- bool isLoading, String data, int currentIndex, String? error
+ bool isLoading, String data, int currentIndex, bool isClassTeacher, String? error
 });
 
 
@@ -62,12 +62,13 @@ class _$MainscaffoldStateCopyWithImpl<$Res>
 
 /// Create a copy of MainscaffoldState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? data = null,Object? currentIndex = null,Object? error = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? isLoading = null,Object? data = null,Object? currentIndex = null,Object? isClassTeacher = null,Object? error = freezed,}) {
   return _then(_self.copyWith(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
 as String,currentIndex: null == currentIndex ? _self.currentIndex : currentIndex // ignore: cast_nullable_to_non_nullable
-as int,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as int,isClassTeacher: null == isClassTeacher ? _self.isClassTeacher : isClassTeacher // ignore: cast_nullable_to_non_nullable
+as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }
@@ -153,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  String data,  int currentIndex,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool isLoading,  String data,  int currentIndex,  bool isClassTeacher,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MainscaffoldState() when $default != null:
-return $default(_that.isLoading,_that.data,_that.currentIndex,_that.error);case _:
+return $default(_that.isLoading,_that.data,_that.currentIndex,_that.isClassTeacher,_that.error);case _:
   return orElse();
 
 }
@@ -174,10 +175,10 @@ return $default(_that.isLoading,_that.data,_that.currentIndex,_that.error);case 
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  String data,  int currentIndex,  String? error)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool isLoading,  String data,  int currentIndex,  bool isClassTeacher,  String? error)  $default,) {final _that = this;
 switch (_that) {
 case _MainscaffoldState():
-return $default(_that.isLoading,_that.data,_that.currentIndex,_that.error);case _:
+return $default(_that.isLoading,_that.data,_that.currentIndex,_that.isClassTeacher,_that.error);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -194,10 +195,10 @@ return $default(_that.isLoading,_that.data,_that.currentIndex,_that.error);case 
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  String data,  int currentIndex,  String? error)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool isLoading,  String data,  int currentIndex,  bool isClassTeacher,  String? error)?  $default,) {final _that = this;
 switch (_that) {
 case _MainscaffoldState() when $default != null:
-return $default(_that.isLoading,_that.data,_that.currentIndex,_that.error);case _:
+return $default(_that.isLoading,_that.data,_that.currentIndex,_that.isClassTeacher,_that.error);case _:
   return null;
 
 }
@@ -209,12 +210,13 @@ return $default(_that.isLoading,_that.data,_that.currentIndex,_that.error);case 
 
 
 class _MainscaffoldState implements MainscaffoldState {
-  const _MainscaffoldState({required this.isLoading, required this.data, required this.currentIndex, this.error});
+  const _MainscaffoldState({required this.isLoading, required this.data, required this.currentIndex, this.isClassTeacher = false, this.error});
   
 
 @override final  bool isLoading;
 @override final  String data;
 @override final  int currentIndex;
+@override@JsonKey() final  bool isClassTeacher;
 @override final  String? error;
 
 /// Create a copy of MainscaffoldState
@@ -227,16 +229,16 @@ _$MainscaffoldStateCopyWith<_MainscaffoldState> get copyWith => __$MainscaffoldS
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MainscaffoldState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.currentIndex, currentIndex) || other.currentIndex == currentIndex)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MainscaffoldState&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.data, data) || other.data == data)&&(identical(other.currentIndex, currentIndex) || other.currentIndex == currentIndex)&&(identical(other.isClassTeacher, isClassTeacher) || other.isClassTeacher == isClassTeacher)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,isLoading,data,currentIndex,error);
+int get hashCode => Object.hash(runtimeType,isLoading,data,currentIndex,isClassTeacher,error);
 
 @override
 String toString() {
-  return 'MainscaffoldState(isLoading: $isLoading, data: $data, currentIndex: $currentIndex, error: $error)';
+  return 'MainscaffoldState(isLoading: $isLoading, data: $data, currentIndex: $currentIndex, isClassTeacher: $isClassTeacher, error: $error)';
 }
 
 
@@ -247,7 +249,7 @@ abstract mixin class _$MainscaffoldStateCopyWith<$Res> implements $MainscaffoldS
   factory _$MainscaffoldStateCopyWith(_MainscaffoldState value, $Res Function(_MainscaffoldState) _then) = __$MainscaffoldStateCopyWithImpl;
 @override @useResult
 $Res call({
- bool isLoading, String data, int currentIndex, String? error
+ bool isLoading, String data, int currentIndex, bool isClassTeacher, String? error
 });
 
 
@@ -264,12 +266,13 @@ class __$MainscaffoldStateCopyWithImpl<$Res>
 
 /// Create a copy of MainscaffoldState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? data = null,Object? currentIndex = null,Object? error = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? isLoading = null,Object? data = null,Object? currentIndex = null,Object? isClassTeacher = null,Object? error = freezed,}) {
   return _then(_MainscaffoldState(
 isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
 as String,currentIndex: null == currentIndex ? _self.currentIndex : currentIndex // ignore: cast_nullable_to_non_nullable
-as int,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as int,isClassTeacher: null == isClassTeacher ? _self.isClassTeacher : isClassTeacher // ignore: cast_nullable_to_non_nullable
+as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,
   ));
 }

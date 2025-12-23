@@ -1,3 +1,4 @@
+import 'package:amrita_vidhyalayam_teacher/core/features/main_scaffold/presentation/viewmodel/mainscaffold_viewmodel.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,22 +22,38 @@ class HomePage extends ConsumerStatefulWidget {
 class HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(homeProvider.notifier).getPunchDetails();
-    });
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (ref.read(mainscaffoldProvider).currentIndex == 0) {
+        final homeState = ref.read(homeProvider);
+        if (homeState.todayData == null && homeState.punchData == null) {
+          ref.read(homeProvider.notifier).getPunchDetails();
+        }
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(mainscaffoldProvider, (previous, next) {
+      ref.read(homeProvider.notifier).greeting();
+
+      if (previous?.currentIndex != next.currentIndex &&
+          next.currentIndex == 0) {
+        final homeState = ref.read(homeProvider);
+        if (homeState.todayData == null && homeState.punchData == null) {
+          ref.read(homeProvider.notifier).getPunchDetails();
+        }
+      }
+    });
+
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light),
     );
     return Scaffold(
-      
       body: Container(
         decoration: BoxDecoration(
-          color:AppColors.primary ,
+          color: AppColors.primary,
           image: DecorationImage(
             image: AssetImage('assets/images/bg-test2.jpg'),
             fit: BoxFit.cover,
@@ -101,6 +118,7 @@ class HeaderSection extends ConsumerStatefulWidget {
 class HeaderSectionState extends ConsumerState<HeaderSection> {
   @override
   Widget build(BuildContext context) {
+    final homeState = ref.watch(homeProvider);
     final theme = Theme.of(context);
     return Padding(
       padding: EdgeInsets.all(20.0.w),
@@ -161,7 +179,7 @@ class HeaderSectionState extends ConsumerState<HeaderSection> {
           ),
           SizedBox(height: 20.h),
           Text(
-            'Good Morning !',
+            homeState.greetingText.toString(),
             style: TextStyle(
               color: Colors.white,
               fontSize: 20.sp,
@@ -312,9 +330,9 @@ class CheckInCardState extends ConsumerState<CheckInCard> {
                 ],
               ),
             ),
-      
+
             SizedBox(height: 12.h),
-      
+
             /// Time section
             Container(
               decoration: BoxDecoration(
@@ -330,7 +348,8 @@ class CheckInCardState extends ConsumerState<CheckInCard> {
                       text: TextSpan(
                         text: homeState.todayData?.checkInTime == "-- : --"
                             ? "-- : --"
-                            : homeState.todayData?.checkInTime?.split(" ")[0] ?? "-- : --",
+                            : homeState.todayData?.checkInTime?.split(" ")[0] ??
+                                  "-- : --",
                         style: TextStyle(
                           fontSize: 20.sp,
                           color: Colors.black,
@@ -351,15 +370,17 @@ class CheckInCardState extends ConsumerState<CheckInCard> {
                       ),
                     ),
                   ),
-      
+
                   SizedBox(width: 8.w),
                   Container(height: 16.h, width: 1.w, color: Color(0xffC4C4C4)),
                   SizedBox(width: 8.w),
-      
+
                   homeState.todayData?.checkInTimeStatus == 'n/a'
                       ? Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 6.w,
+                            vertical: 2.h,
+                          ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20.r),
                             border: Border.all(color: Color(0xffC4C4C4)),
@@ -374,7 +395,9 @@ class CheckInCardState extends ConsumerState<CheckInCard> {
                         )
                       : Container(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 6.w, vertical: 3.h),
+                            horizontal: 6.w,
+                            vertical: 3.h,
+                          ),
                           decoration: BoxDecoration(
                             color: getStatusColor(
                               homeState.todayData?.checkInTimeStatus ?? "",
@@ -393,9 +416,9 @@ class CheckInCardState extends ConsumerState<CheckInCard> {
                 ],
               ),
             ),
-      
+
             SizedBox(height: 12.h),
-      
+
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 4.w),
               child: Text(
@@ -409,6 +432,7 @@ class CheckInCardState extends ConsumerState<CheckInCard> {
     );
   }
 }
+
 class CheckOutCard extends ConsumerStatefulWidget {
   const CheckOutCard({Key? key}) : super(key: key);
 
@@ -488,9 +512,9 @@ class CheckOutCardState extends ConsumerState<CheckOutCard> {
                 ],
               ),
             ),
-      
+
             SizedBox(height: 12.h),
-      
+
             Container(
               decoration: BoxDecoration(
                 color: Color(0xffFAFAFA),
@@ -505,7 +529,10 @@ class CheckOutCardState extends ConsumerState<CheckOutCard> {
                       text: TextSpan(
                         text: homeState.todayData?.checkOutTime == "-- : --"
                             ? "-- : --"
-                            : homeState.todayData?.checkOutTime?.split(" ")[0] ?? "-- : --",
+                            : homeState.todayData?.checkOutTime?.split(
+                                    " ",
+                                  )[0] ??
+                                  "-- : --",
                         style: TextStyle(
                           fontSize: 20.sp,
                           color: Colors.black,
@@ -526,15 +553,17 @@ class CheckOutCardState extends ConsumerState<CheckOutCard> {
                       ),
                     ),
                   ),
-      
+
                   SizedBox(width: 8.w),
                   Container(height: 16.h, width: 1.w, color: Color(0xffC4C4C4)),
                   SizedBox(width: 8.w),
-      
+
                   homeState.todayData?.checkOutTimeStatus == 'n/a'
                       ? Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 6.w,
+                            vertical: 2.h,
+                          ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20.r),
                             border: Border.all(color: Color(0xffC4C4C4)),
@@ -549,7 +578,9 @@ class CheckOutCardState extends ConsumerState<CheckOutCard> {
                         )
                       : Container(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 6.w, vertical: 3.h),
+                            horizontal: 6.w,
+                            vertical: 3.h,
+                          ),
                           decoration: BoxDecoration(
                             color: getStatusColor(
                               homeState.todayData?.checkOutTimeStatus ?? "",
@@ -568,9 +599,9 @@ class CheckOutCardState extends ConsumerState<CheckOutCard> {
                 ],
               ),
             ),
-      
+
             SizedBox(height: 12.h),
-      
+
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 4.w),
               child: Text(
@@ -584,6 +615,7 @@ class CheckOutCardState extends ConsumerState<CheckOutCard> {
     );
   }
 }
+
 class RecentActivitiesSection extends ConsumerWidget {
   const RecentActivitiesSection({Key? key}) : super(key: key);
 
@@ -603,17 +635,30 @@ class RecentActivitiesSection extends ConsumerWidget {
             children: [
               Text(
                 "Recent Activities",
-                style: TextStyle(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
               ),
-              Text(
-                "View all day",
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w600,
+              GestureDetector(
+                onTap: () =>
+                    ref.read(mainscaffoldProvider.notifier).changeIndex(2),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.r),
+                    color: AppColors.primary.withOpacity(0.1),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 5.0.sp,
+                      horizontal: 6.sp,
+                    ),
+                    child: Text(
+                      "View all day",
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -624,19 +669,21 @@ class RecentActivitiesSection extends ConsumerWidget {
           Expanded(
             child: homeState.isLoading
                 ? Skeletonizer(
-                  enabled: true,
-                  child: ListView.separated(
+                    enabled: true,
+                    child: ListView.separated(
                       itemCount: 5,
                       separatorBuilder: (_, i) => SizedBox(height: 20.h),
                       itemBuilder: (_, i) => ActivityItem(
-                          date:  "2025-12-06",
-                          shift: "Test Schools",
-                          status: "",
-                        )
+                        date: "2025-12-06",
+                        shift: "Test Schools",
+                        status: "",
+                      ),
                     ),
-                )
+                  )
                 : ListView.separated(
-                    itemCount: (homeState.punchData?.attendanceList?.length ?? 0).clamp(0, 5),
+                    itemCount:
+                        (homeState.punchData?.attendanceList?.length ?? 0)
+                            .clamp(0, 5),
                     separatorBuilder: (_, i) => SizedBox(height: 20.h),
                     itemBuilder: (context, index) {
                       final item = homeState.punchData!.attendanceList![index];
@@ -674,7 +721,7 @@ class ActivityItem extends ConsumerStatefulWidget {
 class ActivityItemState extends ConsumerState<ActivityItem> {
   @override
   Widget build(BuildContext context) {
-bool isAbsent = widget.status=="Absent";
+    bool isAbsent = widget.status == "Absent";
 
     return Container(
       decoration: BoxDecoration(
@@ -742,12 +789,17 @@ bool isAbsent = widget.status=="Absent";
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                       )
-                    : widget.status == 'Absent'? LinearGradient(
+                    : widget.status == 'Absent'
+                    ? LinearGradient(
                         colors: [Color(0xffE53935), Color(0xff7F201D)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
-                      ):LinearGradient(
-                        colors:[const Color.fromARGB(255, 190, 190, 190), const Color.fromARGB(255, 202, 202, 202)],
+                      )
+                    : LinearGradient(
+                        colors: [
+                          const Color.fromARGB(255, 190, 190, 190),
+                          const Color.fromARGB(255, 202, 202, 202),
+                        ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
@@ -757,7 +809,11 @@ bool isAbsent = widget.status=="Absent";
                 ),
               ),
               child: Text(
-                widget.status=="Absent" ? "Absent" :widget.status=="Present"? "Present":"Testing...",
+                widget.status == "Absent"
+                    ? "Absent"
+                    : widget.status == "Present"
+                    ? "Present"
+                    : "Testing...",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 12.sp,
@@ -770,11 +826,4 @@ bool isAbsent = widget.status=="Absent";
       ),
     );
   }
-
-  
-
-
 }
-
-
-

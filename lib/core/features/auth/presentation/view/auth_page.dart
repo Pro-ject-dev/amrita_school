@@ -8,7 +8,6 @@ import 'package:lottie/lottie.dart';
 import '../../../../providers/common_providers.dart';
 import '../../../../theme/images/app_images.dart';
 
-
 class AuthPage extends ConsumerWidget {
   const AuthPage({super.key});
 
@@ -27,16 +26,13 @@ class AuthPage extends ConsumerWidget {
       }
       if (next.isValid) {
         ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  
-                                  content: Text(
-                                    "Logged In",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  behavior: SnackBarBehavior.floating,
-                                  backgroundColor:Colors.green,
-                                  duration: Duration(seconds: 3),
-                                ));
+          SnackBar(
+            content: Text("Logged In", style: TextStyle(color: Colors.white)),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 3),
+          ),
+        );
         context.go('/mainScaffold');
       }
     });
@@ -79,11 +75,17 @@ class AuthPage extends ConsumerWidget {
                       children: [
                         Text(
                           'Welcome Back',
-                          style: TextStyle(fontSize: 20.sp, color: Colors.white),
+                          style: TextStyle(
+                            fontSize: 20.sp,
+                            color: Colors.white,
+                          ),
                         ),
                         Text(
                           'Sign in and start managing your classroom.',
-                          style: TextStyle(fontSize: 11.sp, color: Colors.white),
+                          style: TextStyle(
+                            fontSize: 11.sp,
+                            color: Colors.white,
+                          ),
                         ),
                       ],
                     ),
@@ -98,9 +100,9 @@ class AuthPage extends ConsumerWidget {
                 ),
               ),
             ),
-        
+
             SizedBox(height: 30.h),
-        
+
             /// LOGIN BUTTON
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -141,7 +143,7 @@ class AuthPage extends ConsumerWidget {
                 ),
               ),
             ),
-        
+
             SizedBox(height: 10.h),
             Text(
               'Contact support for account access.',

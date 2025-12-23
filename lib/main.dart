@@ -1,4 +1,3 @@
-import 'package:amrita_vidhyalayam_teacher/core/features/my_class/presentation/widgets/test.dart';
 import 'package:amrita_vidhyalayam_teacher/core/providers/common_providers.dart';
 import 'package:amrita_vidhyalayam_teacher/core/router/router.dart';
 import 'package:amrita_vidhyalayam_teacher/core/theme/strings/app_strings.dart';
@@ -6,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:amrita_vidhyalayam_teacher/core/shared/widgets/connectivity_wrapper.dart';
 import 'core/theme/app_theme.dart' show AppTheme;
 
 void main() {
@@ -43,8 +43,13 @@ class MyApp extends ConsumerWidget {
           
           
           routerConfig: router,
+          builder: (context, child) {
+            return ConnectivityWrapper(child: child!);
+          },
         );
       },
     );
   }
 }
+
+

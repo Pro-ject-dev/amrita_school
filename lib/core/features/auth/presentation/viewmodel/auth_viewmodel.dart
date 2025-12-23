@@ -28,6 +28,10 @@ class AuthViewModel extends StateNotifier<AuthState> {
               "mail", 
               isLoggedIn["mail"].toString()
             );
+            await ref.read(storageServiceProvider).write(
+              "className", 
+             validStatus.message.classSubject?.first.studentClass??"null"
+            );
               state = state.copyWith(
                 isValid: true,
                 isLoading: false,
