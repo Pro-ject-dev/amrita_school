@@ -622,6 +622,7 @@ class RecentActivitiesSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final homeState = ref.watch(homeProvider);
+     final isTeacher = ref.watch(mainscaffoldProvider);
 
     return Padding(
       padding: EdgeInsets.all(20.w),
@@ -639,7 +640,7 @@ class RecentActivitiesSection extends ConsumerWidget {
               ),
               GestureDetector(
                 onTap: () =>
-                    ref.read(mainscaffoldProvider.notifier).changeIndex(2),
+                    ref.read(mainscaffoldProvider.notifier).changeIndex(isTeacher.isClassTeacher ? 2:1),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(4.r),
