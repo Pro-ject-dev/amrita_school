@@ -114,7 +114,8 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 flutter_launcher_icons:
   android: true
-  ios: false
-  image_path_android: assets/icons/ic_launcher_foreground.png
-  adaptive_icon_background: "#002b5d"
-  adaptive_icon_foreground: assets/icons/ic_launcher_foreground.png
+  ios: true
+  image_path: "assets/images/app_icon.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#0B3160"
+  adaptive_icon_foreground: "assets/images/app_icon.png"

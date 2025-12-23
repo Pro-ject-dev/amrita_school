@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:ui';
 import 'package:amrita_vidhyalayam_teacher/core/features/home/data/models/today_puch_model.dart';
-import 'package:amrita_vidhyalayam_teacher/core/features/home/data/repository/home_repository.dart';
 import 'package:amrita_vidhyalayam_teacher/core/providers/common_providers.dart';
 import 'package:amrita_vidhyalayam_teacher/core/shared/repository/employee_repository.dart';
 import 'package:flutter/material.dart';
@@ -50,20 +49,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
   }
 
   Future<TodayPuchModel> getTodayPunchDetail() async {
-    final todayDate = DateFormat("yyyy-MM-dd")
-    .format(DateTime(2025, 12, 1));
-
-    // final todayDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
-    // log("Today: $todayDate");
-
-    // final todayPunch = state.punchData?.punchList?.firstWhere(
-    //   (e) => e.dateOfPunch =="2025-12-02",
-
-
-    
-    //   orElse: () => PunchModel(),
-    // );
-
+    final todayDate = DateFormat("yyyy-MM-dd").format(DateTime.now());
     final todayPunch = state.punchData?.punchList?.firstWhere(
       (e) => e.dateOfPunch ==todayDate,
       orElse: () => PunchModel(),
